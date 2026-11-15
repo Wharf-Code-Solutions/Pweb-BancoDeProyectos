@@ -9,7 +9,8 @@
  *   ]);
  *
  * Opciones: tipo, requerido, opcional (muestra "(opcional)"), ayuda, error,
- * solo_lectura, maxlength, autocomplete, clase_contenedor.
+ * req_envio (marca ** de obligatorio para enviar), solo_lectura, maxlength, min, max,
+ * autocomplete, clase_contenedor.
  */
 
 function campo(string $nombre, string $etiqueta, ?string $valor = '', array $o = []): string
@@ -23,6 +24,8 @@ function campo(string $nombre, string $etiqueta, ?string $valor = '', array $o =
     $html .= '<label class="form-label" for="' . e($id) . '">' . e($etiqueta);
     if (!empty($o['requerido'])) {
         $html .= '<span class="req" aria-hidden="true">*</span>';
+    } elseif (!empty($o['req_envio'])) {
+        $html .= '<span class="req-envio" aria-hidden="true">**</span>';
     } elseif (!empty($o['opcional'])) {
         $html .= ' <span class="fw-normal text-mute">(opcional)</span>';
     }
@@ -51,6 +54,11 @@ function campo(string $nombre, string $etiqueta, ?string $valor = '', array $o =
     if (!empty($o['maxlength'])) {
         $extra .= ' maxlength="' . (int) $o['maxlength'] . '"';
     }
+    foreach (['min', 'max'] as $attr) {
+        if (isset($o[$attr])) {
+            $extra .= ' ' . $attr . '="' . e((string) $o[$attr]) . '"';
+        }
+    }
     if (!empty($o['autocomplete'])) {
         $extra .= ' autocomplete="' . e($o['autocomplete']) . '"';
     }
@@ -69,7 +77,8 @@ function campo_select(string $nombre, string $etiqueta, ?string $valor, array $o
     $es_lista = array_is_list($opciones);
     $html = '<div class="' . e($o['clase_contenedor'] ?? '') . '">';
     $html .= '<label class="form-label" for="' . e($id) . '">' . e($etiqueta)
-           . (!empty($o['requerido']) ? '<span class="req" aria-hidden="true">*</span>' : '') . '</label>';
+           . (!empty($o['requerido']) ? '<span class="req" aria-hidden="true">*</span>'
+              : (!empty($o['req_envio']) ? '<span class="req-envio" aria-hidden="true">**</span>' : '')) . '</label>';
     $invalido = !empty($o['error']);
     $html .= '<select class="form-select' . ($invalido ? ' is-invalid' : '') . '" id="' . e($id) . '" name="' . e($nombre) . '"'
            . (!empty($o['requerido']) ? ' required' : '')
@@ -93,7 +102,8 @@ function campo_area(string $nombre, string $etiqueta, ?string $valor, array $o =
     $html = '<div class="' . e($o['clase_contenedor'] ?? '') . '">';
     $html .= '<label class="form-label" for="' . e($id) . '">' . e($etiqueta)
            . (!empty($o['requerido']) ? '<span class="req" aria-hidden="true">*</span>'
-              : (!empty($o['opcional']) ? ' <span class="fw-normal text-mute">(opcional)</span>' : '')) . '</label>';
+              : (!empty($o['req_envio']) ? '<span class="req-envio" aria-hidden="true">**</span>'
+              : (!empty($o['opcional']) ? ' <span class="fw-normal text-mute">(opcional)</span>' : ''))) . '</label>';
     $invalido = !empty($o['error']);
     $describe = array_filter([!empty($o['ayuda']) ? $id . '-a' : null, $invalido ? $id . '-e' : null]);
     $html .= '<textarea class="form-control' . ($invalido ? ' is-invalid' : '') . '" id="' . e($id) . '" name="' . e($nombre) . '"'

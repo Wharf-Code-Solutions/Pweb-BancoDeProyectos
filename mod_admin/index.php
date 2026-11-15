@@ -47,7 +47,7 @@ $indicador = function (string $rotulo, int $valor, string $ruta, string $accion,
     <?= $indicador('Proyectos por revisar', $por_revisar, 'mod_admin/revisar_proyectos.php', 'Revisar', true) ?>
     <?= $indicador('Candidaturas por decidir', $candidaturas, 'mod_admin/candidaturas.php', 'Decidir', true) ?>
     <?= $indicador('Solicitudes de dirección', $direccion, 'mod_admin/direccion.php', 'Decidir', true) ?>
-    <?= $indicador('Listos para iniciar', $listos, 'mod_admin/proyectos.php?estado=publicado', 'Ver') ?>
+    <?= $indicador('Listos para iniciar', $listos, 'mod_admin/proyectos.php?listos=1', 'Ver') ?>
 </div>
 
 <div class="row g-4">
