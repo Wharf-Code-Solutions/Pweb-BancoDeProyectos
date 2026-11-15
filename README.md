@@ -37,10 +37,16 @@ El proyecto está construido utilizando una arquitectura modular clásica basada
 La estructura sigue un patrón modular enfocado en la simplicidad y separación de responsabilidades:
 
 * `/bd` - Scripts de conexión a la base de datos.
-* `/css`, `/js`, `/img` - Recursos estáticos locales.
+* `/inc` - Núcleo común: arranque (`inicio.php`), sesión y acceso por rol, CSRF, avisos, auditoría y menú.
+* `/css`, `/js`, `/img` - Recursos estáticos locales. `css/app.css` es la hoja de las pantallas; los ajustes nuevos van en `css/extras.css`.
+* `/lib`, `/fonts` - Bootstrap 5.3.3, Bootstrap Icons 1.11.3 y Montserrat servidos en local.
 * `/inputs` - Componentes y fragmentos reutilizables de formularios HTML/PHP.
-* `/menumain` - Layouts y navegación principal.
-* `/mod_*` - Módulos operativos divididos por caso de uso (ej. `mod_alumnos`, `mod_proyectos`).
+* `/menumain` - Plantillas: pública (A) y de aplicación (B) con menú lateral y menú móvil.
+* `/errores` - Páginas 403, 404 y 500.
+* `/sql` - Script de la base y datos de prueba.
+* `/mod_*` - Un módulo por rol: `mod_alumno`, `mod_empresa`, `mod_profesor`, `mod_admin` y `mod_comun` (cuenta y notificaciones).
+
+Cada página empieza con `require_once __DIR__ . '/../inc/inicio.php';` y, si es privada, `$usuario = requiere_rol('alumno');`. Un rol distinto recibe 403 y el intento queda en el historial de auditoría.
 
 ## 🚀 Instalación y Configuración (Entorno de Desarrollo)
 

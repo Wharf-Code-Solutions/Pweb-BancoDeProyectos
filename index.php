@@ -53,5 +53,6 @@ try {
     <?php if ($detalle !== ''): ?>
         <p class="fallo"><code><?= htmlspecialchars($detalle) ?></code></p>
     <?php endif; ?>
+    <p><a href="login.php">Ir a iniciar sesión</a></p>
 </body>
 </html>

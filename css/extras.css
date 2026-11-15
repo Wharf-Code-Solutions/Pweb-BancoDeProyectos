@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Ajustes propios del proyecto PHP que no están en app.css (la hoja de las
+   pantallas). app.css se mantiene igual a las maquetas; lo nuevo va aquí.
+   ========================================================================== */
+
+/* "Cerrar sesión" es un formulario POST: el botón se ve como los enlaces del menú. */
+.nav-rol form { margin: 0; }
+.nav-rol .enlace-menu {
+  width: 100%; border: 0; background: transparent; text-align: left; font-family: inherit;
+  display: flex; align-items: center; gap: .75rem; min-height: 44px; padding: .55rem 1.5rem;
+  color: #dbe4f3; font-weight: 500; font-size: .9375rem;
+}
+.nav-rol .enlace-menu .bi { font-size: 1.1rem; width: 20px; text-align: center; color: #9fb3d3; }
+.nav-rol .enlace-menu:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+.barra-superior a.btn-icono { text-decoration: none; }

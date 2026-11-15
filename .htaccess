@@ -1,0 +1,7 @@
+# Sin listado de carpetas
+Options -Indexes
+
+# La plantilla de errores solo se incluye desde PHP
+<Files "plantilla_error.php">
+    Require all denied
+</Files>
