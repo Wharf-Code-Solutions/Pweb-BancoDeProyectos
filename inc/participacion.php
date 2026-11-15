@@ -78,7 +78,7 @@ function html_cupo(string $texto, int $usados, int $max, string $resto, string $
     for ($i = 1; $i <= $max; $i++) {
         $puntos .= '<span' . ($i <= $usados ? ' class="usado"' : '') . '></span>';
     }
-    return '<div class="cupo' . ($usados >= $max ? ' lleno' : '') . '"><span class="cupo-icono"><i class="bi ' . $icono . '" aria-hidden="true"></i></span>'
+    return '<div class="cupo' . ($max > 0 && $usados >= $max ? ' lleno' : '') . '"><span class="cupo-icono"><i class="bi ' . $icono . '" aria-hidden="true"></i></span>'
          . '<span class="cupo-texto">' . e($texto) . "</span><span class=\"puntos\" aria-hidden=\"true\">$puntos</span>"
          . '<span class="cupo-resto">' . e($resto) . '</span></div>';
 }

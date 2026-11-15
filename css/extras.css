@@ -21,3 +21,7 @@
 .selector-rol:checked + .tarjeta-rol { border: 2px solid var(--navy); background: var(--primario-claro-bg); }
 .selector-rol:focus-visible + .tarjeta-rol { outline: 3px solid var(--focus); outline-offset: 2px; }
 .selector-rol:disabled + .tarjeta-rol { cursor: default; }
+
+/* Preselección de la empresa (D9, D10, E4) */
+.estado-preseleccion { color: #854d0e; background: #fef9c3; }
+.estado-preseleccion::before { display: none; }

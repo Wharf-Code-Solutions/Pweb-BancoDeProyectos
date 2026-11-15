@@ -20,6 +20,7 @@ require_once __DIR__ . '/notificaciones.php';
 require_once __DIR__ . '/estados.php';
 require_once __DIR__ . '/proyectos.php';
 require_once __DIR__ . '/participacion.php';
+require_once __DIR__ . '/candidaturas.php';
 require_once __DIR__ . '/../inputs/campos.php';
 require_once __DIR__ . '/../inputs/paginacion.php';
 
