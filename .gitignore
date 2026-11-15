@@ -1,0 +1,20 @@
+# Credenciales locales
+bd/config.local.php
+.env
+
+# Maquetas de pantallas (solo en local por ahora)
+Pantallas/
+
+# Pruebas personales
+pruebas.php
+
+# Archivos subidos por usuarios
+uploads/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log

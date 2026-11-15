@@ -52,15 +52,16 @@ Para levantar este proyecto en un entorno local (como XAMPP o WAMP):
    ```
 
 2. **Base de Datos:**
-   * Importa el archivo `sql/banco_proyectos.sql` en tu servidor MariaDB/MySQL local. Este script creará la base de datos `banco_proyectos` y toda su estructura (tablas, triggers, vistas y procedimientos).
+   * Importa el archivo `sql/banco_proyectos.sql` en tu servidor MariaDB/MySQL local. Este script creará la base de datos `banco_proyectos` y toda su estructura (tablas, triggers, vistas y procedimientos). Probado también en MariaDB 10.4 de XAMPP.
+   * Para desarrollo, importa después `sql/datos_prueba.sql`: crea un usuario por rol (`admin@`, `empresa@`, `alumno@` y `profesor@banco.test`, contraseña `Prueba2026!`), el catálogo de habilidades y los criterios de evaluación.
 
 3. **Configuración de Credenciales:**
-   * Copia el archivo de ejemplo (si aplica) o configura las variables de conexión en la ruta correspondiente (ej. `bd/conexion.php` o archivo `.env`).
+   * Copia `bd/config.ejemplo.php` como `bd/config.local.php` y ajusta los datos de conexión. Si no existe, se usa la plantilla (XAMPP: `root` sin contraseña).
    * *Aviso de seguridad:* Las credenciales reales de la base de datos **nunca** deben subirse a este repositorio.
 
 4. **Ejecución:**
    * Coloca el proyecto en la carpeta raíz de tu servidor web (ej. `htdocs` en XAMPP).
-   * Accede a través del navegador web: `http://localhost/Pweb-BancoDeProyectos/`
+   * Accede a través del navegador web: `http://localhost/<carpeta-del-proyecto>/` (por ejemplo `http://localhost/Banco_Proyectos/`). Mientras se construye la Fase 2, la página de inicio muestra una verificación del entorno.
 
 ## 📜 Licencia y Derechos
 
