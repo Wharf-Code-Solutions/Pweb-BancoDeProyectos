@@ -25,3 +25,10 @@
 /* Preselección de la empresa (D9, D10, E4) */
 .estado-preseleccion { color: #854d0e; background: #fef9c3; }
 .estado-preseleccion::before { display: none; }
+
+/* Celular: la columna de contenido no debe crecer con las tablas anchas
+   (el desplazamiento horizontal queda dentro de .table-responsive). */
+.cuerpo-app .contenido, .cuerpo-app main { min-width: 0; }
+@media (max-width: 991.98px) {
+  .hero-publico .row { --bs-gutter-x: 1.5rem; }
+}

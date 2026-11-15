@@ -20,7 +20,21 @@ if (es_post()) {
         $intentos = ['n' => 0, 'desde' => time()];
     }
 
-    if ($intentos['n'] >= 5) {
+    // Segundo freno, por cuenta y guardado en la base (no se salta borrando cookies):
+    // 5 intentos fallidos sobre la misma cuenta en 15 minutos la bloquean ese tiempo.
+    $s = conexion()->prepare('SELECT c_usuario FROM usuario WHERE correo = ?');
+    $s->execute([$correo]);
+    $cuenta = $s->fetchColumn() ?: null;
+    $fallos_cuenta = 0;
+    if ($cuenta) {
+        $s = conexion()->prepare("SELECT COUNT(*) FROM historial_auditoria
+            WHERE c_usuario = ? AND operacion = 'iniciar_sesion' AND resultado = 'error' AND fecha > NOW() - INTERVAL 15 MINUTE
+              AND fecha > COALESCE((SELECT MAX(fecha) FROM historial_auditoria WHERE c_usuario = ? AND operacion = 'iniciar_sesion' AND resultado = 'exito'), '1970-01-01')");
+        $s->execute([$cuenta, $cuenta]);
+        $fallos_cuenta = (int) $s->fetchColumn();
+    }
+
+    if ($intentos['n'] >= 5 || $fallos_cuenta >= 5) {
         $error = 'Demasiados intentos. Espera unos minutos y vuelve a intentarlo.';
     } elseif ($correo === '' || $contrasena === '') {
         $error = 'Escribe tu correo y tu contraseña.';
@@ -38,6 +52,9 @@ if (es_post()) {
     } else {
         $intentos['n']++;
         $_SESSION['intentos_login'] = $intentos;
+        if ($cuenta) {
+            registrar_auditoria('iniciar_sesion', 'usuario', $cuenta, 'error', $cuenta);
+        }
         $error = 'Correo o contraseña incorrectos.';
     }
 }

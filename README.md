@@ -24,12 +24,17 @@ El sistema cuenta con control de acceso por propiedad y funciones específicas p
 El proyecto está construido utilizando una arquitectura modular clásica basada en el lado del servidor, optimizada para entornos de hosting compartido.
 
 * **Backend:** PHP 8.x nativo (Estructurado/Modular).
-* **Base de Datos:** MariaDB 10.11+ / MySQL 8.0+ (Motor InnoDB, Charset `utf8mb4`).
+* **Base de Datos:** MariaDB 10.4+ / MySQL 8.0+ (Motor InnoDB, Charset `utf8mb4`).
 * **Frontend:** HTML5 semántico, CSS3 personalizado y Bootstrap 5 (incorporado de manera local).
 * **Seguridad:**
-  * Hasheo seguro de contraseñas (`BCRYPT`).
+  * Hasheo seguro de contraseñas (`BCRYPT`) y regeneración de la sesión al iniciar sesión o cambiar la contraseña.
   * Prevención de Inyección SQL mediante sentencias preparadas.
   * Control de acceso estricto por propiedad (el usuario solo ve/edita lo que le pertenece según su sesión).
+  * Token CSRF en todos los formularios `POST`; cierre de sesión solo por `POST`.
+  * Bloqueo de 15 minutos tras 5 intentos fallidos de inicio de sesión sobre la misma cuenta.
+  * Cookie de sesión `HttpOnly` y `SameSite=Lax`; cierre por inactividad a las 2 horas; una cuenta desactivada pierde su sesión abierta.
+  * Las carpetas `inc`, `bd`, `sql`, `menumain` e `inputs` no se pueden abrir desde el navegador (`.htaccess`).
+  * Historial de auditoría inmutable de las operaciones importantes y de los accesos denegados.
 * **Integridad de Datos:** Base de datos con 20 tablas, 25 llaves foráneas, 50 restricciones `CHECK`, triggers como segunda capa de validación de reglas de negocio y folios únicos generados sin `AUTO_INCREMENT`.
 
 ### Estructura de Carpetas
@@ -68,6 +73,31 @@ Para levantar este proyecto en un entorno local (como XAMPP o WAMP):
 4. **Ejecución:**
    * Coloca el proyecto en la carpeta raíz de tu servidor web (ej. `htdocs` en XAMPP).
    * Accede a través del navegador web: `http://localhost/<carpeta-del-proyecto>/` (por ejemplo `http://localhost/Banco_Proyectos/`). Para revisar la instalación abre `verificar.php` (solo responde con `debug` activo).
+
+## 🔄 Flujo principal
+
+1. La **empresa** se registra, crea su proyecto (puede guardarlo como borrador) y lo envía a revisión.
+2. El **administrador** lo aprueba y publica, lo devuelve con correcciones o lo rechaza.
+3. Los **alumnos** ven los proyectos publicados con la coincidencia de sus habilidades y se postulan (máximo 3 candidaturas vigentes).
+4. La **empresa** evalúa a cada candidato con los criterios ponderados del Tec y puede preseleccionarlo.
+5. El **administrador** aprueba la candidatura y, en el mismo paso, asigna al alumno (respetando el cupo).
+6. Los **profesores** solicitan dirigir proyectos; el administrador aprueba y asigna al director (máximo 3 proyectos activos por profesor, un director por proyecto).
+7. Con director y al menos un alumno, el administrador inicia el proyecto y, al terminar, lo finaliza; las asignaciones se cierran solas.
+
+Cada paso deja una autorización o un registro en el historial, y avisa por notificación a las personas involucradas. El administrador tiene reportes (con impresión y exportación a CSV) y la consulta del historial de auditoría.
+
+## 🧪 Pruebas en local
+
+* Usuarios de prueba (contraseña `Prueba2026!`): `admin@banco.test`, `empresa@banco.test`, `alumno@banco.test` y `profesor@banco.test`.
+* Los alumnos, profesores y administradores no se registran solos: sus cuentas las crea el administrador en **Usuarios → Nuevo usuario**. Las empresas sí pueden registrarse desde la página de inicio.
+* El historial de auditoría no se puede borrar (lo impide un trigger). Para pruebas que crean muchos datos conviene usar una base temporal: importa los dos scripts en otra base y cambia `db_name` en `bd/config.local.php`.
+
+## ✅ Antes de publicar
+
+* En `bd/config.local.php` pon `'debug' => false` (oculta los detalles de los errores y desactiva `verificar.php`).
+* Usa un usuario de base de datos con contraseña y solo los permisos que la aplicación necesita.
+* Sirve el sitio por HTTPS: la cookie de sesión se marca como segura automáticamente.
+* No importes `sql/datos_prueba.sql` en producción.
 
 ## 📜 Licencia y Derechos
 
