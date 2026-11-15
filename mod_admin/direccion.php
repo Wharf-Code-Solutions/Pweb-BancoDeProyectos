@@ -36,6 +36,7 @@ $bloqueo = fn (array $x) => match (true) {
 
 $justificacion = '';
 $errores = [];
+$otras = [];
 if (es_post() && $sol) {
     verificar_csrf();
     $decision = ($_POST['decision'] ?? '') === 'aprobar' ? 'aprobar' : 'rechazar';
@@ -62,6 +63,16 @@ if (es_post() && $sol) {
             if ($decision === 'aprobar') {
                 // El trigger valida el límite de 3 (RN-05) y un solo director por proyecto.
                 $pdo->prepare('INSERT INTO asignacion_profesor (c_asignacion_profesor, c_solicitud_direccion) VALUES (?, ?)')->execute([siguiente_folio('APR'), $id]);
+                // Las demás solicitudes pendientes para este proyecto ya no pueden prosperar: se rechazan con su autorización.
+                $s = $pdo->prepare("SELECT sd.c_solicitud_direccion, pr.c_usuario FROM solicitud_direccion sd JOIN profesor pr ON pr.num_empleado = sd.num_empleado
+                    WHERE sd.c_proyecto = ? AND sd.estado = 'pendiente' AND sd.c_solicitud_direccion <> ? FOR UPDATE");
+                $s->execute([$sol['c_proyecto'], $id]);
+                $otras = $s->fetchAll();
+                foreach ($otras as $o) {
+                    $pdo->prepare("UPDATE solicitud_direccion SET estado = 'rechazada' WHERE c_solicitud_direccion = ?")->execute([$o['c_solicitud_direccion']]);
+                    $pdo->prepare("INSERT INTO autorizacion (c_autorizacion, num_empleado_admin, c_solicitud_direccion, decision, justificacion) VALUES (?, ?, ?, 'rechazada', ?)")
+                        ->execute([siguiente_folio('AUT'), $admin['clave'], $o['c_solicitud_direccion'], 'El proyecto ya tiene un director asignado.']);
+                }
             }
             $pdo->commit();
         } catch (PDOException $ex) {
@@ -80,6 +91,10 @@ if (es_post() && $sol) {
                 $s = $pdo->prepare("SELECT e.c_usuario FROM proyecto p JOIN empresa e ON e.rfc_empresa = p.rfc_empresa WHERE p.c_proyecto = ?");
                 $s->execute([$sol['c_proyecto']]);
                 notificar((string) $s->fetchColumn(), $sol['nombre'] . ' será el director del proyecto «' . $sol['titulo'] . '».');
+                foreach ($otras as $o) {
+                    registrar_auditoria('rechazar', 'solicitud_direccion', $o['c_solicitud_direccion']);
+                    notificar($o['c_usuario'], 'Tu solicitud para dirigir «' . $sol['titulo'] . '» fue rechazada: el proyecto ya tiene director.');
+                }
                 aviso('exito', 'Solicitud aprobada: ' . $sol['nombre'] . ' quedó como director.');
             } else {
                 notificar($sol['c_usuario_profesor'], 'Tu solicitud para dirigir «' . $sol['titulo'] . '» fue rechazada.');

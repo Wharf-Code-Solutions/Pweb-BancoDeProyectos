@@ -63,7 +63,19 @@ function validar_rfc(string $rfc): ?string
     if (!preg_match('/^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/u', $rfc)) {
         return 'El RFC no tiene el formato del SAT (letras, fecha y homoclave).';
     }
+    // Los 6 dígitos son una fecha AAMMDD: el mes y el día deben existir.
+    $fecha = substr($rfc, -9, 6);
+    if (!checkdate((int) substr($fecha, 2, 2), (int) substr($fecha, 4, 2), 2000)) {
+        return 'La fecha dentro del RFC no es válida (AAMMDD).';
+    }
     return null;
+}
+
+/** ¿Es una fecha real con formato AAAA-MM-DD? (rechaza 2027-02-30, que PHP convertiría en marzo) */
+function es_fecha(string $f): bool
+{
+    $d = DateTime::createFromFormat('!Y-m-d', $f);
+    return $d !== false && $d->format('Y-m-d') === $f;
 }
 
 function correo_registrado(string $correo, ?string $excepto_usuario = null): bool

@@ -7,7 +7,7 @@ $pdo = conexion();
 $operaciones = $pdo->query('SELECT DISTINCT operacion FROM historial_auditoria ORDER BY operacion')->fetchAll(PDO::FETCH_COLUMN);
 $entidades = $pdo->query('SELECT DISTINCT entidad_afectada FROM historial_auditoria ORDER BY entidad_afectada')->fetchAll(PDO::FETCH_COLUMN);
 $resultados = ['exito' => ['Éxito', 'exito'], 'error' => ['Error', 'advertencia'], 'denegado' => ['Acceso denegado', 'peligro']];
-$fecha_valida = fn (string $f) => DateTime::createFromFormat('!Y-m-d', $f) ? $f : '';
+$fecha_valida = fn (string $f) => es_fecha($f) ? $f : '';
 
 $filtros = [
     'usuario'   => limpiar($_GET['usuario'] ?? ''),

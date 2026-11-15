@@ -90,6 +90,11 @@ Cada paso deja una autorización o un registro en el historial, y avisa por noti
 
 * Usuarios de prueba (contraseña `Prueba2026!`): `admin@banco.test`, `empresa@banco.test`, `alumno@banco.test` y `profesor@banco.test`.
 * Los alumnos, profesores y administradores no se registran solos: sus cuentas las crea el administrador en **Usuarios → Nuevo usuario**. Las empresas sí pueden registrarse desde la página de inicio.
+* **Pruebas automáticas de integridad:** con XAMPP encendido, ejecuta desde la carpeta del proyecto
+  ```bash
+  C:\xampp\php\php.exe pruebas\flujo.php
+  ```
+  Crea una base temporal, recorre el sitio como cada rol con datos válidos e inválidos (permisos, CSRF, formularios, límites de 3, cupo, estados, triggers y restricciones) y al final la borra; la aplicación vuelve sola a su base normal. Opciones: `--conservar` (no borra la base temporal) y `--url=http://localhost/OtraCarpeta`.
 * El historial de auditoría no se puede borrar (lo impide un trigger). Para pruebas que crean muchos datos conviene usar una base temporal: importa los dos scripts en otra base y cambia `db_name` en `bd/config.local.php`.
 
 ## ✅ Antes de publicar

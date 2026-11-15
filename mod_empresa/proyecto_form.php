@@ -67,6 +67,12 @@ if (es_post()) {
     } elseif (mb_strlen($d['titulo']) > 150) {
         $errores['titulo'] = 'Máximo 150 caracteres.';
     }
+    // Textos largos: la columna TEXT admite 65 535 bytes; se limita a 5000 caracteres por campo.
+    foreach (['descripcion', 'problematica', 'objetivos', 'justificacion', 'alcance', 'requisitos_academicos', 'recursos'] as $k) {
+        if (mb_strlen($d[$k]) > 5000) {
+            $errores[$k] = 'Máximo 5000 caracteres.';
+        }
+    }
     // Formato (si se escribió algo)
     if ($d['duracion_estimada'] !== '' && (!ctype_digit($d['duracion_estimada']) || (int) $d['duracion_estimada'] < 1 || (int) $d['duracion_estimada'] > 260)) {
         $errores['duracion_estimada'] = 'Escribe la duración en semanas (de 1 a 260).';
@@ -75,7 +81,7 @@ if (es_post()) {
         $errores['modalidad'] = 'Elige una modalidad.';
     }
     foreach (['fecha_inicio', 'fecha_fin'] as $f) {
-        if ($d[$f] !== '' && !DateTime::createFromFormat('!Y-m-d', $d[$f])) {
+        if ($d[$f] !== '' && !es_fecha($d[$f])) {
             $errores[$f] = 'Escribe una fecha válida.';
         }
     }
