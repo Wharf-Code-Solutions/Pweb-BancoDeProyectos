@@ -86,6 +86,31 @@ function campo_select(string $nombre, string $etiqueta, ?string $valor, array $o
     return $html . '</div>';
 }
 
+/** Área de texto. Opciones: requerido, opcional, ayuda, error, filas, maxlength, clase_contenedor. */
+function campo_area(string $nombre, string $etiqueta, ?string $valor, array $o = []): string
+{
+    $id = $o['id'] ?? $nombre;
+    $html = '<div class="' . e($o['clase_contenedor'] ?? '') . '">';
+    $html .= '<label class="form-label" for="' . e($id) . '">' . e($etiqueta)
+           . (!empty($o['requerido']) ? '<span class="req" aria-hidden="true">*</span>'
+              : (!empty($o['opcional']) ? ' <span class="fw-normal text-mute">(opcional)</span>' : '')) . '</label>';
+    $invalido = !empty($o['error']);
+    $describe = array_filter([!empty($o['ayuda']) ? $id . '-a' : null, $invalido ? $id . '-e' : null]);
+    $html .= '<textarea class="form-control' . ($invalido ? ' is-invalid' : '') . '" id="' . e($id) . '" name="' . e($nombre) . '"'
+           . ' rows="' . (int) ($o['filas'] ?? 3) . '"'
+           . (!empty($o['maxlength']) ? ' maxlength="' . (int) $o['maxlength'] . '"' : '')
+           . (!empty($o['requerido']) ? ' required' : '')
+           . ($describe ? ' aria-describedby="' . e(implode(' ', $describe)) . '"' : '')
+           . ($invalido ? ' aria-invalid="true"' : '') . '>' . e($valor) . '</textarea>';
+    if (!empty($o['ayuda'])) {
+        $html .= '<div class="form-text" id="' . e($id) . '-a">' . e($o['ayuda']) . '</div>';
+    }
+    if ($invalido) {
+        $html .= '<div class="invalid-feedback" id="' . e($id) . '-e"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>' . e($o['error']) . '</div>';
+    }
+    return $html . '</div>';
+}
+
 /** Alerta general cuando el formulario tiene errores. */
 function alerta_errores(array $errores, string $mensaje = 'Algún dato no tiene el formato correcto. Revisa los campos marcados.'): string
 {

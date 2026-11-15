@@ -13,3 +13,11 @@
 .nav-rol .enlace-menu .bi { font-size: 1.1rem; width: 20px; text-align: center; color: #9fb3d3; }
 .nav-rol .enlace-menu:hover { background: rgba(255, 255, 255, .06); color: #fff; }
 .barra-superior a.btn-icono { text-decoration: none; }
+
+[hidden] { display: none !important; }
+
+/* D2 · Tarjetas para elegir el rol del usuario */
+.tarjeta-rol { cursor: pointer; }
+.selector-rol:checked + .tarjeta-rol { border: 2px solid var(--navy); background: var(--primario-claro-bg); }
+.selector-rol:focus-visible + .tarjeta-rol { outline: 3px solid var(--focus); outline-offset: 2px; }
+.selector-rol:disabled + .tarjeta-rol { cursor: default; }

@@ -40,7 +40,9 @@ function url(string $ruta = ''): string
 /** Redirige y termina. */
 function redirigir(string $ruta): never
 {
-    header('Location: ' . (preg_match('#^https?://#', $ruta) ? $ruta : url($ruta)));
+    // Acepta rutas del proyecto ('mod_admin/usuarios.php') o URLs ya armadas con url() ('/Banco_Proyectos/...').
+    $absoluta = str_starts_with($ruta, '/') && !str_starts_with($ruta, '//');
+    header('Location: ' . ($absoluta ? $ruta : url($ruta)));
     exit;
 }
 

@@ -162,6 +162,15 @@ function requiere_sesion(): array
         aviso('info', 'Inicia sesión para continuar.');
         redirigir('login.php');
     }
+
+    // Si la administración desactivó la cuenta, la sesión abierta termina aquí.
+    $s = conexion()->prepare('SELECT estado FROM usuario WHERE c_usuario = ?');
+    $s->execute([$u['c_usuario']]);
+    if ($s->fetchColumn() !== 'activo') {
+        reiniciar_sesion();
+        aviso('advertencia', 'Tu cuenta está desactivada. Contacta a la administración del Tec.');
+        redirigir('login.php');
+    }
     return $u;
 }
 

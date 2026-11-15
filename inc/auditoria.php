@@ -11,6 +11,30 @@
  * petición, después de que la operación se confirme o se revierta.
  */
 
+/** Texto legible de un registro del historial (para el panel y la consulta). */
+function describir_operacion(array $h): string
+{
+    $verbo = [
+        'iniciar_sesion' => 'Inició sesión', 'cerrar_sesion' => 'Cerró sesión', 'acceso' => 'Acceso denegado a',
+        'registrar' => 'Registró', 'crear' => 'Creó', 'editar' => 'Editó', 'activar' => 'Activó',
+        'desactivar' => 'Desactivó', 'eliminar' => 'Eliminó', 'actualizar_datos' => 'Actualizó los datos de',
+        'cambiar_contrasena' => 'Cambió la contraseña de', 'aprobar' => 'Aprobó', 'rechazar' => 'Rechazó',
+        'devolver' => 'Devolvió', 'asignar' => 'Asignó', 'finalizar' => 'Finalizó', 'cancelar' => 'Canceló',
+        'enviar_revision' => 'Envió a revisión', 'postular' => 'Se postuló a', 'evaluar' => 'Evaluó',
+        'solicitar_direccion' => 'Solicitó dirigir',
+    ][$h['operacion']] ?? ucfirst(str_replace('_', ' ', $h['operacion']));
+
+    if (in_array($h['operacion'], ['iniciar_sesion', 'cerrar_sesion'], true)) {
+        return $verbo;
+    }
+    $entidad = str_replace('_', ' ', $h['entidad_afectada']);
+    if ($h['operacion'] === 'acceso') {
+        return $verbo . ' ' . $h['registro_afectado'];
+    }
+    $texto = $verbo . ' ' . $entidad . ' ' . $h['registro_afectado'];
+    return $h['resultado'] === 'error' ? $texto . ' (falló)' : $texto;
+}
+
 function registrar_auditoria(string $operacion, string $entidad, string $registro, string $resultado = 'exito', ?string $c_usuario = null): void
 {
     $c_usuario ??= usuario_actual()['c_usuario'] ?? null;
