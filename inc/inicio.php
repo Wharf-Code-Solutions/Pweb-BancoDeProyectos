@@ -15,6 +15,9 @@ require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/csrf.php';
 require_once __DIR__ . '/reglas.php';
 require_once __DIR__ . '/menu.php';
+require_once __DIR__ . '/validacion.php';
+require_once __DIR__ . '/notificaciones.php';
+require_once __DIR__ . '/../inputs/campos.php';
 
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('America/Mexico_City');

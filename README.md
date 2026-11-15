@@ -67,7 +67,7 @@ Para levantar este proyecto en un entorno local (como XAMPP o WAMP):
 
 4. **Ejecución:**
    * Coloca el proyecto en la carpeta raíz de tu servidor web (ej. `htdocs` en XAMPP).
-   * Accede a través del navegador web: `http://localhost/<carpeta-del-proyecto>/` (por ejemplo `http://localhost/Banco_Proyectos/`). Mientras se construye la Fase 2, la página de inicio muestra una verificación del entorno.
+   * Accede a través del navegador web: `http://localhost/<carpeta-del-proyecto>/` (por ejemplo `http://localhost/Banco_Proyectos/`). Para revisar la instalación abre `verificar.php` (solo responde con `debug` activo).
 
 ## 📜 Licencia y Derechos
 

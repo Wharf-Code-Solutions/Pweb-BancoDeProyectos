@@ -1,58 +1,76 @@
 <?php
-/**
- * Página temporal de verificación del entorno (Fase 0).
- * Se reemplaza por la pantalla P1 (Inicio) en la Fase 2.
- */
-require_once __DIR__ . '/bd/conexion.php';
+/** Pantalla P1 · Inicio (pública). */
+require_once __DIR__ . '/inc/inicio.php';
 
-$checks = [];
-$checks['PHP ' . PHP_VERSION] = version_compare(PHP_VERSION, '8.0', '>=');
-$checks['Extensión pdo_mysql'] = extension_loaded('pdo_mysql');
-$checks['Configuración local (bd/config.local.php)'] = is_file(__DIR__ . '/bd/config.local.php');
+$usuario = usuario_actual();
+$titulo = 'Inicio';
+require __DIR__ . '/menumain/publico_encabezado.php';
 
-$detalle = '';
-try {
-    $pdo = conexion();
-    $checks['Conexión a la base'] = true;
-    $tablas = (int) $pdo->query("SELECT COUNT(*) FROM information_schema.TABLES
-        WHERE TABLE_SCHEMA = DATABASE() AND TABLE_TYPE = 'BASE TABLE'")->fetchColumn();
-    $checks["Tablas creadas ($tablas de 20)"] = $tablas === 20;
-    $usuarios = (int) $pdo->query('SELECT COUNT(*) FROM usuario')->fetchColumn();
-    $checks["Usuarios de prueba ($usuarios)"] = $usuarios >= 4;
-
-    $pdo->beginTransaction();
-    $folio = siguiente_folio('PRY');
-    $pdo->rollBack();
-    $checks["Procedimiento de folios ($folio)"] = (bool) preg_match('/^PRY-\d{8}$/', $folio);
-} catch (PDOException $e) {
-    $checks['Conexión a la base'] = false;
-    $detalle = config()['debug'] ? $e->getMessage() : 'Revisa bd/config.local.php';
-}
+$icono_rol = 'width:48px;height:48px;font-size:1.4rem;border-radius:50%;display:grid;place-items:center;background:var(--primario-claro-bg);color:var(--navy)';
+$roles = [
+    ['bi-building', 'Empresas', ['Registrar proyectos y enviarlos a revisión', 'Revisar el perfil de los candidatos', 'Evaluarlos con criterios ponderados']],
+    ['bi-mortarboard', 'Alumnos', ['Registrar sus habilidades y evidencias', 'Buscar proyectos acordes a su perfil', 'Postularse y seguir su solicitud']],
+    ['bi-person-workspace', 'Profesores', ['Solicitar la dirección de proyectos', 'Consultar los proyectos que dirigen', 'Conocer a los alumnos asignados']],
+];
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Banco de Proyectos · Verificación del entorno</title>
-    <style>
-        body { font-family: system-ui, sans-serif; background: #f5f4ef; color: #1f1e1d; max-width: 640px; margin: 40px auto; padding: 0 16px; }
-        li { margin: 6px 0; }
-        .ok { color: #1a7f37; } .fallo { color: #b42318; }
-        code { background: #e9e7df; padding: 2px 4px; border-radius: 4px; }
-    </style>
-</head>
-<body>
-    <h1>Banco de Proyectos Académicos</h1>
-    <p>Verificación del entorno de desarrollo.</p>
-    <ul>
-        <?php foreach ($checks as $nombre => $ok): ?>
-            <li class="<?= $ok ? 'ok' : 'fallo' ?>"><?= $ok ? '✔' : '✘' ?> <?= htmlspecialchars($nombre) ?></li>
-        <?php endforeach; ?>
-    </ul>
-    <?php if ($detalle !== ''): ?>
-        <p class="fallo"><code><?= htmlspecialchars($detalle) ?></code></p>
-    <?php endif; ?>
-    <p><a href="login.php">Ir a iniciar sesión</a></p>
-</body>
-</html>
+<section class="hero-publico">
+    <div class="contenedor">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <span class="etiqueta" style="color:var(--yel)">TecNM · Instituto Tecnológico de Veracruz</span>
+                <h1>Banco de Proyectos Académicos</h1>
+                <p>Las empresas proponen proyectos tecnológicos, los alumnos de Sistemas Computacionales se postulan y el Tec autoriza cada asignación.</p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <?php if ($usuario): ?>
+                        <a class="btn btn-principal" href="<?= e(url(ruta_panel($usuario))) ?>"><i class="bi bi-speedometer2" aria-hidden="true"></i>Ir a mi panel</a>
+                    <?php else: ?>
+                        <a class="btn btn-principal" href="<?= e(url('login.php')) ?>"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>Iniciar sesión</a>
+                        <a class="btn btn-claro" href="<?= e(url('registro_empresa.php')) ?>"><i class="bi bi-building-add" aria-hidden="true"></i>Registrar mi empresa</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div style="aspect-ratio:4/3;border-radius:10px;background:var(--deep);display:grid;place-items:center;color:#9fb3d3;font-size:.875rem;border:1px dashed rgba(255,255,255,.3)">
+                    <span><i class="bi bi-image" aria-hidden="true"></i> Imagen institucional (opcional)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="seccion-publica">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">¿Cómo funciona?</h2>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="paso"><div class="n">1</div><h3>Las empresas proponen</h3><p>Registran su necesidad tecnológica como proyecto y la envían a revisión del Tec.</p></div></div>
+            <div class="col-md-4"><div class="paso"><div class="n">2</div><h3>Los alumnos se postulan</h3><p>Consultan los proyectos publicados y se postulan hasta a tres a la vez, según sus habilidades.</p></div></div>
+            <div class="col-md-4"><div class="paso"><div class="n">3</div><h3>El Tec autoriza</h3><p>La administración aprueba cada proyecto y asigna a los alumnos y a un profesor director.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="seccion-publica alterna">
+    <div class="contenedor">
+        <h2 class="titulo-seccion">¿Qué puede hacer en el sistema?</h2>
+        <div class="row g-4">
+            <?php foreach ($roles as [$icono, $nombre, $acciones]): ?>
+                <div class="col-md-4">
+                    <div class="card h-100"><div class="card-body p-4">
+                        <div class="cupo-icono mb-3" style="<?= $icono_rol ?>"><i class="bi <?= $icono ?>" aria-hidden="true"></i></div>
+                        <h3 class="card-title"><?= e($nombre) ?></h3>
+                        <ul class="verificaciones">
+                            <?php foreach ($acciones as $a): ?><li><?= e($a) ?></li><?php endforeach; ?>
+                        </ul>
+                    </div></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <p class="text-center text-mute mt-4 mb-0">Alumnos y profesores: su cuenta la crea la administración del Tec.</p>
+        <?php if (!$usuario): ?>
+            <div class="d-flex justify-content-center mt-4">
+                <a class="btn btn-principal" href="<?= e(url('registro_empresa.php')) ?>"><i class="bi bi-building-add" aria-hidden="true"></i>Registrar mi empresa</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+<?php require __DIR__ . '/menumain/publico_pie.php'; ?>
