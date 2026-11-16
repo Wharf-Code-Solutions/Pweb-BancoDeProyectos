@@ -9,7 +9,8 @@
  *   ]);
  *
  * Opciones: tipo, requerido, opcional (muestra "(opcional)"), ayuda, error,
- * req_envio (marca ** de obligatorio para enviar), solo_lectura, maxlength, min, max,
+ * req_envio (marca ** de obligatorio para enviar), solo_lectura, maxlength, minlength,
+ * min, max, step, placeholder, pattern (con title que explica el formato), inputmode,
  * autocomplete, clase_contenedor.
  */
 
@@ -54,7 +55,10 @@ function campo(string $nombre, string $etiqueta, ?string $valor = '', array $o =
     if (!empty($o['maxlength'])) {
         $extra .= ' maxlength="' . (int) $o['maxlength'] . '"';
     }
-    foreach (['min', 'max'] as $attr) {
+    if (!empty($o['minlength'])) {
+        $extra .= ' minlength="' . (int) $o['minlength'] . '"';
+    }
+    foreach (['min', 'max', 'step', 'placeholder', 'pattern', 'title', 'inputmode'] as $attr) {
         if (isset($o[$attr])) {
             $extra .= ' ' . $attr . '="' . e((string) $o[$attr]) . '"';
         }
@@ -95,7 +99,7 @@ function campo_select(string $nombre, string $etiqueta, ?string $valor, array $o
     return $html . '</div>';
 }
 
-/** Área de texto. Opciones: requerido, opcional, ayuda, error, filas, maxlength, clase_contenedor. */
+/** Área de texto. Opciones: requerido, opcional, ayuda, error, filas, maxlength, minlength, placeholder, clase_contenedor. */
 function campo_area(string $nombre, string $etiqueta, ?string $valor, array $o = []): string
 {
     $id = $o['id'] ?? $nombre;
@@ -109,6 +113,8 @@ function campo_area(string $nombre, string $etiqueta, ?string $valor, array $o =
     $html .= '<textarea class="form-control' . ($invalido ? ' is-invalid' : '') . '" id="' . e($id) . '" name="' . e($nombre) . '"'
            . ' rows="' . (int) ($o['filas'] ?? 3) . '"'
            . (!empty($o['maxlength']) ? ' maxlength="' . (int) $o['maxlength'] . '"' : '')
+           . (!empty($o['minlength']) ? ' minlength="' . (int) $o['minlength'] . '"' : '')
+           . (isset($o['placeholder']) ? ' placeholder="' . e($o['placeholder']) . '"' : '')
            . (!empty($o['requerido']) ? ' required' : '')
            . ($describe ? ' aria-describedby="' . e(implode(' ', $describe)) . '"' : '')
            . ($invalido ? ' aria-invalid="true"' : '') . '>' . e($valor) . '</textarea>';

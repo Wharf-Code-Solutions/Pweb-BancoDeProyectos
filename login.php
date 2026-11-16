@@ -60,6 +60,8 @@ if (es_post()) {
 }
 
 $titulo = 'Iniciar sesión';
+$indexar = true;
+$descripcion = 'Inicia sesión en el Banco de Proyectos Académicos del TecNM · ITVer con tu correo y contraseña.';
 require __DIR__ . '/menumain/publico_encabezado.php';
 ?>
 <section class="seccion-publica alterna" style="padding:3rem 0 4rem">
@@ -75,11 +77,11 @@ require __DIR__ . '/menumain/publico_encabezado.php';
                 <?= csrf_campo() ?>
                 <div>
                     <label class="form-label" for="correo">Correo electrónico</label>
-                    <input class="form-control" id="correo" name="correo" type="email" autocomplete="username" required value="<?= e($correo) ?>">
+                    <input class="form-control" id="correo" name="correo" type="email" autocomplete="username" placeholder="nombre@dominio.com" maxlength="254" required value="<?= e($correo) ?>">
                 </div>
                 <div>
                     <label class="form-label" for="contrasena">Contraseña</label>
-                    <input class="form-control" id="contrasena" name="contrasena" type="password" autocomplete="current-password" required>
+                    <input class="form-control" id="contrasena" name="contrasena" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
                 </div>
                 <button type="submit" class="btn btn-principal w-100"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>Iniciar sesión</button>
             </form>

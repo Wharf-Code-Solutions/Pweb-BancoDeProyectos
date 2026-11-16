@@ -262,23 +262,23 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
             <?= csrf_campo() ?>
             <section class="seccion-form" id="s1" aria-labelledby="s1-t">
                 <h2 id="s1-t"><span class="num">1</span>Datos generales</h2>
-                <?= campo('titulo', 'Título del proyecto', $d['titulo'], ['requerido' => true, 'maxlength' => 150, 'ayuda' => 'Máximo 150 caracteres.', 'error' => $err('titulo')]) ?>
+                <?= campo('titulo', 'Título del proyecto', $d['titulo'], ['placeholder' => 'Ej. Sistema de control de inventarios para almacén', 'requerido' => true, 'maxlength' => 150, 'ayuda' => 'Máximo 150 caracteres.', 'error' => $err('titulo')]) ?>
             </section>
 
             <section class="seccion-form" id="s2" aria-labelledby="s2-t">
                 <h2 id="s2-t"><span class="num">2</span>Descripción del proyecto</h2>
                 <div class="d-grid gap-3">
-                    <?= campo_area('descripcion', 'Descripción', $d['descripcion'], ['req_envio' => true, 'filas' => 3, 'error' => $err('descripcion')]) ?>
-                    <?= campo_area('problematica', 'Problemática', $d['problematica'], ['req_envio' => true, 'filas' => 3, 'error' => $err('problematica')]) ?>
-                    <?= campo_area('objetivos', 'Objetivos', $d['objetivos'], ['req_envio' => true, 'filas' => 3, 'error' => $err('objetivos'), 'ayuda' => 'Escribe un objetivo por línea.']) ?>
-                    <?= campo_area('justificacion', 'Justificación', $d['justificacion'], ['req_envio' => true, 'filas' => 2, 'error' => $err('justificacion')]) ?>
-                    <?= campo_area('alcance', 'Alcance', $d['alcance'], ['req_envio' => true, 'filas' => 2, 'error' => $err('alcance')]) ?>
+                    <?= campo_area('descripcion', 'Descripción', $d['descripcion'], ['placeholder' => 'De qué trata el proyecto, en pocas líneas', 'maxlength' => 5000, 'req_envio' => true, 'filas' => 3, 'error' => $err('descripcion')]) ?>
+                    <?= campo_area('problematica', 'Problemática', $d['problematica'], ['placeholder' => 'Qué problema tiene hoy la empresa', 'maxlength' => 5000, 'req_envio' => true, 'filas' => 3, 'error' => $err('problematica')]) ?>
+                    <?= campo_area('objetivos', 'Objetivos', $d['objetivos'], ['placeholder' => 'Un objetivo por línea', 'maxlength' => 5000, 'req_envio' => true, 'filas' => 3, 'error' => $err('objetivos'), 'ayuda' => 'Escribe un objetivo por línea.']) ?>
+                    <?= campo_area('justificacion', 'Justificación', $d['justificacion'], ['placeholder' => 'Por qué es importante resolverlo', 'maxlength' => 5000, 'req_envio' => true, 'filas' => 2, 'error' => $err('justificacion')]) ?>
+                    <?= campo_area('alcance', 'Alcance', $d['alcance'], ['placeholder' => 'Qué incluye y qué no incluye el proyecto', 'maxlength' => 5000, 'req_envio' => true, 'filas' => 2, 'error' => $err('alcance')]) ?>
                 </div>
             </section>
 
             <section class="seccion-form" id="s3" aria-labelledby="s3-t">
                 <h2 id="s3-t"><span class="num">3</span>Requisitos</h2>
-                <?= campo_area('requisitos_academicos', 'Requisitos académicos', $d['requisitos_academicos'], ['opcional' => true, 'filas' => 2]) ?>
+                <?= campo_area('requisitos_academicos', 'Requisitos académicos', $d['requisitos_academicos'], ['placeholder' => 'Ej. Alumnos de 7.° semestre en adelante', 'maxlength' => 5000, 'opcional' => true, 'filas' => 2]) ?>
                 <h3 class="h5 mt-4 mb-0">Habilidades requeridas</h3>
                 <p class="form-text mt-1 mb-2">Las obligatorias se usan para mostrar la coincidencia a los alumnos.</p>
                 <?php if ($err('req')): ?><div class="invalid-feedback d-flex mb-2"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><?= e($err('req')) ?></div><?php endif; ?>
@@ -294,12 +294,12 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
             <section class="seccion-form" id="s4" aria-labelledby="s4-t">
                 <h2 id="s4-t"><span class="num">4</span>Planeación</h2>
                 <div class="row g-3">
-                    <?= campo('duracion_estimada', 'Duración estimada (semanas)', $d['duracion_estimada'], ['tipo' => 'number', 'min' => 1, 'max' => 260, 'req_envio' => true, 'error' => $err('duracion_estimada'), 'clase_contenedor' => 'col-md-6']) ?>
+                    <?= campo('duracion_estimada', 'Duración estimada (semanas)', $d['duracion_estimada'], ['placeholder' => 'Ej. 16', 'tipo' => 'number', 'min' => 1, 'max' => 260, 'req_envio' => true, 'error' => $err('duracion_estimada'), 'clase_contenedor' => 'col-md-6']) ?>
                     <?= campo_select('modalidad', 'Modalidad', $d['modalidad'], MODALIDADES, ['req_envio' => true, 'error' => $err('modalidad'), 'clase_contenedor' => 'col-md-6']) ?>
                     <?= campo('fecha_inicio', 'Fecha de inicio', $d['fecha_inicio'], ['tipo' => 'date', 'req_envio' => true, 'error' => $err('fecha_inicio'), 'clase_contenedor' => 'col-md-6']) ?>
                     <?= campo('fecha_fin', 'Fecha de fin', $d['fecha_fin'], ['tipo' => 'date', 'req_envio' => true, 'error' => $err('fecha_fin'), 'clase_contenedor' => 'col-md-6']) ?>
-                    <?= campo_area('recursos', 'Recursos necesarios', $d['recursos'], ['opcional' => true, 'filas' => 2, 'clase_contenedor' => 'col-12']) ?>
-                    <?= campo('cupo_alumnos', 'Cupo de alumnos', $d['cupo_alumnos'], ['tipo' => 'number', 'min' => 1, 'max' => 50, 'opcional' => true,
+                    <?= campo_area('recursos', 'Recursos necesarios', $d['recursos'], ['placeholder' => 'Equipo, software, licencias o espacios que se requieren', 'maxlength' => 5000, 'opcional' => true, 'filas' => 2, 'clase_contenedor' => 'col-12']) ?>
+                    <?= campo('cupo_alumnos', 'Cupo de alumnos', $d['cupo_alumnos'], ['placeholder' => 'Sin límite', 'tipo' => 'number', 'min' => 1, 'max' => 50, 'opcional' => true,
                         'ayuda' => 'Déjalo vacío para «Sin límite de cupo».', 'error' => $err('cupo_alumnos'), 'clase_contenedor' => 'col-md-6']) ?>
                 </div>
             </section>

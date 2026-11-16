@@ -115,7 +115,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 </div>
 <?php if (!$pendientes && !$sol): ?>
     <div class="card"><div class="card-body"><div class="vacio"><div class="vacio-icono"><i class="bi bi-person-check" aria-hidden="true"></i></div>
-        <h3>No hay solicitudes de dirección pendientes</h3><p>Cuando un profesor solicite dirigir un proyecto aparecerá aquí.</p></div></div></div>
+        <h2>No hay solicitudes de dirección pendientes</h2><p>Cuando un profesor solicite dirigir un proyecto aparecerá aquí.</p></div></div></div>
 <?php else: ?>
 <div class="row g-4">
     <div class="col-lg-5">
@@ -157,7 +157,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             <form method="post" action="<?= e(url('mod_admin/direccion.php?id=' . urlencode($sol['c_solicitud_direccion']))) ?>" class="p-3 d-grid gap-3" novalidate>
                 <?= csrf_campo() ?>
                 <?= alerta_errores(isset($errores['_general']) ? $errores : []) ?>
-                <?= campo_area('justificacion', 'Justificación', $justificacion, ['requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null, 'ayuda' => 'Obligatoria. La verá el profesor.']) ?>
+                <?= campo_area('justificacion', 'Justificación', $justificacion, ['placeholder' => 'Motivo de la decisión (mínimo 10 caracteres)', 'minlength' => 10, 'maxlength' => 3000, 'requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null, 'ayuda' => 'Obligatoria. La verá el profesor.']) ?>
                 <div class="d-flex flex-wrap gap-2">
                     <?php if ($motivo): ?>
                         <div class="accion-bloqueada"><button type="button" class="btn btn-aprobar" disabled aria-describedby="bd"><i class="bi bi-check-circle" aria-hidden="true"></i>Aprobar y asignar</button>

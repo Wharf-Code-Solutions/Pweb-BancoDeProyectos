@@ -135,7 +135,7 @@ function html_tarjeta_proyecto(array $p, string $chips, string $pie): string
 {
     $icono_mod = ['presencial' => 'bi-geo-alt', 'remota' => 'bi-wifi', 'hibrida' => 'bi-shuffle'][$p['modalidad']] ?? 'bi-geo-alt';
     $cupo = $p['cupo_alumnos'] ? 'Cupo: ' . (int) $p['alumnos_asignados'] . ' de ' . (int) $p['cupo_alumnos'] : 'Sin límite de cupo';
-    return '<article class="tarjeta-proyecto"><div class="cabeza"><div><h3>' . e($p['titulo']) . '</h3>'
+    return '<article class="tarjeta-proyecto"><div class="cabeza"><div><h2>' . e($p['titulo']) . '</h2>'
         . '<div class="empresa">' . e($p['razon_social']) . ' · ' . e($p['sector']) . '</div></div>' . insignia('proyecto', $p['estado']) . '</div>'
         . '<div class="datos"><span><i class="bi ' . $icono_mod . '" aria-hidden="true"></i>' . e(MODALIDADES[$p['modalidad']] ?? '') . '</span>'
         . '<span><i class="bi bi-hourglass-split" aria-hidden="true"></i>' . (int) $p['duracion_estimada'] . ' semanas</span>'

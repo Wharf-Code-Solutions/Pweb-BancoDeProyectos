@@ -100,7 +100,7 @@ $acciones = function (array $a) use ($accion_form): string {
     </form>
     <?php if (!$lista): ?>
         <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-diagram-3" aria-hidden="true"></i></div>
-            <h3>No hay asignaciones<?= array_filter($filtros) ? ' con esos filtros' : '' ?></h3><p>Se crean al aprobar candidaturas y solicitudes de dirección.</p></div>
+            <h2>No hay asignaciones<?= array_filter($filtros) ? ' con esos filtros' : '' ?></h2><p>Se crean al aprobar candidaturas y solicitudes de dirección.</p></div>
     <?php else: ?>
         <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
             <thead><tr><th scope="col">Tipo</th><th scope="col">Persona</th><th scope="col">Proyecto</th><th scope="col">Estado</th><th scope="col">Fecha de cierre</th><th scope="col" class="acciones">Acciones</th></tr></thead>

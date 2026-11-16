@@ -137,20 +137,20 @@ $suma_pesos = array_sum(array_map(fn ($cr) => (float) $cr['peso'], $criterios));
                                 <?php if ($cr['descripcion']): ?><p class="small text-mute mb-2"><?= e($cr['descripcion']) ?></p><?php endif; ?>
                                 <div class="row g-2">
                                     <div class="col-4">
-                                        <label class="form-label" for="c<?= $i ?>">Calificación<span class="req" aria-hidden="true">*</span></label>
+                                        <label class="form-label" for="c<?= $i ?>">Calificación<span class="visually-hidden"> de <?= e($cr['nombre_criterio']) ?></span><span class="req" aria-hidden="true">*</span></label>
                                         <input class="form-control calificacion<?= $err ? ' is-invalid' : '' ?>" id="c<?= $i ?>" name="punt[<?= $i ?>]" type="number" min="0" max="100" step="0.01"
-                                            data-peso="<?= e($cr['peso']) ?>" value="<?= e($valores[$cr['nombre_criterio']] ?? '') ?>" aria-describedby="c<?= $i ?>-a" required>
+                                            data-peso="<?= e($cr['peso']) ?>" value="<?= e($valores[$cr['nombre_criterio']] ?? '') ?>" placeholder="0 a 100" inputmode="decimal" aria-describedby="c<?= $i ?>-a<?= $err ? " c{$i}-e" : '' ?>"<?= $err ? ' aria-invalid="true"' : '' ?> required>
                                         <div class="form-text" id="c<?= $i ?>-a">De 0 a 100</div>
-                                        <?php if ($err): ?><div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><?= e($err) ?></div><?php endif; ?>
+                                        <?php if ($err): ?><div class="invalid-feedback" id="c<?= $i ?>-e"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><?= e($err) ?></div><?php endif; ?>
                                     </div>
                                     <div class="col-8">
-                                        <label class="form-label" for="m<?= $i ?>">Comentario <span class="fw-normal text-mute">(opcional)</span></label>
-                                        <input class="form-control" id="m<?= $i ?>" name="coment[<?= $i ?>]" type="text" maxlength="500" value="<?= e($comentarios[$cr['nombre_criterio']] ?? '') ?>">
+                                        <label class="form-label" for="m<?= $i ?>">Comentario<span class="visually-hidden"> de <?= e($cr['nombre_criterio']) ?></span> <span class="fw-normal text-mute">(opcional)</span></label>
+                                        <input class="form-control" id="m<?= $i ?>" name="coment[<?= $i ?>]" type="text" maxlength="500" placeholder="Ej. Buen manejo de bases de datos" value="<?= e($comentarios[$cr['nombre_criterio']] ?? '') ?>">
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                        <?= campo_area('comentarios', 'Comentarios generales', $general, ['opcional' => true, 'filas' => 3, 'error' => $errores['comentarios'] ?? null, 'clase_contenedor' => 'mt-2']) ?>
+                        <?= campo_area('comentarios', 'Comentarios generales', $general, ['placeholder' => 'Fortalezas, áreas de mejora y recomendación final', 'maxlength' => 2000, 'opcional' => true, 'filas' => 3, 'error' => $errores['comentarios'] ?? null, 'clase_contenedor' => 'mt-2']) ?>
                         <div class="resaltado mt-3"><div class="form-check">
                             <input class="form-check-input" type="checkbox" id="preseleccionado" name="preseleccionado" value="1"<?= $presel ? ' checked' : '' ?> aria-describedby="pre-a">
                             <label class="form-check-label" for="preseleccionado"><strong>Preseleccionar candidato</strong></label></div>

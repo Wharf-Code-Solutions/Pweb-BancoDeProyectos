@@ -41,13 +41,13 @@ $n = count($activos);
 <div class="bg-white border border-top-0 p-3 d-grid gap-3" style="border-radius:0 0 8px 8px">
     <?php if (!$lista): ?>
         <div class="vacio"><div class="vacio-icono"><i class="bi bi-briefcase" aria-hidden="true"></i></div>
-            <h3><?= $pestana === 'activos' ? 'No diriges proyectos activos' : 'Tu historial está vacío' ?></h3>
+            <h2><?= $pestana === 'activos' ? 'No diriges proyectos activos' : 'Tu historial está vacío' ?></h2>
             <p><?= $pestana === 'activos' ? 'Solicita la dirección de un proyecto publicado; la administración la autorizará.' : 'Aquí verás los proyectos que ya terminaste de dirigir.' ?></p></div>
     <?php endif; ?>
     <?php foreach ($lista as $d): $alumnos->execute([$d['c_proyecto']]); $als = $alumnos->fetchAll(); ?>
         <div class="card"><div class="card-body">
             <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
-                <div><h3 class="h4 mb-1"><a class="text-decoration-none" href="<?= e(url('mod_profesor/proyecto.php?id=' . urlencode($d['c_proyecto']))) ?>"><?= e($d['titulo']) ?></a></h3>
+                <div><h2 class="h4 mb-1"><a class="text-decoration-none" href="<?= e(url('mod_profesor/proyecto.php?id=' . urlencode($d['c_proyecto']))) ?>"><?= e($d['titulo']) ?></a></h2>
                     <span class="small text-mute"><?= e($d['razon_social']) ?> · <?= e(rango_fechas($d['fecha_inicio'], $d['fecha_fin'])) ?></span></div>
                 <div class="d-flex gap-2 align-items-start"><?= insignia('proyecto', $d['estado']) ?>
                     <?= $d['estado_asignacion'] !== 'activa' ? insignia('asignacion', $d['estado_asignacion']) : '' ?></div>

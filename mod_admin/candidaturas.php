@@ -55,7 +55,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     </form>
     <?php if (!$lista): ?>
         <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
-            <h3>No hay candidaturas por decidir</h3><p>Cuando una empresa evalúe a un candidato, la candidatura aparecerá aquí.</p></div>
+            <h2>No hay candidaturas por decidir</h2><p>Cuando una empresa evalúe a un candidato, la candidatura aparecerá aquí.</p></div>
     <?php else: $decidir = fn ($c) => '<a class="btn btn-secundario btn-sm" href="' . e(url('mod_admin/candidatura.php?id=' . urlencode($c['c_candidatura']))) . '">Decidir</a>'; ?>
         <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
             <thead><tr><th scope="col">Alumno</th><th scope="col">Proyecto</th><th scope="col">Estado</th><th scope="col">Preseleccionado</th><th scope="col">Puntuación</th><th scope="col">Evaluada</th><th scope="col" class="acciones">Acciones</th></tr></thead>

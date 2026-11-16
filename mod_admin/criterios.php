@@ -141,9 +141,9 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             </div>
             <div class="modal-body d-grid gap-3">
                 <?= alerta_errores(isset($errores['_general']) ? $errores : []) ?>
-                <?= campo('nombre', 'Nombre', $form['nombre'] ?: $form['original'], ['requerido' => true, 'maxlength' => 80, 'error' => $errores['nombre'] ?? null]) ?>
-                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null]) ?>
-                <?= campo('peso', 'Peso (%)', $form['peso'], ['requerido' => true, 'maxlength' => 6, 'error' => $errores['peso'] ?? null,
+                <?= campo('nombre', 'Nombre', $form['nombre'] ?: $form['original'], ['placeholder' => 'Ej. Dominio técnico', 'requerido' => true, 'maxlength' => 80, 'error' => $errores['nombre'] ?? null]) ?>
+                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['placeholder' => 'Qué se califica con este criterio', 'opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null]) ?>
+                <?= campo('peso', 'Peso (%)', $form['peso'], ['placeholder' => 'Ej. 25', 'inputmode' => 'decimal', 'requerido' => true, 'maxlength' => 6, 'error' => $errores['peso'] ?? null,
                     'ayuda' => 'Porcentaje del total. Todos los criterios deben sumar 100 %.']) ?>
             </div>
             <div class="modal-footer">

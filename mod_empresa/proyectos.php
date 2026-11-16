@@ -60,7 +60,7 @@ $acciones = function (array $p): string {
     <div class="card"><div class="card-body">
         <div class="vacio">
             <div class="vacio-icono"><i class="bi bi-folder2-open" aria-hidden="true"></i></div>
-            <h3>Aún no tienes proyectos</h3>
+            <h2>Aún no tienes proyectos</h2>
             <p>Registra la necesidad tecnológica de tu empresa como proyecto y envíala a revisión del Tec.</p>
             <a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>"><i class="bi bi-plus-lg" aria-hidden="true"></i>Registrar mi primer proyecto</a>
         </div>

@@ -81,7 +81,7 @@ $evaluable = in_array($p['estado'], ['publicado', 'en_curso'], true);
     </form>
     <?php if (!$lista): ?>
         <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
-            <h3><?= $filtros['estado'] || $filtros['presel'] ? 'No hay candidatos con esos filtros' : 'Aún no hay candidatos' ?></h3>
+            <h2><?= $filtros['estado'] || $filtros['presel'] ? 'No hay candidatos con esos filtros' : 'Aún no hay candidatos' ?></h2>
             <p>Cuando un alumno se postule a este proyecto aparecerá aquí.</p></div>
     <?php else:
         $boton = function (array $c) use ($evaluable): string {

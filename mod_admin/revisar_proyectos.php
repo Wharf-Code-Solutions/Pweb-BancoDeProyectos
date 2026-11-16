@@ -61,7 +61,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     <?php if (!$lista): ?>
         <div class="vacio p-4">
             <div class="vacio-icono"><i class="bi bi-clipboard-check" aria-hidden="true"></i></div>
-            <h3>No hay proyectos por revisar</h3>
+            <h2>No hay proyectos por revisar</h2>
             <p>Cuando una empresa envíe un proyecto aparecerá aquí.</p>
         </div>
     <?php else: ?>

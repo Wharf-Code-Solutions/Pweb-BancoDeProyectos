@@ -68,6 +68,7 @@ $nota_estado = match ($p['estado']) {
             <li class="nav-item"><a class="nav-link<?= $pestana === 'historial' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_empresa/proyecto.php?id=' . urlencode($id) . '&tab=historial')) ?>">Historial</a></li>
         </ul>
         <div class="bg-white border border-top-0 p-4" style="border-radius:0 0 8px 8px">
+            <h2 class="visually-hidden"><?= $pestana === 'info' ? 'Información del proyecto' : 'Historial del proyecto' ?></h2>
             <?= $pestana === 'info' ? html_contenido_proyecto($p, requisitos_proyecto($id)) : html_linea_tiempo($eventos) ?>
         </div>
     </div>

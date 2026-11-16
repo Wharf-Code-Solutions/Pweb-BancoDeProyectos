@@ -124,7 +124,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     <?php if (!$lista): ?>
         <div class="vacio p-4">
             <div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
-            <h3>No hay usuarios con esos filtros</h3>
+            <h2>No hay usuarios con esos filtros</h2>
         </div>
     <?php else: ?>
         <div class="table-responsive">

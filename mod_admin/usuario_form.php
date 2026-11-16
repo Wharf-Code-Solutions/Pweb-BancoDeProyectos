@@ -239,11 +239,11 @@ $err = fn (string $k) => $errores[$k] ?? null;
     <section class="seccion-form" id="com" aria-labelledby="com-t">
         <h2 id="com-t"><span class="num">2</span>Datos comunes</h2>
         <div class="row g-3">
-            <?= campo('nombre', 'Nombre completo', $d['nombre'], ['requerido' => true, 'maxlength' => 120, 'error' => $err('nombre'), 'clase_contenedor' => 'col-md-6']) ?>
-            <?= campo('correo', 'Correo electrónico', $d['correo'], ['tipo' => 'email', 'requerido' => true, 'error' => $err('correo'), 'clase_contenedor' => 'col-md-6']) ?>
-            <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('nombre', 'Nombre completo', $d['nombre'], ['placeholder' => 'Ej. María Fernanda López García', 'autocomplete' => 'off', 'requerido' => true, 'maxlength' => 120, 'error' => $err('nombre'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('correo', 'Correo electrónico', $d['correo'], ['placeholder' => 'nombre@dominio.com', 'autocomplete' => 'off', 'tipo' => 'email', 'requerido' => true, 'error' => $err('correo'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'autocomplete' => 'off', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
             <?= campo('contrasena', $editando ? 'Nueva contraseña' : 'Contraseña inicial', '', [
-                'tipo' => 'text', 'requerido' => !$editando, 'opcional' => $editando, 'autocomplete' => 'off', 'error' => $err('contrasena'), 'clase_contenedor' => 'col-md-6',
+                'tipo' => 'text', 'placeholder' => $editando ? 'Déjala vacía para no cambiarla' : 'Mínimo 8 caracteres', 'requerido' => !$editando, 'opcional' => $editando, 'autocomplete' => 'off', 'error' => $err('contrasena'), 'clase_contenedor' => 'col-md-6',
                 'ayuda' => $editando ? 'Déjala vacía para conservar la actual.' : 'Al menos 8 caracteres, con mayúscula, minúscula y número. El usuario podrá cambiarla en «Mi cuenta».']) ?>
         </div>
     </section>
@@ -251,18 +251,18 @@ $err = fn (string $k) => $errores[$k] ?? null;
     <section class="seccion-form seccion-rol" data-rol="alumno" aria-labelledby="alu-t">
         <h2 id="alu-t"><span class="num">3</span>Datos del alumno</h2>
         <div class="row g-3">
-            <?= campo('matricula', 'Matrícula', $d['matricula'], ['requerido' => true, 'maxlength' => 8, 'ayuda' => '8 dígitos.', 'error' => $err('matricula'), 'clase_contenedor' => 'col-md-4']) ?>
+            <?= campo('matricula', 'Matrícula', $d['matricula'], ['placeholder' => 'Ej. 21020345', 'pattern' => '[0-9]{8}', 'title' => '8 dígitos.', 'inputmode' => 'numeric', 'autocomplete' => 'off', 'requerido' => true, 'maxlength' => 8, 'ayuda' => '8 dígitos.', 'error' => $err('matricula'), 'clase_contenedor' => 'col-md-4']) ?>
             <?= campo_select('carrera', 'Carrera', $d['carrera'], CARRERAS, ['requerido' => true, 'error' => $err('carrera'), 'clase_contenedor' => 'col-md-5']) ?>
             <?= campo_select('semestre', 'Semestre', $d['semestre'], array_combine(range(1, 12), range(1, 12)), ['requerido' => true, 'error' => $err('semestre'), 'clase_contenedor' => 'col-md-3']) ?>
-            <?= campo_area('datos_academicos', 'Datos académicos', $d['datos_academicos'], ['opcional' => true, 'filas' => 2, 'clase_contenedor' => 'col-12']) ?>
+            <?= campo_area('datos_academicos', 'Datos académicos', $d['datos_academicos'], ['placeholder' => 'Promedio, especialidad, idiomas…', 'maxlength' => 3000, 'opcional' => true, 'filas' => 2, 'clase_contenedor' => 'col-12']) ?>
         </div>
     </section>
 
     <section class="seccion-form seccion-rol" data-rol="empresa" aria-labelledby="emp-t">
         <h2 id="emp-t"><span class="num">3</span>Datos de la empresa</h2>
         <div class="row g-3">
-            <?= campo('rfc', 'RFC', $d['rfc'], ['requerido' => true, 'maxlength' => 13, 'ayuda' => '12 caracteres (moral) o 13 (física).', 'error' => $err('rfc'), 'clase_contenedor' => 'col-md-4']) ?>
-            <?= campo('razon_social', 'Razón social', $d['razon_social'], ['requerido' => true, 'maxlength' => 200, 'error' => $err('razon_social'), 'clase_contenedor' => 'col-md-8']) ?>
+            <?= campo('rfc', 'RFC', $d['rfc'], ['placeholder' => 'Ej. ABC123456XY9', 'pattern' => '[A-Za-zÑñ&]{3,4}[0-9]{6}[A-Za-z0-9]{3}', 'title' => '3 o 4 letras, 6 dígitos de fecha y 3 caracteres de homoclave.', 'autocomplete' => 'off', 'requerido' => true, 'maxlength' => 13, 'ayuda' => '12 caracteres (moral) o 13 (física).', 'error' => $err('rfc'), 'clase_contenedor' => 'col-md-4']) ?>
+            <?= campo('razon_social', 'Razón social', $d['razon_social'], ['placeholder' => 'Ej. Soluciones Digitales del Golfo S.A. de C.V.', 'autocomplete' => 'organization', 'requerido' => true, 'maxlength' => 200, 'error' => $err('razon_social'), 'clase_contenedor' => 'col-md-8']) ?>
             <?= campo_select('sector', 'Sector', $d['sector'], SECTORES_EMPRESA, ['requerido' => true, 'error' => $err('sector'), 'clase_contenedor' => 'col-md-6']) ?>
         </div>
     </section>
@@ -270,15 +270,15 @@ $err = fn (string $k) => $errores[$k] ?? null;
     <section class="seccion-form seccion-rol" data-rol="profesor administrador" aria-labelledby="emp2-t">
         <h2 id="emp2-t"><span class="num">3</span>Datos del <span class="texto-rol"><?= $d['rol'] === 'administrador' ? 'administrador' : 'profesor' ?></span></h2>
         <div class="row g-3">
-            <?= campo('num_empleado', 'Número de empleado', $d['num_empleado'], ['requerido' => true, 'maxlength' => 10, 'error' => $err('num_empleado'), 'clase_contenedor' => 'col-md-4']) ?>
+            <?= campo('num_empleado', 'Número de empleado', $d['num_empleado'], ['placeholder' => 'Ej. EMP1024', 'autocomplete' => 'off', 'requerido' => true, 'maxlength' => 10, 'error' => $err('num_empleado'), 'clase_contenedor' => 'col-md-4']) ?>
             <div class="col-md-8 solo-rol" data-rol="profesor">
-                <?= campo('especialidad', 'Especialidad', $d['especialidad'], ['requerido' => true, 'maxlength' => 150, 'error' => $err('especialidad')]) ?>
+                <?= campo('especialidad', 'Especialidad', $d['especialidad'], ['placeholder' => 'Ej. Ingeniería de software', 'requerido' => true, 'maxlength' => 150, 'error' => $err('especialidad')]) ?>
             </div>
             <div class="col-md-8 solo-rol" data-rol="administrador">
-                <?= campo('cargo', 'Cargo', $d['cargo'], ['requerido' => true, 'maxlength' => 80, 'error' => $err('cargo')]) ?>
+                <?= campo('cargo', 'Cargo', $d['cargo'], ['placeholder' => 'Ej. Jefe de Vinculación', 'requerido' => true, 'maxlength' => 80, 'error' => $err('cargo')]) ?>
             </div>
             <div class="col-12 solo-rol" data-rol="profesor">
-                <?= campo_area('experiencia', 'Experiencia', $d['experiencia'], ['opcional' => true, 'filas' => 3]) ?>
+                <?= campo_area('experiencia', 'Experiencia', $d['experiencia'], ['placeholder' => 'Proyectos dirigidos, líneas de investigación, experiencia profesional…', 'maxlength' => 3000, 'opcional' => true, 'filas' => 3]) ?>
             </div>
         </div>
     </section>

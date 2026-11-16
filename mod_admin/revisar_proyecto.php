@@ -143,7 +143,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                     </div>
                     <?php if (isset($errores['decision'])): ?><div class="invalid-feedback d-flex mt-2"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><?= e($errores['decision']) ?></div><?php endif; ?>
                 </fieldset>
-                <?= campo_area('justificacion', 'Justificación', $justificacion, ['filas' => 5, 'error' => $errores['justificacion'] ?? null,
+                <?= campo_area('justificacion', 'Justificación', $justificacion, ['placeholder' => 'Explica a la empresa el motivo de tu resolución', 'maxlength' => 3000, 'filas' => 5, 'error' => $errores['justificacion'] ?? null,
                     'ayuda' => 'Obligatoria para devolver o rechazar. La empresa la verá destacada.']) ?>
                 <button type="submit" class="btn btn-principal w-100" id="boton-decision" disabled><i class="bi bi-check2" aria-hidden="true"></i>Elige una resolución</button>
                 <p class="small text-mute mb-0">Se pedirá confirmación antes de guardar. La decisión no se puede modificar.</p>

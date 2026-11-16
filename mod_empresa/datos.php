@@ -53,15 +53,15 @@ $err = fn (string $k) => $errores[$k] ?? null;
         <h2 id="emp-t">Empresa</h2>
         <div class="row g-3">
             <?= campo('rfc', 'RFC', $d['rfc_empresa'], ['solo_lectura' => true, 'ayuda' => 'No se puede cambiar.', 'clase_contenedor' => 'col-md-4']) ?>
-            <?= campo('razon_social', 'Razón social', $d['razon_social'], ['requerido' => true, 'maxlength' => 200, 'error' => $err('razon_social'), 'clase_contenedor' => 'col-md-8']) ?>
+            <?= campo('razon_social', 'Razón social', $d['razon_social'], ['placeholder' => 'Ej. Soluciones Digitales del Golfo S.A. de C.V.', 'autocomplete' => 'organization', 'requerido' => true, 'maxlength' => 200, 'error' => $err('razon_social'), 'clase_contenedor' => 'col-md-8']) ?>
             <?= campo_select('sector', 'Sector', $d['sector'], SECTORES_EMPRESA, ['requerido' => true, 'error' => $err('sector'), 'clase_contenedor' => 'col-md-6']) ?>
         </div>
     </section>
     <section class="seccion-form" aria-labelledby="con-t">
         <h2 id="con-t">Contacto responsable</h2>
         <div class="row g-3">
-            <?= campo('nombre', 'Nombre completo', $d['nombre'], ['requerido' => true, 'maxlength' => 120, 'error' => $err('nombre'), 'clase_contenedor' => 'col-md-6']) ?>
-            <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('nombre', 'Nombre completo', $d['nombre'], ['placeholder' => 'Ej. María Fernanda López García', 'autocomplete' => 'name', 'requerido' => true, 'maxlength' => 120, 'error' => $err('nombre'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'autocomplete' => 'tel', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
             <?= campo('correo', 'Correo electrónico', $d['correo'], ['solo_lectura' => true, 'ayuda' => 'Para cambiarlo, contacta a la administración.', 'clase_contenedor' => 'col-md-6']) ?>
         </div>
     </section>

@@ -59,7 +59,7 @@ $filtros = ['estado' => $estado];
     </form>
     <?php if (!$lista): ?>
         <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-send-check" aria-hidden="true"></i></div>
-            <h3>No tienes solicitudes de dirección<?= $estado ? ' con ese estado' : '' ?></h3>
+            <h2>No tienes solicitudes de dirección<?= $estado ? ' con ese estado' : '' ?></h2>
             <p><a href="<?= e(url('mod_profesor/proyectos.php')) ?>">Busca un proyecto</a> que quieras dirigir.</p></div>
     <?php else:
         $acciones = function (array $sd) use ($estado): string {

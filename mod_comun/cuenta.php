@@ -70,11 +70,11 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             <form method="post" class="d-grid gap-3" novalidate>
                 <?= csrf_campo() ?>
                 <input type="hidden" name="accion" value="datos">
-                <?= campo('nombre', 'Nombre completo', $d['nombre'], ['requerido' => true, 'maxlength' => 120, 'autocomplete' => 'name', 'error' => $errores['nombre'] ?? null]) ?>
+                <?= campo('nombre', 'Nombre completo', $d['nombre'], ['placeholder' => 'Ej. María Fernanda López García', 'requerido' => true, 'maxlength' => 120, 'autocomplete' => 'name', 'error' => $errores['nombre'] ?? null]) ?>
                 <?= campo('correo', 'Correo electrónico', $cuenta['correo'], ['id' => 'co', 'solo_lectura' => true,
                     'ayuda' => 'El correo no se puede cambiar. Si es incorrecto, contacta a la administración.']) ?>
                 <div class="row g-3">
-                    <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'autocomplete' => 'tel',
+                    <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'autocomplete' => 'tel',
                         'ayuda' => '10 dígitos.', 'error' => $errores['telefono'] ?? null, 'clase_contenedor' => 'col-md-6']) ?>
                     <?= campo('rol', 'Rol', nombre_rol($usuario['rol']), ['solo_lectura' => true, 'clase_contenedor' => 'col-md-6']) ?>
                 </div>
@@ -88,10 +88,10 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             <form method="post" class="d-grid gap-3" novalidate>
                 <?= csrf_campo() ?>
                 <input type="hidden" name="accion" value="contrasena">
-                <?= campo('actual', 'Contraseña actual', '', ['tipo' => 'password', 'requerido' => true, 'autocomplete' => 'current-password', 'error' => $errores_pw['actual'] ?? null]) ?>
-                <?= campo('nueva', 'Nueva contraseña', '', ['tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
+                <?= campo('actual', 'Contraseña actual', '', ['placeholder' => 'Tu contraseña actual', 'tipo' => 'password', 'requerido' => true, 'autocomplete' => 'current-password', 'error' => $errores_pw['actual'] ?? null]) ?>
+                <?= campo('nueva', 'Nueva contraseña', '', ['placeholder' => 'Mínimo 8 caracteres', 'minlength' => 8, 'tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
                     'ayuda' => 'Al menos 8 caracteres, con mayúscula, minúscula y número.', 'error' => $errores_pw['nueva'] ?? null]) ?>
-                <?= campo('confirmacion', 'Confirmar nueva contraseña', '', ['tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password']) ?>
+                <?= campo('confirmacion', 'Confirmar nueva contraseña', '', ['placeholder' => 'Repite la nueva contraseña', 'tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password']) ?>
                 <div class="barra-acciones-form pt-0"><button type="submit" class="btn btn-secundario">Cambiar contraseña</button></div>
             </form>
         </section>

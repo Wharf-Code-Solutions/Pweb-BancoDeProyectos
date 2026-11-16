@@ -108,8 +108,8 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
                     <form method="post" class="d-grid gap-3" novalidate>
                         <?= csrf_campo() ?>
                         <?= alerta_errores(isset($errores['_general']) ? $errores : []) ?>
-                        <?= campo_area('experiencia', 'Experiencia relacionada con este proyecto', $d['experiencia'], ['requerido' => true, 'filas' => 4, 'error' => $errores['experiencia'] ?? null]) ?>
-                        <?= campo_area('justificacion', 'Justificación', $d['justificacion'], ['requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null]) ?>
+                        <?= campo_area('experiencia', 'Experiencia relacionada con este proyecto', $d['experiencia'], ['placeholder' => 'Proyectos o temas similares que hayas trabajado (mínimo 20 caracteres)', 'minlength' => 20, 'maxlength' => 3000, 'requerido' => true, 'filas' => 4, 'error' => $errores['experiencia'] ?? null]) ?>
+                        <?= campo_area('justificacion', 'Justificación', $d['justificacion'], ['placeholder' => 'Por qué quieres dirigir este proyecto (mínimo 20 caracteres)', 'minlength' => 20, 'maxlength' => 3000, 'requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null]) ?>
                         <div class="barra-acciones-form pt-0">
                             <a class="btn btn-terciario" href="<?= e(url('mod_profesor/proyectos.php')) ?>">Cancelar</a>
                             <button type="submit" class="btn btn-principal"><i class="bi bi-send-check" aria-hidden="true"></i>Solicitar dirección</button>

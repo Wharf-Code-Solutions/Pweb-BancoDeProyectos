@@ -141,9 +141,9 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                     <?php if (isset($errores['habilidad'])): ?><div class="invalid-feedback"><i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><?= e($errores['habilidad']) ?></div><?php endif; ?>
                 </div>
                 <?= campo_select('nivel', 'Nivel', $form['nivel'], NIVELES, ['requerido' => true, 'error' => $errores['nivel'] ?? null]) ?>
-                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null,
+                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['placeholder' => 'Ej. Desarrollé una API REST para la tienda escolar', 'opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null,
                     'ayuda' => 'Qué has hecho con esta habilidad.']) ?>
-                <?= campo('evidencia', 'Evidencia', $form['evidencia'], ['tipo' => 'url', 'opcional' => true, 'maxlength' => 500, 'error' => $errores['evidencia'] ?? null,
+                <?= campo('evidencia', 'Evidencia', $form['evidencia'], ['placeholder' => 'https://github.com/usuario/proyecto', 'tipo' => 'url', 'opcional' => true, 'maxlength' => 500, 'error' => $errores['evidencia'] ?? null,
                     'ayuda' => 'Enlace a un repositorio, constancia o portafolio.']) ?>
             </div>
             <div class="modal-footer">

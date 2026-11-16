@@ -41,7 +41,7 @@ $restan = MAX_CANDIDATURAS - $vigentes;
 <?php if (!$tarjetas): ?>
     <div class="card"><div class="card-body"><div class="vacio">
         <div class="vacio-icono"><i class="bi bi-search" aria-hidden="true"></i></div>
-        <h3>No hay proyectos que coincidan</h3>
+        <h2>No hay proyectos que coincidan</h2>
         <p><?= array_filter($filtros) || $solo_cumplo ? 'Prueba con otros filtros.' : 'Por ahora no hay proyectos publicados. Vuelve pronto.' ?></p>
     </div></div></div>
 <?php else: ?>

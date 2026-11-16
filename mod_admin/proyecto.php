@@ -95,6 +95,7 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
         </ul>
         <div class="bg-white border border-top-0 p-3 p-md-4" style="border-radius:0 0 8px 8px">
             <?php if ($pestana === 'info'): ?>
+                <h2 class="visually-hidden">Información del proyecto</h2>
                 <?= html_contenido_proyecto($p, requisitos_proyecto($id)) ?>
 
             <?php elseif ($pestana === 'participantes'): ?>

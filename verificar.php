@@ -40,6 +40,9 @@ try {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Verificación del entorno de desarrollo del Banco de Proyectos Académicos.">
+    <meta name="author" content="Carlos Daniel Rodríguez Cano, Evaristo Romero Tirado">
+    <meta name="robots" content="noindex, nofollow">
     <title>Banco de Proyectos · Verificación del entorno</title>
     <style>
         body { font-family: system-ui, sans-serif; background: #f5f4ef; color: #1f1e1d; max-width: 640px; margin: 40px auto; padding: 0 16px; }

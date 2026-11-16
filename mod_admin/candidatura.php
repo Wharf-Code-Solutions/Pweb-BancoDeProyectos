@@ -114,7 +114,7 @@ $sugerida = $ev ? ($ev['preseleccionado'] ? 'La empresa lo preseleccionó con ' 
             <form method="post" class="p-3 d-grid gap-3" novalidate>
                 <?= csrf_campo() ?>
                 <?= alerta_errores(isset($errores['_general']) ? $errores : []) ?>
-                <?= campo_area('justificacion', 'Justificación', $justificacion ?: $sugerida, ['requerido' => true, 'filas' => 4, 'error' => $errores['justificacion'] ?? null,
+                <?= campo_area('justificacion', 'Justificación', $justificacion ?: $sugerida, ['placeholder' => 'Motivo de la decisión (mínimo 10 caracteres)', 'minlength' => 10, 'maxlength' => 3000, 'requerido' => true, 'filas' => 4, 'error' => $errores['justificacion'] ?? null,
                     'ayuda' => 'Obligatoria. Quedará en el historial y la verá el alumno.']) ?>
                 <div class="d-grid gap-2">
                     <?php if ($cupo_lleno || !$proyecto_abierto): ?>

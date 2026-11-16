@@ -4,6 +4,8 @@ require_once __DIR__ . '/inc/inicio.php';
 
 $usuario = usuario_actual();
 $titulo = 'Inicio';
+$indexar = true;
+$descripcion = 'Banco de Proyectos Académicos del TecNM · ITVer: las empresas registran sus necesidades tecnológicas, los alumnos se postulan y los profesores dirigen los proyectos.';
 require __DIR__ . '/menumain/publico_encabezado.php';
 
 $icono_rol = 'width:48px;height:48px;font-size:1.4rem;border-radius:50%;display:grid;place-items:center;background:var(--primario-claro-bg);color:var(--navy)';

@@ -148,9 +148,9 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             </div>
             <div class="modal-body d-grid gap-3">
                 <?= alerta_errores(isset($errores['_general']) ? $errores : []) ?>
-                <?= campo('nombre', 'Nombre', $form['nombre'] ?: $form['original'], ['requerido' => true, 'maxlength' => 80, 'error' => $errores['nombre'] ?? null]) ?>
+                <?= campo('nombre', 'Nombre', $form['nombre'] ?: $form['original'], ['placeholder' => 'Ej. JavaScript o Trabajo en equipo', 'requerido' => true, 'maxlength' => 80, 'error' => $errores['nombre'] ?? null]) ?>
                 <?= campo_select('tipo', 'Tipo', $form['tipo'], ['dura' => 'Técnica (dura)', 'blanda' => 'Socioemocional (blanda)'], ['requerido' => true, 'error' => $errores['tipo'] ?? null]) ?>
-                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null]) ?>
+                <?= campo('descripcion', 'Descripción', $form['descripcion'], ['placeholder' => 'Breve descripción de la habilidad', 'opcional' => true, 'maxlength' => 255, 'error' => $errores['descripcion'] ?? null]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-terciario" data-bs-dismiss="modal">Cancelar</button>

@@ -76,6 +76,8 @@ if (es_post()) {
 }
 
 $titulo = 'Registrar mi empresa';
+$indexar = true;
+$descripcion = 'Registra tu empresa en el Banco de Proyectos Académicos del TecNM · ITVer para proponer proyectos a alumnos y profesores.';
 require __DIR__ . '/menumain/publico_encabezado.php';
 ?>
 <section class="seccion-publica alterna" style="padding:3rem 0 4rem">
@@ -89,22 +91,22 @@ require __DIR__ . '/menumain/publico_encabezado.php';
                 <?= csrf_campo() ?>
                 <fieldset class="d-grid gap-3">
                     <legend class="h3 mb-0">Empresa</legend>
-                    <?= campo('rfc', 'RFC', $d['rfc'], ['requerido' => true, 'maxlength' => 13, 'error' => $errores['rfc'] ?? null,
+                    <?= campo('rfc', 'RFC', $d['rfc'], ['placeholder' => 'Ej. ABC123456XY9', 'pattern' => '[A-Za-zÑñ&]{3,4}[0-9]{6}[A-Za-z0-9]{3}', 'title' => '3 o 4 letras, 6 dígitos de fecha y 3 caracteres de homoclave.', 'autocomplete' => 'off', 'requerido' => true, 'maxlength' => 13, 'error' => $errores['rfc'] ?? null,
                         'ayuda' => 'Persona moral 12 caracteres, persona física 13. Se guarda en mayúsculas.']) ?>
-                    <?= campo('razon_social', 'Razón social', $d['razon_social'], ['requerido' => true, 'maxlength' => 200, 'error' => $errores['razon_social'] ?? null]) ?>
+                    <?= campo('razon_social', 'Razón social', $d['razon_social'], ['placeholder' => 'Ej. Soluciones Digitales del Golfo S.A. de C.V.', 'autocomplete' => 'organization', 'requerido' => true, 'maxlength' => 200, 'error' => $errores['razon_social'] ?? null]) ?>
                     <?= campo_select('sector', 'Sector', $d['sector'], SECTORES_EMPRESA, ['requerido' => true, 'error' => $errores['sector'] ?? null]) ?>
                 </fieldset>
                 <fieldset class="d-grid gap-3">
                     <legend class="h3 mb-0">Contacto responsable</legend>
-                    <?= campo('nombre', 'Nombre completo', $d['nombre'], ['requerido' => true, 'maxlength' => 120, 'autocomplete' => 'name', 'error' => $errores['nombre'] ?? null]) ?>
+                    <?= campo('nombre', 'Nombre completo', $d['nombre'], ['placeholder' => 'Ej. María Fernanda López García', 'requerido' => true, 'maxlength' => 120, 'autocomplete' => 'name', 'error' => $errores['nombre'] ?? null]) ?>
                     <div class="row g-3">
-                        <?= campo('correo', 'Correo electrónico', $d['correo'], ['tipo' => 'email', 'requerido' => true, 'autocomplete' => 'email',
+                        <?= campo('correo', 'Correo electrónico', $d['correo'], ['placeholder' => 'contacto@empresa.com', 'tipo' => 'email', 'requerido' => true, 'autocomplete' => 'email',
                             'ayuda' => 'Con este correo iniciará sesión.', 'error' => $errores['correo'] ?? null, 'clase_contenedor' => 'col-md-6']) ?>
-                        <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'autocomplete' => 'tel',
+                        <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'autocomplete' => 'tel',
                             'ayuda' => '10 dígitos.', 'error' => $errores['telefono'] ?? null, 'clase_contenedor' => 'col-md-6']) ?>
-                        <?= campo('contrasena', 'Contraseña', '', ['tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
+                        <?= campo('contrasena', 'Contraseña', '', ['placeholder' => 'Mínimo 8 caracteres', 'minlength' => 8, 'tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
                             'error' => $errores['contrasena'] ?? null, 'clase_contenedor' => 'col-md-6']) ?>
-                        <?= campo('confirmacion', 'Confirmar contraseña', '', ['tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
+                        <?= campo('confirmacion', 'Confirmar contraseña', '', ['placeholder' => 'Repite la contraseña', 'tipo' => 'password', 'requerido' => true, 'autocomplete' => 'new-password',
                             'clase_contenedor' => 'col-md-6']) ?>
                     </div>
                     <div class="leyenda-req">

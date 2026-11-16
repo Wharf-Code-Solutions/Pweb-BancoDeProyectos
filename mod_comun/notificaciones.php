@@ -75,7 +75,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     <div class="card"><div class="card-body">
         <div class="vacio">
             <div class="vacio-icono"><i class="bi bi-bell-slash" aria-hidden="true"></i></div>
-            <h3><?= $solo_no_leidas ? 'No tienes notificaciones sin leer' : 'Aún no tienes notificaciones' ?></h3>
+            <h2><?= $solo_no_leidas ? 'No tienes notificaciones sin leer' : 'Aún no tienes notificaciones' ?></h2>
             <p>Aquí verás los avisos sobre tus proyectos, solicitudes y asignaciones.</p>
         </div>
     </div></div>

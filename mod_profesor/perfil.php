@@ -56,10 +56,10 @@ $err = fn (string $k) => $errores[$k] ?? null;
     <section class="seccion-form" aria-labelledby="doc-t">
         <h2 id="doc-t">Perfil docente</h2>
         <div class="row g-3">
-            <?= campo('especialidad', 'Especialidad', $d['especialidad'], ['requerido' => true, 'maxlength' => 150, 'error' => $err('especialidad'), 'clase_contenedor' => 'col-12']) ?>
-            <?= campo_area('experiencia', 'Experiencia', $d['experiencia'], ['opcional' => true, 'filas' => 4, 'error' => $err('experiencia'), 'clase_contenedor' => 'col-12',
+            <?= campo('especialidad', 'Especialidad', $d['especialidad'], ['placeholder' => 'Ej. Ingeniería de software', 'requerido' => true, 'maxlength' => 150, 'error' => $err('especialidad'), 'clase_contenedor' => 'col-12']) ?>
+            <?= campo_area('experiencia', 'Experiencia', $d['experiencia'], ['placeholder' => 'Proyectos dirigidos, líneas de investigación, experiencia profesional…', 'opcional' => true, 'filas' => 4, 'error' => $err('experiencia'), 'clase_contenedor' => 'col-12',
                 'ayuda' => 'Se muestra al administrador cuando solicitas dirigir un proyecto.']) ?>
-            <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'autocomplete' => 'tel', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
         </div>
     </section>
     <div class="barra-acciones-form">

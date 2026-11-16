@@ -93,14 +93,14 @@ $linea = function (array $c): string {
     <?php if (!$lista): ?>
         <div class="vacio">
             <div class="vacio-icono"><i class="bi bi-send" aria-hidden="true"></i></div>
-            <h3><?= $pestana === 'vigentes' ? 'No tienes solicitudes vigentes' : 'Tu historial está vacío' ?></h3>
+            <h2><?= $pestana === 'vigentes' ? 'No tienes solicitudes vigentes' : 'Tu historial está vacío' ?></h2>
             <p><?= $pestana === 'vigentes' ? 'Busca un proyecto que te interese y postúlate. Puedes tener hasta 3 a la vez.' : 'Aquí verás las solicitudes rechazadas, canceladas o cerradas.' ?></p>
         </div>
     <?php endif; ?>
     <?php foreach ($lista as $c): $cancelable = in_array($c['estado'], ['pendiente', 'en_revision'], true); ?>
         <div class="card"><div class="card-body">
             <div class="d-flex flex-wrap justify-content-between gap-2 align-items-start mb-2">
-                <div><h3 class="h4 mb-1"><?= e($c['titulo']) ?></h3>
+                <div><h2 class="h4 mb-1"><?= e($c['titulo']) ?></h2>
                     <span class="small text-mute"><?= e($c['razon_social']) ?> · enviada el <?= e(fecha_corta($c['fecha'])) ?></span> <span class="folio"><?= e($c['c_candidatura']) ?></span></div>
                 <div class="d-flex flex-wrap gap-2 align-items-center">
                     <?php if ($c['preseleccionado']): ?><span class="etiqueta-dato"><i class="bi bi-star" aria-hidden="true"></i>Preseleccionado por la empresa</span><?php endif; ?>
@@ -131,7 +131,7 @@ $linea = function (array $c): string {
             </div>
             <div class="modal-body">
                 <p>Cancelarás tu solicitud a <strong class="titulo-cancelar"></strong>. Liberarás un lugar de tus 3 candidaturas.</p>
-                <?= campo_area('motivo', 'Motivo', '', ['opcional' => true, 'filas' => 3, 'maxlength' => 400]) ?>
+                <?= campo_area('motivo', 'Motivo', '', ['placeholder' => 'Ej. Me asignaron a otro proyecto', 'opcional' => true, 'filas' => 3, 'maxlength' => 400]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-terciario" data-bs-dismiss="modal">Volver</button>

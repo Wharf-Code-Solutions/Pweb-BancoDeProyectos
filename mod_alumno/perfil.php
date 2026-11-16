@@ -64,9 +64,9 @@ $err = fn (string $k) => $errores[$k] ?? null;
         <div class="row g-3">
             <?= campo_select('carrera', 'Carrera', $d['carrera'], $carreras, ['requerido' => true, 'error' => $err('carrera'), 'clase_contenedor' => 'col-md-8']) ?>
             <?= campo_select('semestre', 'Semestre', $d['semestre'], array_combine(range(1, 12), range(1, 12)), ['requerido' => true, 'error' => $err('semestre'), 'clase_contenedor' => 'col-md-4']) ?>
-            <?= campo_area('datos_academicos', 'Datos académicos', $d['datos_academicos'], ['opcional' => true, 'filas' => 3, 'error' => $err('datos_academicos'), 'clase_contenedor' => 'col-12',
+            <?= campo_area('datos_academicos', 'Datos académicos', $d['datos_academicos'], ['placeholder' => 'Ej. Promedio 9.1, inglés B2, especialidad en desarrollo web', 'opcional' => true, 'filas' => 3, 'error' => $err('datos_academicos'), 'clase_contenedor' => 'col-12',
                 'ayuda' => 'Promedio, especialidad, idiomas u otros datos que ayuden a las empresas a conocerte.']) ?>
-            <?= campo('telefono', 'Teléfono', $d['telefono'], ['tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
+            <?= campo('telefono', 'Teléfono', $d['telefono'], ['placeholder' => 'Ej. 2291234567', 'pattern' => '[0-9]{10,15}', 'title' => 'Solo dígitos, de 10 a 15.', 'inputmode' => 'tel', 'autocomplete' => 'tel', 'tipo' => 'tel', 'opcional' => true, 'maxlength' => 15, 'ayuda' => '10 dígitos.', 'error' => $err('telefono'), 'clase_contenedor' => 'col-md-6']) ?>
         </div>
     </section>
     <div class="barra-acciones-form">

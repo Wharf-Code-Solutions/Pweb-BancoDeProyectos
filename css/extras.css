@@ -32,3 +32,7 @@
 @media (max-width: 991.98px) {
   .hero-publico .row { --bs-gutter-x: 1.5rem; }
 }
+
+/* Encabezados h2 que antes eran h3 (orden de encabezados para accesibilidad): mismo aspecto. */
+.vacio h2 { font-size: 1.125rem; margin-bottom: .35rem; }
+.tarjeta-proyecto h2 { font-size: 1.0625rem; margin: 0; }

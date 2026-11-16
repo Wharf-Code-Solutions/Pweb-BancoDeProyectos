@@ -32,7 +32,7 @@ $restan = MAX_DIRECCIONES - $activos;
 <?php if (!$lista): ?>
     <div class="card"><div class="card-body"><div class="vacio">
         <div class="vacio-icono"><i class="bi bi-search" aria-hidden="true"></i></div>
-        <h3>No hay proyectos que coincidan</h3>
+        <h2>No hay proyectos que coincidan</h2>
         <p><?= $sin_director ? 'Todos los proyectos publicados ya tienen director, o prueba con otros filtros.' : 'Prueba con otros filtros.' ?></p>
     </div></div></div>
 <?php else: ?>
