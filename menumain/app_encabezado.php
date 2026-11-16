@@ -30,7 +30,7 @@ $rol_txt = nombre_rol($usuario['rol']);
             <i class="bi bi-list" aria-hidden="true"></i>
         </button>
         <a href="<?= e(url(ruta_panel($usuario))) ?>" class="marca">
-            <span class="logo-ph blanco mini">TecNM</span><span class="sep" aria-hidden="true"></span>
+            <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="28" height="28">
             <span class="nombre-largo">Banco de Proyectos Académicos</span>
             <span class="nombre-corto">Banco de Proyectos</span>
         </a>
@@ -47,12 +47,13 @@ $rol_txt = nombre_rol($usuario['rol']);
                 <i class="bi bi-chevron-down" aria-hidden="true"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="<?= e(url('mod_comun/cuenta.php')) ?>"><i class="bi bi-person-circle me-2" aria-hidden="true"></i>Mi cuenta</a></li>
+                <li><span class="dropdown-header"><?= e($usuario['subtitulo'] ?: $rol_txt) ?></span></li>
+                <li><a class="dropdown-item" href="<?= e(url('mod_comun/cuenta.php')) ?>">Mi cuenta</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <form method="post" action="<?= e(url('logout.php')) ?>">
                         <?= csrf_campo() ?>
-                        <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Cerrar sesión</button>
+                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
                     </form>
                 </li>
             </ul>
@@ -61,13 +62,12 @@ $rol_txt = nombre_rol($usuario['rol']);
 
     <div class="offcanvas offcanvas-start offcanvas-nav" tabindex="-1" id="menu-movil" aria-label="Menú">
         <div class="offcanvas-header">
-            <span class="fw-bold">Menú</span>
+            <span class="rol-actual m-0 p-0 border-0"><?= e($rol_txt) ?><strong><?= e($usuario['nombre']) ?></strong></span>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar menú"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="rol-actual"><span><?= e($rol_txt) ?></span><strong><?= e($usuario['nombre']) ?></strong></div>
             <ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul>
-            <ul class="nav-rol" style="border-top:1px solid rgba(255,255,255,.12);margin-top:1rem;padding-top:.5rem">
+            <ul class="nav-rol secundario">
                 <li><a href="<?= e(url('mod_comun/cuenta.php')) ?>"><i class="bi bi-person-circle" aria-hidden="true"></i><span>Mi cuenta</span></a></li>
                 <li>
                     <form method="post" action="<?= e(url('logout.php')) ?>">
@@ -81,7 +81,6 @@ $rol_txt = nombre_rol($usuario['rol']);
 
     <div class="cuerpo-app">
         <nav class="barra-lateral" aria-label="Navegación principal">
-            <div class="rol-actual"><span><?= e($rol_txt) ?></span><strong><?= e($usuario['subtitulo'] ?: $usuario['nombre']) ?></strong></div>
             <ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul>
         </nav>
         <div class="contenido">

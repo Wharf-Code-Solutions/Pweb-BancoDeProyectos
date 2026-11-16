@@ -79,19 +79,18 @@ $migas = [['Panel', 'mod_alumno/index.php'], ['Mis habilidades', null]];
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Alumno</span><h1 class="titulo-izquierda">Mis habilidades</h1></div>
-    <div class="acciones"><button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-habilidad"><i class="bi bi-plus-lg" aria-hidden="true"></i>Agregar habilidad</button></div>
+    <div><h1 class="titulo-izquierda">Mis habilidades</h1></div>
+    <div class="acciones"><button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-habilidad">Agregar habilidad</button></div>
 </div>
 
 <?php foreach ($grupos as $tipo => $nombre_grupo): $lista = array_values(array_filter($mias, fn ($h) => $h['tipo'] === $tipo)); ?>
     <h2 class="h3 mb-3"><?= e($nombre_grupo) ?> <span class="small text-mute fw-normal">· <?= count($lista) ?></span></h2>
     <?php if (!$lista): ?>
         <div class="vacio mb-5">
-            <div class="vacio-icono"><i class="bi <?= $tipo === 'dura' ? 'bi-code-slash' : 'bi-people' ?>" aria-hidden="true"></i></div>
             <h3>Aún no registras habilidades <?= $tipo === 'dura' ? 'técnicas' : 'socioemocionales' ?></h3>
             <p><?= $tipo === 'dura' ? 'Agrega los lenguajes y herramientas que dominas; las empresas las comparan con lo que piden sus proyectos.'
                 : 'Agrega habilidades como trabajo en equipo o comunicación; muchas empresas las piden como deseables.' ?></p>
-            <button type="button" class="btn btn-secundario" data-bs-toggle="modal" data-bs-target="#modal-habilidad" data-tipo="<?= $tipo ?>"><i class="bi bi-plus-lg" aria-hidden="true"></i>Agregar habilidad <?= $tipo === 'dura' ? 'técnica' : 'socioemocional' ?></button>
+            <button type="button" class="btn btn-secundario" data-bs-toggle="modal" data-bs-target="#modal-habilidad" data-tipo="<?= $tipo ?>">Agregar habilidad <?= $tipo === 'dura' ? 'técnica' : 'socioemocional' ?></button>
         </div>
     <?php else: ?>
         <div class="row g-3 mb-5">
@@ -101,14 +100,14 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                         <span class="estado estado-<?= $clase_nivel[$h['nivel']] ?>"><?= e(NIVELES[$h['nivel']]) ?></span></div>
                     <?php if ($h['descripcion']): ?><p class="small text-mute mb-0"><?= e($h['descripcion']) ?></p><?php endif; ?>
                     <?php if ($h['evidencia']): ?>
-                        <a href="<?= e($h['evidencia']) ?>" class="small text-break" target="_blank" rel="noopener noreferrer"><i class="bi bi-link-45deg" aria-hidden="true"></i> <?= e(preg_replace('#^https?://(www\.)?#i', '', $h['evidencia'])) ?></a>
+                        <a href="<?= e($h['evidencia']) ?>" class="small text-break" target="_blank" rel="noopener noreferrer"><?= e(preg_replace('#^https?://(www\.)?#i', '', $h['evidencia'])) ?></a>
                     <?php else: ?><span class="small text-mute">Sin evidencia</span><?php endif; ?>
                     <div class="d-flex gap-2 mt-auto pt-2">
                         <button type="button" class="btn btn-secundario btn-sm" data-bs-toggle="modal" data-bs-target="#modal-habilidad"
                             data-original="<?= e($h['nombre_habilidad']) ?>" data-nivel="<?= e($h['nivel']) ?>" data-descripcion="<?= e($h['descripcion'] ?? '') ?>" data-evidencia="<?= e($h['evidencia'] ?? '') ?>">
-                            <i class="bi bi-pencil" aria-hidden="true"></i>Editar</button>
+                            Editar</button>
                         <form method="post" class="d-inline"><?= csrf_campo() ?><input type="hidden" name="accion" value="quitar"><input type="hidden" name="original" value="<?= e($h['nombre_habilidad']) ?>">
-                            <button type="submit" class="btn btn-rechazar-contorno btn-sm" data-confirmar="¿Quitar «<?= e($h['nombre_habilidad']) ?>» de tu perfil?"><i class="bi bi-trash" aria-hidden="true"></i>Quitar</button></form>
+                            <button type="submit" class="btn btn-rechazar-contorno btn-sm" data-confirmar="¿Quitar «<?= e($h['nombre_habilidad']) ?>» de tu perfil?">Quitar</button></form>
                     </div>
                 </div></div></div>
             <?php endforeach; ?>

@@ -34,19 +34,19 @@ $partes = explode(' ', $usuario['nombre']);
 $saludo = preg_match('/^(Mtr[oa]|Dr[a]?|Ing|Lic)\.?$/i', $partes[0] ?? '') && isset($partes[1]) ? $partes[0] . ' ' . $partes[1] : $partes[0];
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Profesor</span><h1 class="titulo-izquierda">Hola, <?= e($saludo) ?></h1></div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_profesor/proyectos.php')) ?>"><i class="bi bi-search" aria-hidden="true"></i>Ver proyectos disponibles</a></div>
+    <div><h1 class="titulo-izquierda">Hola, <?= e($saludo) ?></h1></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_profesor/proyectos.php')) ?>">Ver proyectos disponibles</a></div>
 </div>
 
 <div class="row g-3 mb-4">
     <div class="col-md-4"><div class="indicador"><span class="rotulo">Proyectos que dirige</span><span class="valor"><?= $activos ?> <small>de <?= MAX_DIRECCIONES ?></small></span>
         <div class="progress" role="progressbar" aria-label="Proyectos que dirige" aria-valuenow="<?= $activos ?>" aria-valuemin="0" aria-valuemax="<?= MAX_DIRECCIONES ?>">
             <div class="progress-bar" style="width:<?= round($activos / MAX_DIRECCIONES * 100) ?>%"></div></div>
-        <a class="ver" href="<?= e(url('mod_profesor/dirijo.php')) ?>">Ver proyectos que dirijo <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_profesor/dirijo.php')) ?>">Ver proyectos que dirijo </a></div></div>
     <div class="col-md-4"><div class="indicador"><span class="rotulo">Solicitudes de dirección pendientes</span><span class="valor"><?= $pendientes ?></span>
-        <a class="ver" href="<?= e(url('mod_profesor/solicitudes.php?estado=pendiente')) ?>">Ver solicitudes <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_profesor/solicitudes.php?estado=pendiente')) ?>">Ver solicitudes </a></div></div>
     <div class="col-md-4"><div class="indicador"><span class="rotulo">Alumnos a su cargo</span><span class="valor"><?= $alumnos ?></span>
-        <a class="ver" href="<?= e(url('mod_profesor/dirijo.php')) ?>">Ver <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_profesor/dirijo.php')) ?>">Ver </a></div></div>
 </div>
 
 <div class="row g-4">
@@ -55,8 +55,7 @@ $saludo = preg_match('/^(Mtr[oa]|Dr[a]?|Ing|Lic)\.?$/i', $partes[0] ?? '') && is
             <a href="<?= e(url('mod_profesor/dirijo.php')) ?>" class="small fw-semibold">Ver todos</a></div>
         <div class="card-body">
             <?php if (!$dirijo): ?>
-                <div class="vacio"><div class="vacio-icono"><i class="bi bi-briefcase" aria-hidden="true"></i></div>
-                    <h3>Aún no diriges proyectos</h3><p>Solicita la dirección de un proyecto publicado; la administración la autorizará.</p></div>
+                <div class="vacio"><h3>Aún no diriges proyectos</h3><p>Solicita la dirección de un proyecto publicado; la administración la autorizará.</p></div>
             <?php else: ?>
                 <div class="list-group list-group-flush"><?php foreach ($dirijo as $d): ?>
                     <div class="list-group-item px-0 d-flex flex-wrap justify-content-between gap-2 align-items-center">

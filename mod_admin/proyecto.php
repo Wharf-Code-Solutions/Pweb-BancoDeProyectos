@@ -63,7 +63,6 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Proyecto</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('proyecto', $p['estado']) ?><?= html_folio($id) ?>
@@ -72,7 +71,7 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
     </div>
     <div class="acciones">
         <?php if ($p['estado'] === 'en_revision'): ?>
-            <a class="btn btn-principal" href="<?= e(url('mod_admin/revisar_proyecto.php?id=' . urlencode($id))) ?>"><i class="bi bi-clipboard-check" aria-hidden="true"></i>Revisar</a>
+            <a class="btn btn-principal" href="<?= e(url('mod_admin/revisar_proyecto.php?id=' . urlencode($id))) ?>">Revisar</a>
         <?php endif; ?>
         <?php if (in_array($p['estado'], ['publicado', 'en_curso'], true)): ?>
             <?= $boton('cancelar', 'Cancelar proyecto', 'bi-x-circle', 'btn-rechazar-contorno', '¿Cancelar «' . $p['titulo'] . '»? Se cancelarán sus asignaciones y solicitudes abiertas. No se puede deshacer.') ?>
@@ -87,13 +86,13 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
 
 <div class="row g-4">
     <div class="col-lg-9">
-        <ul class="nav nav-tabs mb-0">
+        <ul class="nav nav-tabs">
             <?php foreach ($pestanas as $t => $nombre): ?>
                 <li class="nav-item"><a class="nav-link<?= $pestana === $t ? ' active" aria-current="page' : '' ?>" href="<?= $enlace_tab($t) ?>"><?= e($nombre) ?>
                     <?php if (!empty($contador[$t])): ?><span class="badge rounded-pill text-bg-primary"><?= $contador[$t] ?></span><?php endif; ?></a></li>
             <?php endforeach; ?>
         </ul>
-        <div class="bg-white border border-top-0 p-3 p-md-4" style="border-radius:0 0 8px 8px">
+        <div class="panel-pestana">
             <?php if ($pestana === 'info'): ?>
                 <h2 class="visually-hidden">Información del proyecto</h2>
                 <?= html_contenido_proyecto($p, requisitos_proyecto($id)) ?>
@@ -102,7 +101,7 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
                 <?php if (!$participantes): ?>
                     <p class="text-mute mb-0">Aún no hay director ni alumnos asignados.</p>
                 <?php else: ?>
-                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos mb-0">
                         <thead><tr><th scope="col">Persona</th><th scope="col">Tipo</th><th scope="col">Desde</th><th scope="col">Estado</th></tr></thead>
                         <tbody><?php foreach ($participantes as $x): ?>
                             <tr><td><strong><?= e($x['nombre']) ?></strong><br><span class="folio"><?= e($x['clave']) ?></span></td>
@@ -118,13 +117,13 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
                 <?php if (!$candidaturas): ?>
                     <p class="text-mute mb-0">Ningún alumno se ha postulado todavía.</p>
                 <?php else: ?>
-                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos mb-0">
                         <thead><tr><th scope="col">Alumno</th><th scope="col">Fecha</th><th scope="col">Evaluación</th><th scope="col">Estado</th></tr></thead>
                         <tbody><?php foreach ($candidaturas as $c): ?>
                             <tr><td><strong><?= e($c['nombre']) ?></strong><br><span class="folio"><?= e($c['matricula']) ?></span></td>
                                 <td><?= e(fecha_corta($c['fecha'])) ?></td>
                                 <td><?= $c['puntuacion_total'] !== null ? e(rtrim(rtrim($c['puntuacion_total'], '0'), '.')) . ' / 100' : '—' ?>
-                                    <?= $c['preseleccionado'] ? '<span class="etiqueta-dato ms-1"><i class="bi bi-star" aria-hidden="true"></i>Preseleccionado</span>' : '' ?></td>
+                                    <?= $c['preseleccionado'] ? '<span class="etiqueta-dato ms-1">Preseleccionado</span>' : '' ?></td>
                                 <td><?= insignia('candidatura', $c['estado']) ?></td></tr>
                         <?php endforeach; ?></tbody></table></div></div>
                 <?php endif; ?>
@@ -133,7 +132,7 @@ $contador = ['participantes' => $activos, 'candidaturas' => $en_proceso, 'direcc
                 <?php if (!$solicitudes): ?>
                     <p class="text-mute mb-0">Ningún profesor ha solicitado dirigir este proyecto.</p>
                 <?php else: ?>
-                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+                    <div class="tabla-marco"><div class="table-responsive"><table class="table tabla-datos mb-0">
                         <thead><tr><th scope="col">Profesor</th><th scope="col">Fecha</th><th scope="col">Estado</th></tr></thead>
                         <tbody><?php foreach ($solicitudes as $sd): ?>
                             <tr><td><strong><?= e($sd['nombre']) ?></strong><br><span class="folio"><?= e($sd['num_empleado']) ?></span></td>

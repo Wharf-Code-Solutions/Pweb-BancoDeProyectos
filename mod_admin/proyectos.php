@@ -71,7 +71,7 @@ $acciones = function (array $p) use ($volver): string {
 };
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Proyectos</h1></div>
+    <div><h1 class="titulo-izquierda">Proyectos</h1></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
     <form class="filtros" role="search" method="get">
@@ -92,13 +92,13 @@ $acciones = function (array $p) use ($volver): string {
             </select></div>
         <div class="pb-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="listos" name="listos" value="1"<?= $filtros['listos'] ? ' checked' : '' ?>>
             <label class="form-check-label" for="listos">Listos para iniciar</label></div></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
         <p class="p-3 mb-0 text-mute">No hay proyectos con esos filtros.</p>
     <?php else: ?>
     <div class="table-responsive">
-        <table class="table tabla-datos table-striped mb-0">
+        <table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Proyecto</th><th scope="col">Empresa</th><th scope="col">Estado</th><th scope="col">Cupo</th>
                 <th scope="col">Director</th><th scope="col">Candidaturas en proceso</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody>

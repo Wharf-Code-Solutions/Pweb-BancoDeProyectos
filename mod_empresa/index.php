@@ -37,18 +37,17 @@ $clase_hito = fn (string $m) => match (icono_notificacion($m)) {
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Empresa</span>
         <h1 class="titulo-izquierda">Hola, <?= e(explode(' ', $usuario['nombre'])[0]) ?></h1>
         <p class="text-mute mb-0 mt-1"><?= e($usuario['subtitulo']) ?></p>
     </div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>"><i class="bi bi-plus-lg" aria-hidden="true"></i>Nuevo proyecto</a></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>">Nuevo proyecto</a></div>
 </div>
 
 <div class="row g-3 mb-4">
     <?php foreach ($tarjetas as $estado => $rotulo): $n = $conteo[$estado] ?? 0; ?>
         <div class="col-6 col-lg"><div class="indicador<?= $estado === 'devuelto' && $n ? ' pendiente' : '' ?>">
             <span class="rotulo"><?= e($rotulo) ?></span><span class="valor"><?= $n ?></span>
-            <a class="ver" href="<?= e(url('mod_empresa/proyectos.php?estado=' . $estado)) ?>">Ver <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            <a class="ver" href="<?= e(url('mod_empresa/proyectos.php?estado=' . $estado)) ?>">Ver </a>
         </div></div>
     <?php endforeach; ?>
 </div>
@@ -63,7 +62,6 @@ $clase_hito = fn (string $m) => match (icono_notificacion($m)) {
             <div class="card-body">
                 <?php if (!$pendientes): ?>
                     <div class="vacio">
-                        <div class="vacio-icono"><i class="bi bi-check2-circle" aria-hidden="true"></i></div>
                         <h3>Todo al día</h3>
                         <p><?= array_sum($conteo) ? 'No tienes proyectos devueltos ni candidatos por evaluar.' : 'Registra tu primer proyecto para empezar.' ?></p>
                     </div>
@@ -74,7 +72,7 @@ $clase_hito = fn (string $m) => match (icono_notificacion($m)) {
                                 <div class="d-flex flex-wrap justify-content-between gap-2 align-items-start">
                                     <div><strong><?= e($d['titulo']) ?></strong> <span class="folio"><?= e($d['c_proyecto']) ?></span>
                                         <div class="mt-1"><?= insignia('proyecto', 'devuelto') ?></div></div>
-                                    <a class="btn btn-secundario btn-sm" href="<?= e(url('mod_empresa/proyecto_form.php?id=' . urlencode($d['c_proyecto']))) ?>"><i class="bi bi-pencil" aria-hidden="true"></i>Corregir y reenviar</a>
+                                    <a class="btn btn-secundario btn-sm" href="<?= e(url('mod_empresa/proyecto_form.php?id=' . urlencode($d['c_proyecto']))) ?>">Corregir y reenviar</a>
                                 </div>
                                 <?php if ($dev): ?>
                                     <div class="justificacion advertencia"><span class="quien">Correcciones solicitadas · <?= e(fecha_corta($dev['fecha'])) ?></span><?= nl2br(e($dev['justificacion'])) ?></div>
@@ -84,7 +82,7 @@ $clase_hito = fn (string $m) => match (icono_notificacion($m)) {
                         <?php foreach ($por_evaluar as $c): ?>
                             <div class="list-group-item px-0 d-flex flex-wrap justify-content-between gap-2 align-items-center">
                                 <div><strong><?= (int) $c['sin_evaluar'] ?> candidato<?= $c['sin_evaluar'] > 1 ? 's' : '' ?> sin evaluar</strong><div class="small text-mute"><?= e($c['titulo']) ?></div></div>
-                                <a class="btn btn-secundario btn-sm" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($c['c_proyecto']))) ?>"><i class="bi bi-clipboard-check" aria-hidden="true"></i>Evaluar candidatos</a>
+                                <a class="btn btn-secundario btn-sm" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($c['c_proyecto']))) ?>">Evaluar candidatos</a>
                             </div>
                         <?php endforeach; ?>
                     </div>

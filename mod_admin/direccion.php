@@ -111,21 +111,20 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Revisión', null], ['Solicitudes d
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Solicitudes de dirección</h1></div>
+    <div><h1 class="titulo-izquierda">Solicitudes de dirección</h1></div>
 </div>
 <?php if (!$pendientes && !$sol): ?>
-    <div class="card"><div class="card-body"><div class="vacio"><div class="vacio-icono"><i class="bi bi-person-check" aria-hidden="true"></i></div>
-        <h2>No hay solicitudes de dirección pendientes</h2><p>Cuando un profesor solicite dirigir un proyecto aparecerá aquí.</p></div></div></div>
+    <div class="card"><div class="card-body"><div class="vacio"><h2>No hay solicitudes de dirección pendientes</h2><p>Cuando un profesor solicite dirigir un proyecto aparecerá aquí.</p></div></div></div>
 <?php else: ?>
 <div class="row g-4">
     <div class="col-lg-5">
         <?php if (!$pendientes): ?>
             <p class="text-mute">No quedan solicitudes pendientes.</p>
         <?php else: ?>
-            <div class="list-group shadow-sm">
+            <div class="list-group">
                 <?php foreach ($pendientes as $x): $sel = $sol && $x['c_solicitud_direccion'] === $sol['c_solicitud_direccion']; ?>
                     <a href="<?= e(url('mod_admin/direccion.php?id=' . urlencode($x['c_solicitud_direccion']))) ?>" class="list-group-item d-grid gap-1"
-                        <?= $sel ? 'aria-current="true" style="background:var(--primario-claro-bg);border-left:4px solid var(--navy)"' : '' ?>>
+                        <?= $sel ? 'aria-current="true"' : '' ?>>
                         <strong><?= e($x['nombre']) ?></strong><span class="small"><?= e($x['titulo']) ?></span>
                         <span class="d-flex justify-content-between small text-mute"><span><?= e(fecha_corta($x['fecha'])) ?></span><span>Carga: <?= (int) $x['activos'] ?> de <?= MAX_DIRECCIONES ?></span></span>
                     </a>
@@ -137,7 +136,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     <div class="col-lg-7 d-grid gap-3 align-self-start">
         <div class="card"><div class="card-header"><h2 class="h3 mb-0">Profesor</h2></div>
             <div class="card-body">
-                <div class="d-flex gap-3 align-items-center mb-3"><span class="avatar" style="width:52px;height:52px"><?= e(iniciales($sol['nombre'])) ?></span>
+                <div class="d-flex gap-3 align-items-center mb-3"><span class="avatar grande"><?= e(iniciales($sol['nombre'])) ?></span>
                     <div><strong class="d-block fs-5 text-navy"><?= e($sol['nombre']) ?></strong><span class="folio"><?= e($sol['num_empleado']) ?></span>
                         <span class="small text-mute">· <?= e($sol['especialidad']) ?></span></div></div>
                 <?php if ($sol['experiencia_general']): ?><p class="small mb-3"><strong>Experiencia general:</strong> <?= nl2br(e($sol['experiencia_general'])) ?></p><?php endif; ?>
@@ -160,12 +159,12 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                 <?= campo_area('justificacion', 'Justificación', $justificacion, ['placeholder' => 'Motivo de la decisión (mínimo 10 caracteres)', 'minlength' => 10, 'maxlength' => 3000, 'requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null, 'ayuda' => 'Obligatoria. La verá el profesor.']) ?>
                 <div class="d-flex flex-wrap gap-2">
                     <?php if ($motivo): ?>
-                        <div class="accion-bloqueada"><button type="button" class="btn btn-aprobar" disabled aria-describedby="bd"><i class="bi bi-check-circle" aria-hidden="true"></i>Aprobar y asignar</button>
+                        <div class="accion-bloqueada"><button type="button" class="btn btn-aprobar" disabled aria-describedby="bd">Aprobar y asignar</button>
                             <span class="motivo" id="bd"><i class="bi bi-info-circle" aria-hidden="true"></i><?= e($motivo) ?></span></div>
                     <?php else: ?>
-                        <button type="submit" name="decision" value="aprobar" class="btn btn-aprobar" data-confirmar="¿Aprobar a <?= e($sol['nombre']) ?> como director de «<?= e($sol['titulo']) ?>»?"><i class="bi bi-check-circle" aria-hidden="true"></i>Aprobar y asignar</button>
+                        <button type="submit" name="decision" value="aprobar" class="btn btn-aprobar" data-confirmar="¿Aprobar a <?= e($sol['nombre']) ?> como director de «<?= e($sol['titulo']) ?>»?">Aprobar y asignar</button>
                     <?php endif; ?>
-                    <button type="submit" name="decision" value="rechazar" class="btn btn-rechazar" data-confirmar="¿Rechazar la solicitud de <?= e($sol['nombre']) ?>?"><i class="bi bi-x-circle" aria-hidden="true"></i>Rechazar</button>
+                    <button type="submit" name="decision" value="rechazar" class="btn btn-rechazar" data-confirmar="¿Rechazar la solicitud de <?= e($sol['nombre']) ?>?">Rechazar</button>
                 </div>
             </form>
         </div>

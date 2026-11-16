@@ -67,7 +67,6 @@ require __DIR__ . '/menumain/publico_encabezado.php';
 <section class="seccion-publica alterna" style="padding:3rem 0 4rem">
     <div class="contenedor">
         <div class="caja-formulario">
-            <span class="etiqueta">Acceso</span>
             <h1 class="titulo-izquierda h2 mb-4">Iniciar sesión</h1>
             <?= mostrar_avisos() ?>
             <?php if ($error): ?>
@@ -83,11 +82,11 @@ require __DIR__ . '/menumain/publico_encabezado.php';
                     <label class="form-label" for="contrasena">Contraseña</label>
                     <input class="form-control" id="contrasena" name="contrasena" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
                 </div>
-                <button type="submit" class="btn btn-principal w-100"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>Iniciar sesión</button>
+                <button type="submit" class="btn btn-principal w-100">Iniciar sesión</button>
             </form>
             <hr class="my-4">
             <p class="mb-2 text-center">¿Su empresa aún no tiene cuenta? <a href="<?= e(url('registro_empresa.php')) ?>" class="fw-bold">Registrar mi empresa</a></p>
-            <p class="small text-mute text-center mb-0"><i class="bi bi-info-circle" aria-hidden="true"></i> Alumnos y profesores: tu cuenta la crea la administración del Tec.</p>
+            <p class="small text-mute text-center mb-0">Alumnos y profesores: tu cuenta la crea la administración del Tec.</p>
         </div>
     </div>
 </section>

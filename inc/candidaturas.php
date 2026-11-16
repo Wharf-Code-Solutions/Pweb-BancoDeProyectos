@@ -60,7 +60,7 @@ function puntos(float|string|null $n): string
 function html_perfil_candidato(array $c): string
 {
     $html = '<div class="card"><div class="card-header"><h2 class="h3 mb-0">Perfil del alumno</h2></div><div class="card-body">'
-        . '<div class="d-flex gap-3 align-items-center mb-3"><span class="avatar" style="width:52px;height:52px;font-size:1.1rem">' . e(iniciales($c['nombre'])) . '</span>'
+        . '<div class="d-flex gap-3 align-items-center mb-3"><span class="avatar grande">' . e(iniciales($c['nombre'])) . '</span>'
         . '<div><strong class="d-block fs-5 text-navy">' . e($c['nombre']) . '</strong><span class="folio">' . e($c['matricula']) . '</span> '
         . '<span class="small text-mute">· ' . e($c['carrera']) . ' · ' . (int) $c['semestre'] . '.° semestre</span></div></div>';
     $html .= $c['datos_academicos']

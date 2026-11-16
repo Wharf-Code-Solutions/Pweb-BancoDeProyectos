@@ -1,38 +1,33 @@
 /* ==========================================================================
-   Ajustes propios del proyecto PHP que no están en app.css (la hoja de las
-   pantallas). app.css se mantiene igual a las maquetas; lo nuevo va aquí.
+   Ajustes propios del proyecto PHP que no están en app.css.
    ========================================================================== */
 
 /* "Cerrar sesión" es un formulario POST: el botón se ve como los enlaces del menú. */
 .nav-rol form { margin: 0; }
 .nav-rol .enlace-menu {
   width: 100%; border: 0; background: transparent; text-align: left; font-family: inherit;
-  display: flex; align-items: center; gap: .75rem; min-height: 44px; padding: .55rem 1.5rem;
-  color: #dbe4f3; font-weight: 500; font-size: .9375rem;
+  display: flex; align-items: center; gap: .65rem; min-height: 40px; padding: .45rem .75rem;
+  color: var(--ink); font-weight: 500; font-size: var(--t5); border-radius: var(--r);
 }
-.nav-rol .enlace-menu .bi { font-size: 1.1rem; width: 20px; text-align: center; color: #9fb3d3; }
-.nav-rol .enlace-menu:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+.nav-rol .enlace-menu .bi { font-size: 1rem; width: 18px; text-align: center; color: var(--mute); }
+.nav-rol .enlace-menu:hover { background: #eaedf2; }
 .barra-superior a.btn-icono { text-decoration: none; }
 
 [hidden] { display: none !important; }
 
-/* D2 · Tarjetas para elegir el rol del usuario */
+/* D2 · Opciones para elegir el rol del usuario */
 .tarjeta-rol { cursor: pointer; }
-.selector-rol:checked + .tarjeta-rol { border: 2px solid var(--navy); background: var(--primario-claro-bg); }
+.selector-rol:checked + .tarjeta-rol { border-color: var(--navy); background: var(--navy-50); box-shadow: inset 0 0 0 1px var(--navy); }
 .selector-rol:focus-visible + .tarjeta-rol { outline: 3px solid var(--focus); outline-offset: 2px; }
 .selector-rol:disabled + .tarjeta-rol { cursor: default; }
 
-/* Preselección de la empresa (D9, D10, E4) */
-.estado-preseleccion { color: #854d0e; background: #fef9c3; }
+/* Preselección de la empresa (D9, D10, E4): "requiere atención", sin punto */
 .estado-preseleccion::before { display: none; }
 
 /* Celular: la columna de contenido no debe crecer con las tablas anchas
    (el desplazamiento horizontal queda dentro de .table-responsive). */
 .cuerpo-app .contenido, .cuerpo-app main { min-width: 0; }
-@media (max-width: 991.98px) {
-  .hero-publico .row { --bs-gutter-x: 1.5rem; }
-}
 
 /* Encabezados h2 que antes eran h3 (orden de encabezados para accesibilidad): mismo aspecto. */
-.vacio h2 { font-size: 1.125rem; margin-bottom: .35rem; }
-.tarjeta-proyecto h2 { font-size: 1.0625rem; margin: 0; }
+.vacio h2 { font-size: var(--t4); margin-bottom: .25rem; }
+.tarjeta-proyecto h2 { font-size: var(--t4); margin: 0; }

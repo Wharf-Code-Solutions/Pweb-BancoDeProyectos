@@ -75,7 +75,6 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Proyecto</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('proyecto', $p['estado']) ?><span class="folio"><?= e($id) ?></span>
@@ -112,7 +111,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
                         <?= campo_area('justificacion', 'Justificación', $d['justificacion'], ['placeholder' => 'Por qué quieres dirigir este proyecto (mínimo 20 caracteres)', 'minlength' => 20, 'maxlength' => 3000, 'requerido' => true, 'filas' => 3, 'error' => $errores['justificacion'] ?? null]) ?>
                         <div class="barra-acciones-form pt-0">
                             <a class="btn btn-terciario" href="<?= e(url('mod_profesor/proyectos.php')) ?>">Cancelar</a>
-                            <button type="submit" class="btn btn-principal"><i class="bi bi-send-check" aria-hidden="true"></i>Solicitar dirección</button>
+                            <button type="submit" class="btn btn-principal">Solicitar dirección</button>
                         </div>
                     </form>
                 <?php endif; ?>

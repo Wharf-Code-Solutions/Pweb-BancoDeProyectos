@@ -83,7 +83,7 @@ $acciones = function (array $a) use ($accion_form): string {
 };
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Asignaciones</h1></div>
+    <div><h1 class="titulo-izquierda">Asignaciones</h1></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
     <form class="filtros" role="search" method="get">
@@ -96,13 +96,12 @@ $acciones = function (array $a) use ($accion_form): string {
         <div><label class="form-label small mb-1" for="proyecto">Proyecto</label>
             <select class="form-select" id="proyecto" name="proyecto"><option value="">Todos</option>
                 <?php foreach ($proyectos as $k => $t): ?><option value="<?= e($k) ?>"<?= $filtros['proyecto'] === $k ? ' selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?></select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
-        <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-diagram-3" aria-hidden="true"></i></div>
-            <h2>No hay asignaciones<?= array_filter($filtros) ? ' con esos filtros' : '' ?></h2><p>Se crean al aprobar candidaturas y solicitudes de dirección.</p></div>
+        <div class="vacio"><h2>No hay asignaciones<?= array_filter($filtros) ? ' con esos filtros' : '' ?></h2><p>Se crean al aprobar candidaturas y solicitudes de dirección.</p></div>
     <?php else: ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Tipo</th><th scope="col">Persona</th><th scope="col">Proyecto</th><th scope="col">Estado</th><th scope="col">Fecha de cierre</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody><?php foreach ($lista as $a): ?>
                 <tr><td><span class="etiqueta-dato"><?= $a['tipo'] === 'director' ? 'Director' : 'Alumno' ?></span></td>

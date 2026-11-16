@@ -129,14 +129,14 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $sin_tab = array_diff_key($filtros, ['tab' => 1]);
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Consulta</span><h1 class="titulo-izquierda">Reportes</h1></div>
+    <div><h1 class="titulo-izquierda">Reportes</h1></div>
     <div class="acciones">
-        <a class="btn btn-secundario" href="<?= e(url_lista('mod_admin/reportes.php', $filtros + ['csv' => '1'])) ?>"><i class="bi bi-filetype-csv" aria-hidden="true"></i>Exportar CSV</a>
-        <button type="button" class="btn btn-principal" onclick="window.print()"><i class="bi bi-printer" aria-hidden="true"></i>Imprimir</button>
+        <a class="btn btn-secundario" href="<?= e(url_lista('mod_admin/reportes.php', $filtros + ['csv' => '1'])) ?>">Exportar CSV</a>
+        <button type="button" class="btn btn-secundario" onclick="window.print()">Imprimir</button>
     </div>
 </div>
-<form class="card mb-3 filtros" role="search" method="get">
-    <div class="card-body d-flex flex-wrap gap-3 align-items-end">
+<form class="filtros barra-filtros" role="search" method="get">
+    <div class="d-flex flex-wrap gap-3 align-items-end">
         <input type="hidden" name="tab" value="<?= e($pestana) ?>">
         <div><label class="form-label small mb-1" for="estado">Estado del proyecto</label>
             <select class="form-select" id="estado" name="estado"><option value="">Todos</option>
@@ -147,32 +147,35 @@ $sin_tab = array_diff_key($filtros, ['tab' => 1]);
         <div><label class="form-label small mb-1" for="periodo">Periodo (inicio del proyecto)</label>
             <select class="form-select" id="periodo" name="periodo"><option value="">Todos</option>
                 <?php foreach ($periodos as $k => [$t]): ?><option value="<?= $k ?>"<?= $filtros['periodo'] === $k ? ' selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?></select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Aplicar</button>
+        <button type="submit" class="btn btn-secundario">Aplicar</button>
         <?php if (array_filter($sin_tab)): ?><a class="btn btn-terciario" href="<?= e(url('mod_admin/reportes.php?tab=' . $pestana)) ?>">Limpiar</a><?php endif; ?>
     </div>
 </form>
 <?php if ($pestana === 'profesores' && array_filter($sin_tab)): ?>
     <p class="small text-mute">El reporte de profesores muestra la carga actual y no usa los filtros de proyecto.</p>
 <?php endif; ?>
-<ul class="nav nav-tabs mb-0">
+<ul class="nav nav-tabs mb-4">
     <?php foreach ($pestanas as $t => $nombre): ?>
         <li class="nav-item"><a class="nav-link<?= $pestana === $t ? ' active" aria-current="page' : '' ?>" href="<?= e(url_lista('mod_admin/reportes.php', ['tab' => $t] + $sin_tab)) ?>"><?= e($nombre) ?></a></li>
     <?php endforeach; ?>
 </ul>
-<div class="bg-white border border-top-0 p-3" style="border-radius:0 0 8px 8px">
-    <div class="row g-3 mb-4">
+<div>
+    <dl class="cifras-resumen">
         <?php foreach ($indicadores as $rotulo => $valor): ?>
-            <div class="col-6 col-lg-3"><div class="indicador"><span class="rotulo"><?= e($rotulo) ?></span><span class="valor"><?= (int) $valor ?></span></div></div>
+            <div><dt><?= e($rotulo) ?></dt><dd><?= (int) $valor ?></dd></div>
         <?php endforeach; ?>
-    </div>
+    </dl>
     <div class="tabla-marco">
         <?php if (!$filas): ?>
             <p class="p-3 mb-0 text-mute">No hay datos para estos filtros.</p>
         <?php else: ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos tabla-reporte mb-0">
             <thead><tr><?php foreach ($encabezados as $h): ?><th scope="col"><?= e($h) ?></th><?php endforeach; ?></tr></thead>
             <tbody><?php foreach ($filas as $f): ?>
-                <tr><?php foreach ($f as $v): ?><td><?= is_array($v) ? insignia($v[1], $v[2]) : e((string) $v) ?></td><?php endforeach; ?></tr>
+                <tr><?php foreach ($f as $i => $v):
+                    $txt = is_array($v) ? '' : (string) $v;
+                    $clase = is_array($v) || $i === 0 ? 'nw' : (preg_match('/^(\d+( de \d+)?|—)$/u', $txt) ? 'num' : (mb_strlen($txt) > 16 ? 'texto' : 'nw')); ?>
+                    <td class="<?= $clase ?>"><?= is_array($v) ? insignia($v[1], $v[2]) : e($txt) ?></td><?php endforeach; ?></tr>
             <?php endforeach; ?></tbody></table></div>
         <?php endif; ?>
         <div class="pie-tabla"><span><?= $filtros['periodo'] ? 'Periodo: ' . e($periodos[$filtros['periodo']][0]) . ' · ' : '' ?><?= count($filas) ?> registro<?= count($filas) === 1 ? '' : 's' ?> · generado el <?= e(fecha_hora(date('Y-m-d H:i:s'))) ?></span></div>

@@ -44,7 +44,7 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Revisión', null], ['Proyectos por
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Proyectos por revisar</h1></div>
+    <div><h1 class="titulo-izquierda">Proyectos por revisar</h1></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
     <form class="filtros" role="search" method="get">
@@ -56,17 +56,16 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                 <option value="reenviados"<?= $filtros['tipo'] === 'reenviados' ? ' selected' : '' ?>>Reenviados</option>
                 <option value="primera"<?= $filtros['tipo'] === 'primera' ? ' selected' : '' ?>>Primera revisión</option>
             </select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
-        <div class="vacio p-4">
-            <div class="vacio-icono"><i class="bi bi-clipboard-check" aria-hidden="true"></i></div>
+        <div class="vacio">
             <h2>No hay proyectos por revisar</h2>
             <p>Cuando una empresa envíe un proyecto aparecerá aquí.</p>
         </div>
     <?php else: ?>
     <div class="table-responsive">
-        <table class="table tabla-datos table-striped mb-0">
+        <table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Proyecto</th><th scope="col">Empresa</th><th scope="col">Enviado</th><th scope="col">Tipo</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody>
             <?php foreach ($lista as $p): ?>

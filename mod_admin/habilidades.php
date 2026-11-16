@@ -83,10 +83,10 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Catálogos', null], ['Habilidades'
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Catálogos</span><h1 class="titulo-izquierda">Catálogo de habilidades</h1></div>
+    <div><h1 class="titulo-izquierda">Catálogo de habilidades</h1></div>
     <div class="acciones">
         <button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-habilidad" data-nuevo>
-            <i class="bi bi-plus-lg" aria-hidden="true"></i>Agregar habilidad</button>
+            Agregar habilidad</button>
     </div>
 </div>
 
@@ -97,7 +97,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             <p class="p-3 mb-0 text-mute">Aún no hay habilidades de este tipo.</p>
         <?php else: ?>
         <div class="table-responsive">
-            <table class="table tabla-datos table-striped mb-0">
+            <table class="table tabla-datos mb-0">
                 <thead><tr>
                     <th scope="col">Habilidad</th><th scope="col">Descripción</th>
                     <th scope="col">Alumnos que la tienen</th><th scope="col">Proyectos que la piden</th>
@@ -113,12 +113,12 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                         <td class="acciones text-nowrap">
                             <button type="button" class="btn btn-secundario btn-sm" data-bs-toggle="modal" data-bs-target="#modal-habilidad"
                                 data-original="<?= e($h['nombre_habilidad']) ?>" data-tipo="<?= e($h['tipo']) ?>" data-descripcion="<?= e($h['descripcion'] ?? '') ?>">
-                                <i class="bi bi-pencil" aria-hidden="true"></i>Editar</button>
+                                Editar</button>
                             <?php if (!$en_uso): ?>
                                 <form method="post" class="d-inline"><?= csrf_campo() ?>
                                     <input type="hidden" name="accion" value="eliminar"><input type="hidden" name="original" value="<?= e($h['nombre_habilidad']) ?>">
                                     <button type="submit" class="btn btn-rechazar-contorno btn-sm" data-confirmar="¿Eliminar la habilidad «<?= e($h['nombre_habilidad']) ?>»?">
-                                        <i class="bi bi-trash" aria-hidden="true"></i><span class="visually-hidden">Eliminar</span></button>
+                                        <span class="visually-hidden">Eliminar</span></button>
                                 </form>
                             <?php endif; ?>
                         </td>

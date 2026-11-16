@@ -44,8 +44,8 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e($k) . '</span><span class="v">' . e($v) . '</span></div>';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Alumno</span><h1 class="titulo-izquierda">Hola, <?= e(explode(' ', $usuario['nombre'])[0]) ?></h1></div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_alumno/proyectos.php')) ?>"><i class="bi bi-search" aria-hidden="true"></i>Ver proyectos disponibles</a></div>
+    <div><h1 class="titulo-izquierda">Hola, <?= e(explode(' ', $usuario['nombre'])[0]) ?></h1></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_alumno/proyectos.php')) ?>">Ver proyectos disponibles</a></div>
 </div>
 <?php if ($falta): ?>
     <div class="alert alert-info" role="alert"><i class="bi bi-info-circle-fill" aria-hidden="true"></i>
@@ -57,11 +57,11 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
         <span class="valor"><?= $vigentes ?> <small>de <?= MAX_CANDIDATURAS ?></small></span>
         <div class="progress" role="progressbar" aria-label="Candidaturas vigentes" aria-valuenow="<?= $vigentes ?>" aria-valuemin="0" aria-valuemax="<?= MAX_CANDIDATURAS ?>">
             <div class="progress-bar" style="width:<?= round($vigentes / MAX_CANDIDATURAS * 100) ?>%"></div></div>
-        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver mis solicitudes <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver mis solicitudes </a></div></div>
     <div class="col-md-4"><div class="indicador"><span class="rotulo">Pendientes de evaluación</span><span class="valor"><?= $cuentas['pendientes'] ?></span>
-        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver </a></div></div>
     <div class="col-md-4"><div class="indicador"><span class="rotulo">Preseleccionado por la empresa</span><span class="valor"><?= $cuentas['preseleccionado'] ?></span>
-        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div>
+        <a class="ver" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver </a></div></div>
 </div>
 
 <div class="row g-4">
@@ -79,7 +79,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
                                 <div><a class="fw-bold d-block text-decoration-none" href="<?= e(url('mod_alumno/proyecto.php?id=' . urlencode($r['c_proyecto']))) ?>"><?= e($r['titulo']) ?></a>
                                     <span class="small text-mute"><?= e($r['razon_social']) ?> · <?= e(fecha_corta($r['fecha'])) ?></span></div>
                                 <div class="d-flex gap-2 align-items-center flex-wrap">
-                                    <?php if ($r['preseleccionado']): ?><span class="etiqueta-dato"><i class="bi bi-star" aria-hidden="true"></i>Preseleccionado</span><?php endif; ?>
+                                    <?php if ($r['preseleccionado']): ?><span class="etiqueta-dato">Preseleccionado</span><?php endif; ?>
                                     <?= insignia('candidatura', $r['estado']) ?></div>
                             </div>
                         <?php endforeach; ?>
@@ -93,8 +93,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
             <div class="card-header"><h2 class="h3 mb-0">Asignación activa</h2></div>
             <div class="card-body">
                 <?php if (!$asignaciones): ?>
-                    <div class="vacio"><div class="vacio-icono"><i class="bi bi-briefcase" aria-hidden="true"></i></div>
-                        <h3>Aún no tienes una asignación activa</h3>
+                    <div class="vacio"><h3>Aún no tienes una asignación activa</h3>
                         <p>Cuando el Tec apruebe una de tus candidaturas, aquí verás el proyecto, la empresa y tu director.</p></div>
                 <?php else: foreach ($asignaciones as $a): ?>
                     <a class="fw-bold d-block mb-2" href="<?= e(url('mod_alumno/proyecto.php?id=' . urlencode($a['c_proyecto']))) ?>"><?= e($a['titulo']) ?></a>

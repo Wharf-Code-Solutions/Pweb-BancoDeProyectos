@@ -217,7 +217,7 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
         . '<div class="form-check mb-0"><input class="form-check-input" type="radio" name="req[' . $i . '][obligatorio]" id="o' . $i . 'a" value="1"' . ($r['obligatorio'] ? ' checked' : '') . '><label class="form-check-label" for="o' . $i . 'a">Obligatoria</label></div>'
         . '<div class="form-check mb-0"><input class="form-check-input" type="radio" name="req[' . $i . '][obligatorio]" id="o' . $i . 'b" value="0"' . (!$r['obligatorio'] ? ' checked' : '') . '><label class="form-check-label" for="o' . $i . 'b">Deseable</label></div>'
         . '</div></fieldset>'
-        . '<button type="button" class="btn btn-terciario quitar-habilidad"><i class="bi bi-trash" aria-hidden="true"></i>Quitar</button>'
+        . '<button type="button" class="btn btn-terciario quitar-habilidad">Quitar</button>'
         . '</div>';
 };
 ?>
@@ -250,7 +250,7 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
                     $con_error = array_intersect_key($errores, array_flip($campos)) || ($ancla === 's3' && isset($errores['req']));
                     $listo = !$con_error && $campos && !in_array('', array_map(fn ($k) => $d[$k], $campos), true); ?>
                     <li><a href="#<?= $ancla ?>"<?= $listo ? ' class="listo"' : '' ?>>
-                        <span class="n"><?= $listo ? '<i class="bi bi-check-lg" aria-hidden="true"></i>' : $n ?></span><?= e($nombre) ?></a></li>
+                        <span class="n"><?= $listo ? '' : $n ?></span><?= e($nombre) ?></a></li>
                 <?php endforeach; ?>
             </ul>
             <p class="leyenda-req mt-3"><span class="text-danger fw-bold">*</span> Obligatorio siempre<br>
@@ -287,7 +287,7 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
                 </div>
                 <template id="plantilla-habilidad"><?= $fila_hab('__i__', ['habilidad' => '', 'nivel' => 'basico', 'obligatorio' => 1]) ?></template>
                 <div class="pt-2 border-top">
-                    <button type="button" class="btn btn-secundario btn-sm" id="agregar-habilidad"><i class="bi bi-plus-lg" aria-hidden="true"></i>Agregar habilidad</button>
+                    <button type="button" class="btn btn-secundario btn-sm" id="agregar-habilidad">Agregar habilidad</button>
                 </div>
             </section>
 
@@ -306,8 +306,8 @@ $fila_hab = function (string|int $i, array $r) use ($habilidades): string {
 
             <div class="barra-acciones-form">
                 <a class="btn btn-terciario" href="<?= e(url($p ? 'mod_empresa/proyecto.php?id=' . urlencode($id) : 'mod_empresa/proyectos.php')) ?>">Cancelar</a>
-                <button type="submit" name="accion" value="guardar" class="btn btn-secundario"><i class="bi bi-floppy" aria-hidden="true"></i>Guardar <?= ($p['estado'] ?? 'borrador') === 'devuelto' ? 'cambios' : 'borrador' ?></button>
-                <button type="submit" name="accion" value="enviar" class="btn btn-principal"><i class="bi bi-send" aria-hidden="true"></i><?= ($p['estado'] ?? '') === 'devuelto' ? 'Reenviar a revisión' : 'Enviar a revisión' ?></button>
+                <button type="submit" name="accion" value="guardar" class="btn btn-secundario">Guardar <?= ($p['estado'] ?? 'borrador') === 'devuelto' ? 'cambios' : 'borrador' ?></button>
+                <button type="submit" name="accion" value="enviar" class="btn btn-principal"><?= ($p['estado'] ?? '') === 'devuelto' ? 'Reenviar a revisión' : 'Enviar a revisión' ?></button>
             </div>
         </form>
     </div>

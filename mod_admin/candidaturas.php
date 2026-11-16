@@ -40,7 +40,7 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Revisión', null], ['Candidaturas 
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Candidaturas por decidir</h1>
+    <div><h1 class="titulo-izquierda">Candidaturas por decidir</h1>
         <p class="text-mute mb-0 mt-1">Aparecen aquí cuando la empresa ya evaluó al alumno.</p></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
@@ -51,18 +51,17 @@ require __DIR__ . '/../menumain/app_encabezado.php';
             </select></div>
         <div class="pb-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="presel" name="presel" value="1"<?= $filtros['presel'] ? ' checked' : '' ?>>
             <label class="form-check-label" for="presel">Solo preseleccionados</label></div></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
-        <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
-            <h2>No hay candidaturas por decidir</h2><p>Cuando una empresa evalúe a un candidato, la candidatura aparecerá aquí.</p></div>
+        <div class="vacio"><h2>No hay candidaturas por decidir</h2><p>Cuando una empresa evalúe a un candidato, la candidatura aparecerá aquí.</p></div>
     <?php else: $decidir = fn ($c) => '<a class="btn btn-secundario btn-sm" href="' . e(url('mod_admin/candidatura.php?id=' . urlencode($c['c_candidatura']))) . '">Decidir</a>'; ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Alumno</th><th scope="col">Proyecto</th><th scope="col">Estado</th><th scope="col">Preseleccionado</th><th scope="col">Puntuación</th><th scope="col">Evaluada</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody><?php foreach ($lista as $c): ?>
                 <tr><td><strong><?= e($c['nombre']) ?></strong><br><span class="folio"><?= e($c['matricula']) ?></span></td>
                     <td><?= e($c['titulo']) ?></td><td><?= insignia('candidatura', $c['estado']) ?></td>
-                    <td><?= $c['preseleccionado'] ? '<span class="estado estado-preseleccion"><i class="bi bi-star-fill" aria-hidden="true"></i>Sí</span>' : 'No' ?></td>
+                    <td><?= $c['preseleccionado'] ? '<span class="estado estado-preseleccion">Sí</span>' : 'No' ?></td>
                     <td><span class="puntuacion"><?= puntos($c['puntuacion_total']) ?></span></td>
                     <td><?= $c['fecha_eval'] ? e(fecha_corta($c['fecha_eval'])) : '—' ?></td>
                     <td class="acciones"><?= $decidir($c) ?></td></tr>

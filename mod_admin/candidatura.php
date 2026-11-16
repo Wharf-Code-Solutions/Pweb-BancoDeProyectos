@@ -83,7 +83,6 @@ $sugerida = $ev ? ($ev['preseleccionado'] ? 'La empresa lo preseleccionó con ' 
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Decidir candidatura</span>
         <h1 class="titulo-izquierda"><?= e($c['nombre']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('candidatura', $c['estado']) ?><?= $ev && $ev['preseleccionado'] ? insignia_preseleccion() : '' ?>
@@ -118,12 +117,12 @@ $sugerida = $ev ? ($ev['preseleccionado'] ? 'La empresa lo preseleccionó con ' 
                     'ayuda' => 'Obligatoria. Quedará en el historial y la verá el alumno.']) ?>
                 <div class="d-grid gap-2">
                     <?php if ($cupo_lleno || !$proyecto_abierto): ?>
-                        <div class="accion-bloqueada"><button type="button" class="btn btn-aprobar" disabled aria-describedby="bloq"><i class="bi bi-check-circle" aria-hidden="true"></i>Aprobar y asignar</button>
+                        <div class="accion-bloqueada"><button type="button" class="btn btn-aprobar" disabled aria-describedby="bloq">Aprobar y asignar</button>
                             <span class="motivo" id="bloq"><i class="bi bi-info-circle" aria-hidden="true"></i><?= $cupo_lleno ? 'El proyecto ya no tiene cupo.' : 'El proyecto ya no admite asignaciones.' ?></span></div>
                     <?php else: ?>
-                        <button type="submit" name="decision" value="aprobar" class="btn btn-aprobar" data-confirmar="¿Aprobar la candidatura y asignar a <?= e($c['nombre']) ?> al proyecto? No se puede modificar."><i class="bi bi-check-circle" aria-hidden="true"></i>Aprobar y asignar</button>
+                        <button type="submit" name="decision" value="aprobar" class="btn btn-aprobar" data-confirmar="¿Aprobar la candidatura y asignar a <?= e($c['nombre']) ?> al proyecto? No se puede modificar.">Aprobar y asignar</button>
                     <?php endif; ?>
-                    <button type="submit" name="decision" value="rechazar" class="btn btn-rechazar" data-confirmar="¿Rechazar la candidatura de <?= e($c['nombre']) ?>? No se puede modificar."><i class="bi bi-x-circle" aria-hidden="true"></i>Rechazar</button>
+                    <button type="submit" name="decision" value="rechazar" class="btn btn-rechazar" data-confirmar="¿Rechazar la candidatura de <?= e($c['nombre']) ?>? No se puede modificar.">Rechazar</button>
                 </div>
             </form>
         </div>

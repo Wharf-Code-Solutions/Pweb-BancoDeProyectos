@@ -71,8 +71,8 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Gestión', null], ['Usuarios', nul
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda">Usuarios</h1></div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_admin/usuario_form.php')) ?>"><i class="bi bi-person-plus" aria-hidden="true"></i>Nuevo usuario</a></div>
+    <div><h1 class="titulo-izquierda">Usuarios</h1></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_admin/usuario_form.php')) ?>">Nuevo usuario</a></div>
 </div>
 
 <div class="tabla-marco tabla-responsiva-tarjetas">
@@ -96,7 +96,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                 <option value="inactivo"<?= $filtros['estado'] === 'inactivo' ? ' selected' : '' ?>>Inactivo</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
         <?php if (array_filter($filtros)): ?>
             <a class="btn btn-terciario" href="<?= e(url('mod_admin/usuarios.php')) ?>">Limpiar</a>
         <?php endif; ?>
@@ -105,7 +105,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
     <?php
     $accion_form = e(url_lista('mod_admin/usuarios.php', $filtros + ['pagina' => $pag['pagina']]));
     $botones = function (array $u) use ($usuario, $accion_form): string {
-        $html = '<a class="btn btn-secundario btn-sm" href="' . e(url('mod_admin/usuario_form.php?id=' . urlencode($u['c_usuario']))) . '">Editar</a> ';
+        $html = '<a class="btn btn-terciario btn-sm" href="' . e(url('mod_admin/usuario_form.php?id=' . urlencode($u['c_usuario']))) . '">Editar<span class="visually-hidden"> a ' . e($u['nombre']) . '</span></a> ';
         if ($u['c_usuario'] === $usuario['c_usuario']) {
             return $html;
         }
@@ -114,21 +114,20 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                . '<input type="hidden" name="c_usuario" value="' . e($u['c_usuario']) . '">'
                . '<input type="hidden" name="accion" value="' . ($activo ? 'desactivar' : 'activar') . '">'
                . ($activo
-                   ? '<button type="submit" class="btn btn-rechazar-contorno btn-sm" data-confirmar="¿Desactivar a ' . e($u['nombre']) . '? Ya no podrá iniciar sesión.">Desactivar</button>'
-                   : '<button type="submit" class="btn btn-secundario btn-sm">Activar</button>')
+                   ? '<button type="submit" class="btn btn-terciario btn-sm text-danger" data-confirmar="¿Desactivar a ' . e($u['nombre']) . '? Ya no podrá iniciar sesión.">Desactivar</button>'
+                   : '<button type="submit" class="btn btn-terciario btn-sm">Activar</button>')
                . '</form>';
         return $html;
     };
     ?>
 
     <?php if (!$lista): ?>
-        <div class="vacio p-4">
-            <div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
+        <div class="vacio">
             <h2>No hay usuarios con esos filtros</h2>
         </div>
     <?php else: ?>
         <div class="table-responsive">
-            <table class="table tabla-datos table-striped mb-0">
+            <table class="table tabla-datos mb-0">
                 <thead><tr>
                     <th scope="col">Nombre</th><th scope="col">Correo</th><th scope="col">Rol</th>
                     <th scope="col">Identificador</th><th scope="col">Estado</th><th scope="col" class="acciones">Acciones</th>
@@ -138,8 +137,8 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                     <tr>
                         <td><strong><?= e($u['rol'] === 'empresa' && $u['razon_social'] ? $u['razon_social'] : $u['nombre']) ?></strong>
                             <?php if ($u['rol'] === 'empresa'): ?><span class="d-block small text-mute"><?= e($u['nombre']) ?></span><?php endif; ?></td>
-                        <td><span class="small"><?= e($u['correo']) ?></span></td>
-                        <td><span class="etiqueta-dato"><?= e(nombre_rol($u['rol'])) ?></span></td>
+                        <td><?= e($u['correo']) ?></td>
+                        <td><?= e(nombre_rol($u['rol'])) ?></td>
                         <td><span class="folio"><?= e($u['identificador'] ?? '—') ?></span></td>
                         <td><?= insignia('usuario', $u['estado']) ?></td>
                         <td class="acciones text-nowrap"><?= $botones($u) ?></td>

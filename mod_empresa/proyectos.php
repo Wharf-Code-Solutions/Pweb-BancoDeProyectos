@@ -52,17 +52,16 @@ $acciones = function (array $p): string {
 };
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Empresa</span><h1 class="titulo-izquierda">Mis proyectos</h1></div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>"><i class="bi bi-plus-lg" aria-hidden="true"></i>Nuevo proyecto</a></div>
+    <div><h1 class="titulo-izquierda">Mis proyectos</h1></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>">Nuevo proyecto</a></div>
 </div>
 
 <?php if ($pag['total'] === 0 && !array_filter($filtros)): ?>
     <div class="card"><div class="card-body">
         <div class="vacio">
-            <div class="vacio-icono"><i class="bi bi-folder2-open" aria-hidden="true"></i></div>
             <h2>Aún no tienes proyectos</h2>
             <p>Registra la necesidad tecnológica de tu empresa como proyecto y envíala a revisión del Tec.</p>
-            <a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>"><i class="bi bi-plus-lg" aria-hidden="true"></i>Registrar mi primer proyecto</a>
+            <a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php')) ?>">Registrar mi primer proyecto</a>
         </div>
     </div></div>
 <?php else: ?>
@@ -74,13 +73,13 @@ $acciones = function (array $p): string {
             <select class="form-select" id="estado" name="estado"><option value="">Todos</option>
                 <?php foreach (ESTADOS['proyecto'] as $k => [$t]): ?><option value="<?= $k ?>"<?= $filtros['estado'] === $k ? ' selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?>
             </select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
         <p class="p-3 mb-0 text-mute">No hay proyectos con esos filtros.</p>
     <?php else: ?>
     <div class="table-responsive">
-        <table class="table tabla-datos table-striped mb-0">
+        <table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Proyecto</th><th scope="col">Estado</th><th scope="col">Registro</th><th scope="col">Candidatos</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody>
             <?php foreach ($lista as $p): ?>

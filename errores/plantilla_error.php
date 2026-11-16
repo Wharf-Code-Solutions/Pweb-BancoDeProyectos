@@ -32,7 +32,7 @@ require __DIR__ . '/../menumain/publico_encabezado.php';
             <div class="codigo"><?= (int) $codigo ?></div>
             <h1 class="h2 mt-2"><?= e($titulo_error) ?></h1>
             <p class="text-mute"><?= e($texto) ?></p>
-            <a class="btn btn-principal" href="<?= e(url($destino)) ?>"><i class="bi bi-house" aria-hidden="true"></i><?= e($texto_boton) ?></a>
+            <a class="btn btn-principal" href="<?= e(url($destino)) ?>"><?= e($texto_boton) ?></a>
         </div>
     </div>
 </section>

@@ -1,41 +1,42 @@
 <?php
 /**
- * Insignias de estado con los colores de las pantallas.
- *   echo insignia('proyecto', 'en_revision');   // <span class="estado estado-info">En revisión</span>
+ * Insignias de estado. Cuatro grupos de color: proceso (en trámite),
+ * activo (aprobado o vigente), atencion (alguien debe actuar) y cerrado.
+ *   echo insignia('proyecto', 'en_revision');   // <span class="estado estado-proceso">En revisión</span>
  */
 
 const ESTADOS = [
     'proyecto' => [
-        'borrador'    => ['Borrador', 'neutro'],
-        'en_revision' => ['En revisión', 'info'],
-        'devuelto'    => ['Devuelto para correcciones', 'advertencia'],
-        'publicado'   => ['Publicado', 'exito'],
-        'rechazado'   => ['Rechazado', 'peligro'],
-        'en_curso'    => ['En curso', 'primario'],
-        'finalizado'  => ['Finalizado', 'neutro-osc'],
-        'cancelado'   => ['Cancelado', 'neutro'],
+        'borrador'    => ['Borrador', 'proceso'],
+        'en_revision' => ['En revisión', 'proceso'],
+        'devuelto'    => ['Devuelto para correcciones', 'atencion'],
+        'publicado'   => ['Publicado', 'activo'],
+        'rechazado'   => ['Rechazado', 'cerrado'],
+        'en_curso'    => ['En curso', 'activo'],
+        'finalizado'  => ['Finalizado', 'cerrado'],
+        'cancelado'   => ['Cancelado', 'cerrado'],
     ],
     'candidatura' => [
-        'pendiente'   => ['Pendiente de evaluación', 'advertencia'],
-        'en_revision' => ['En revisión', 'info'],
-        'aprobada'    => ['Aprobada', 'exito'],
-        'rechazada'   => ['Rechazada', 'peligro'],
-        'cancelada'   => ['Cancelada', 'neutro'],
+        'pendiente'   => ['Pendiente de evaluación', 'atencion'],
+        'en_revision' => ['En revisión', 'proceso'],
+        'aprobada'    => ['Aprobada', 'activo'],
+        'rechazada'   => ['Rechazada', 'cerrado'],
+        'cancelada'   => ['Cancelada', 'cerrado'],
     ],
     'direccion' => [
-        'pendiente' => ['Pendiente', 'advertencia'],
-        'aprobada'  => ['Aprobada', 'exito'],
-        'rechazada' => ['Rechazada', 'peligro'],
-        'cancelada' => ['Cancelada', 'neutro'],
+        'pendiente' => ['Pendiente', 'atencion'],
+        'aprobada'  => ['Aprobada', 'activo'],
+        'rechazada' => ['Rechazada', 'cerrado'],
+        'cancelada' => ['Cancelada', 'cerrado'],
     ],
     'asignacion' => [
-        'activa'     => ['Activa', 'exito'],
-        'finalizada' => ['Finalizada', 'neutro-osc'],
-        'cancelada'  => ['Cancelada', 'neutro'],
+        'activa'     => ['Activa', 'activo'],
+        'finalizada' => ['Finalizada', 'cerrado'],
+        'cancelada'  => ['Cancelada', 'cerrado'],
     ],
     'usuario' => [
-        'activo'   => ['Activo', 'exito'],
-        'inactivo' => ['Inactivo', 'neutro'],
+        'activo'   => ['Activo', 'activo'],
+        'inactivo' => ['Inactivo', 'cerrado'],
     ],
 ];
 
@@ -46,6 +47,6 @@ function nombre_estado(string $tipo, string $estado): string
 
 function insignia(string $tipo, string $estado): string
 {
-    $clase = ESTADOS[$tipo][$estado][1] ?? 'neutro';
+    $clase = ESTADOS[$tipo][$estado][1] ?? 'cerrado';
     return '<span class="estado estado-' . $clase . '">' . e(nombre_estado($tipo, $estado)) . '</span>';
 }

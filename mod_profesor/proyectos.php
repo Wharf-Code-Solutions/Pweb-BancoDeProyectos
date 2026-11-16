@@ -23,7 +23,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $restan = MAX_DIRECCIONES - $activos;
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Profesor</span><h1 class="titulo-izquierda">Proyectos disponibles para dirección</h1></div>
+    <div><h1 class="titulo-izquierda">Proyectos disponibles para dirección</h1></div>
 </div>
 <div class="mb-3"><?= html_cupo("Proyectos que diriges: $activos de " . MAX_DIRECCIONES, $activos, MAX_DIRECCIONES,
     $restan > 0 ? "Puedes dirigir $restan más" : 'Ya diriges el máximo de proyectos', 'bi-briefcase') ?></div>
@@ -31,7 +31,6 @@ $restan = MAX_DIRECCIONES - $activos;
 
 <?php if (!$lista): ?>
     <div class="card"><div class="card-body"><div class="vacio">
-        <div class="vacio-icono"><i class="bi bi-search" aria-hidden="true"></i></div>
         <h2>No hay proyectos que coincidan</h2>
         <p><?= $sin_director ? 'Todos los proyectos publicados ya tienen director, o prueba con otros filtros.' : 'Prueba con otros filtros.' ?></p>
     </div></div></div>
@@ -40,9 +39,9 @@ $restan = MAX_DIRECCIONES - $activos;
         <?php foreach ($lista as $p):
             $ver = '<a href="' . e(url('mod_profesor/proyecto.php?id=' . urlencode($p['c_proyecto']))) . '" class="btn btn-secundario btn-sm">Ver proyecto</a>';
             $izq = match (true) {
-                isset($mias[$p['c_proyecto']]) => '<span class="ya-postulado"><i class="bi bi-check2" aria-hidden="true"></i>Solicitud ' . e(mb_strtolower(nombre_estado('direccion', $mias[$p['c_proyecto']]))) . '</span>',
-                (bool) $p['director']          => '<span class="small text-mute"><i class="bi bi-person-badge" aria-hidden="true"></i> Director: ' . e($p['director']) . '</span>',
-                default                        => '<span class="coincidencia ok"><i class="bi bi-person-check" aria-hidden="true"></i>Sin director</span>',
+                isset($mias[$p['c_proyecto']]) => '<span class="ya-postulado">Solicitud ' . e(mb_strtolower(nombre_estado('direccion', $mias[$p['c_proyecto']]))) . '</span>',
+                (bool) $p['director']          => '<span class="small text-mute">Director: ' . e($p['director']) . '</span>',
+                default                        => '<span class="coincidencia ok">Sin director</span>',
             }; ?>
             <div class="col-lg-6"><?= html_tarjeta_proyecto($p, html_chips_requisitos(requisitos_proyecto($p['c_proyecto'])), $izq . $ver) ?></div>
         <?php endforeach; ?>

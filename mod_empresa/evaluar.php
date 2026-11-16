@@ -89,7 +89,6 @@ $suma_pesos = array_sum(array_map(fn ($cr) => (float) $cr['peso'], $criterios));
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Evaluar candidato</span>
         <h1 class="titulo-izquierda"><?= e($c['nombre']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('candidatura', $c['estado']) ?><?= $presel && $previa ? insignia_preseleccion() : '' ?>
@@ -106,9 +105,9 @@ $suma_pesos = array_sum(array_map(fn ($cr) => (float) $cr['peso'], $criterios));
             <div class="card"><div class="card-header"><h2 class="h3 mb-0">Evaluaciones anteriores</h2></div>
                 <div class="card-body"><ol class="linea-tiempo">
                     <?php foreach ($evaluaciones as $n => $ev): ?>
-                        <li><span class="hito exito"><i class="bi bi-clipboard-check" aria-hidden="true"></i></span>
+                        <li><span class="hito exito"></span>
                             <div class="evento">Evaluación <?= count($evaluaciones) - $n ?> · <span class="puntuacion"><?= puntos($ev['puntuacion_total']) ?></span>
-                                <?= $ev['preseleccionado'] ? '<span class="etiqueta-dato"><i class="bi bi-star" aria-hidden="true"></i>Preseleccionado</span>' : '' ?></div>
+                                <?= $ev['preseleccionado'] ? '<span class="etiqueta-dato">Preseleccionado</span>' : '' ?></div>
                             <div class="cuando"><?= e(fecha_hora($ev['fecha'])) ?> · <?= e($ev['evaluador']) ?></div>
                             <?php if ($ev['comentarios']): ?><div class="justificacion"><span class="quien">Comentario general</span><?= nl2br(e($ev['comentarios'])) ?></div><?php endif; ?></li>
                     <?php endforeach; ?>
@@ -160,7 +159,7 @@ $suma_pesos = array_sum(array_map(fn ($cr) => (float) $cr['peso'], $criterios));
                                 <span class="puntuacion grande" id="total">—</span> <span class="small text-mute">se guarda al enviar</span></div>
                             <div class="d-flex gap-2">
                                 <a class="btn btn-terciario" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($c['c_proyecto']))) ?>">Cancelar</a>
-                                <button type="submit" class="btn btn-principal"><i class="bi bi-floppy" aria-hidden="true"></i>Guardar evaluación</button>
+                                <button type="submit" class="btn btn-principal">Guardar evaluación</button>
                             </div>
                         </div>
                     </form>

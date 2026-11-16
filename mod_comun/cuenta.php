@@ -60,7 +60,7 @@ $migas = [['Panel', ruta_panel($usuario) . 'index.php'], ['Mi cuenta', null]];
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Mi cuenta</span><h1 class="titulo-izquierda">Mi cuenta</h1></div>
+    <div><h1 class="titulo-izquierda">Mi cuenta</h1></div>
 </div>
 <div class="row g-4">
     <div class="col-lg-7">

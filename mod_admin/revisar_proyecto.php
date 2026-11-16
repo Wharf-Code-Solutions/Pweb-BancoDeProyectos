@@ -95,7 +95,6 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Revisar proyecto</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('proyecto', $p['estado']) ?>
@@ -145,7 +144,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                 </fieldset>
                 <?= campo_area('justificacion', 'Justificación', $justificacion, ['placeholder' => 'Explica a la empresa el motivo de tu resolución', 'maxlength' => 3000, 'filas' => 5, 'error' => $errores['justificacion'] ?? null,
                     'ayuda' => 'Obligatoria para devolver o rechazar. La empresa la verá destacada.']) ?>
-                <button type="submit" class="btn btn-principal w-100" id="boton-decision" disabled><i class="bi bi-check2" aria-hidden="true"></i>Elige una resolución</button>
+                <button type="submit" class="btn btn-principal w-100" id="boton-decision" disabled>Elige una resolución</button>
                 <p class="small text-mute mb-0">Se pedirá confirmación antes de guardar. La decisión no se puede modificar.</p>
             </form>
         </div>

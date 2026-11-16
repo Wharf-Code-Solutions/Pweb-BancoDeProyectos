@@ -60,7 +60,6 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Proyecto</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('proyecto', $p['estado']) ?><span class="folio"><?= e($id) ?></span>
@@ -99,7 +98,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
             <div class="card-header"><h2 class="h3 mb-0">Postulación</h2></div>
             <div class="card-body"><div class="d-grid gap-3">
                 <?php if ($activa): ?>
-                    <span class="ya-postulado"><i class="bi bi-check2" aria-hidden="true"></i>Ya te postulaste · <?= e(nombre_estado('candidatura', $mia['estado'])) ?></span>
+                    <span class="ya-postulado">Ya te postulaste · <?= e(nombre_estado('candidatura', $mia['estado'])) ?></span>
                     <a class="btn btn-secundario" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Ver mis solicitudes</a>
                 <?php else:
                     $restan = MAX_CANDIDATURAS - $vigentes;
@@ -111,7 +110,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
                         <?php elseif ($restan <= 0): ?>
                             <?= html_accion_bloqueada('Postularme', 'bi-send', 'Ya tienes 3 candidaturas vigentes. Cancela una o espera su resolución.') ?>
                         <?php else: ?>
-                            <button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-postular"><i class="bi bi-send" aria-hidden="true"></i>Postularme</button>
+                            <button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-postular">Postularme</button>
                         <?php endif; ?>
                     </div>
                     <?php if ($cupo_lleno && $disponible && $restan > 0): ?>
@@ -137,7 +136,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
     <div class="modal-dialog"><div class="modal-content">
         <form method="post"><?= csrf_campo() ?>
             <div class="modal-header">
-                <h2 class="modal-title" id="modal-postular-t"><i class="bi bi-send" aria-hidden="true"></i> Postularme a este proyecto</h2>
+                <h2 class="modal-title" id="modal-postular-t">Postularme a este proyecto</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -151,7 +150,7 @@ $fila = fn (string $k, string $v) => '<div class="kv-fila"><span class="k">' . e
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-terciario" data-bs-dismiss="modal">Volver</button>
-                <button type="submit" class="btn btn-principal"><i class="bi bi-send" aria-hidden="true"></i>Postularme</button>
+                <button type="submit" class="btn btn-principal">Postularme</button>
             </div>
         </form>
     </div></div>

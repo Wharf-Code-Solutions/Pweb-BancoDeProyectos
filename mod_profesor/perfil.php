@@ -40,7 +40,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $err = fn (string $k) => $errores[$k] ?? null;
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Profesor</span><h1 class="titulo-izquierda">Mi perfil</h1></div>
+    <div><h1 class="titulo-izquierda">Mi perfil</h1></div>
 </div>
 <?= alerta_errores($errores) ?>
 <form method="post" style="max-width:860px" novalidate>

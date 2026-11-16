@@ -83,7 +83,6 @@ require __DIR__ . '/menumain/publico_encabezado.php';
 <section class="seccion-publica alterna" style="padding:3rem 0 4rem">
     <div class="contenedor">
         <div class="caja-formulario" style="max-width:640px">
-            <span class="etiqueta">Registro</span>
             <h1 class="titulo-izquierda h2 mb-2">Registrar mi empresa</h1>
             <p class="text-mute">Cree la cuenta de su empresa para proponer proyectos al Tec. Los campos con <span class="text-danger fw-bold">*</span> son obligatorios.</p>
             <?= alerta_errores($errores) ?>
@@ -116,7 +115,7 @@ require __DIR__ . '/menumain/publico_encabezado.php';
                 </fieldset>
                 <div class="barra-acciones-form pt-0">
                     <a class="btn btn-terciario" href="<?= e(url('login.php')) ?>">Ya tengo cuenta</a>
-                    <button type="submit" class="btn btn-principal"><i class="bi bi-building-add" aria-hidden="true"></i>Crear cuenta</button>
+                    <button type="submit" class="btn btn-principal">Crear cuenta</button>
                 </div>
             </form>
         </div>

@@ -47,7 +47,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $filtros = ['estado' => $estado];
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Profesor</span><h1 class="titulo-izquierda">Mis solicitudes de dirección</h1></div>
+    <div><h1 class="titulo-izquierda">Mis solicitudes de dirección</h1></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
     <form class="filtros" role="search" method="get">
@@ -55,11 +55,10 @@ $filtros = ['estado' => $estado];
             <select class="form-select" id="estado" name="estado"><option value="">Todos</option>
                 <?php foreach (ESTADOS['direccion'] as $k => [$t]): ?><option value="<?= $k ?>"<?= $estado === $k ? ' selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?>
             </select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
-        <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-send-check" aria-hidden="true"></i></div>
-            <h2>No tienes solicitudes de dirección<?= $estado ? ' con ese estado' : '' ?></h2>
+        <div class="vacio"><h2>No tienes solicitudes de dirección<?= $estado ? ' con ese estado' : '' ?></h2>
             <p><a href="<?= e(url('mod_profesor/proyectos.php')) ?>">Busca un proyecto</a> que quieras dirigir.</p></div>
     <?php else:
         $acciones = function (array $sd) use ($estado): string {
@@ -70,7 +69,7 @@ $filtros = ['estado' => $estado];
             }
             return $html;
         }; ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Proyecto</th><th scope="col">Fecha</th><th scope="col">Estado</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody><?php foreach ($lista as $sd): ?>
                 <tr><td><strong><?= e($sd['titulo']) ?></strong><br><span class="folio"><?= e($sd['c_solicitud_direccion']) ?></span></td>
@@ -91,14 +90,14 @@ $filtros = ['estado' => $estado];
     <div class="col-lg-6"><div class="card">
         <div class="card-header"><h2 class="h3 mb-0">Historial · <?= e($detalle['titulo']) ?></h2></div>
         <div class="card-body"><ol class="linea-tiempo">
-            <li><span class="hito"><i class="bi bi-send" aria-hidden="true"></i></span><div class="evento">Solicitud enviada</div><div class="cuando"><?= e(fecha_hora($detalle['fecha'])) ?></div></li>
+            <li><span class="hito"></span><div class="evento">Solicitud enviada</div><div class="cuando"><?= e(fecha_hora($detalle['fecha'])) ?></div></li>
             <?php if ($detalle['decision']): $ok = $detalle['decision'] === 'aprobada'; ?>
                 <li><span class="hito <?= $ok ? 'exito' : 'peligro' ?>"><i class="bi <?= $ok ? 'bi-check-lg' : 'bi-x-lg' ?>" aria-hidden="true"></i></span>
                     <div class="evento">Revisión <?= insignia('direccion', $detalle['decision']) ?></div>
                     <div class="cuando"><?= e(fecha_hora($detalle['fecha_decision'])) ?> · <?= e($detalle['administrador']) ?></div>
                     <div class="justificacion <?= $ok ? '' : 'peligro' ?>"><span class="quien">Justificación del Tec</span><?= nl2br(e($detalle['justificacion_tec'])) ?></div></li>
             <?php elseif ($detalle['estado'] === 'cancelada'): ?>
-                <li><span class="hito"><i class="bi bi-x-circle" aria-hidden="true"></i></span><div class="evento">Cancelada</div></li>
+                <li><span class="hito"></span><div class="evento">Cancelada</div></li>
             <?php endif; ?>
         </ol></div></div></div>
     <div class="col-lg-6"><div class="card">

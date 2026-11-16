@@ -77,22 +77,21 @@ $linea = function (array $c): string {
 };
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Alumno</span><h1 class="titulo-izquierda">Mis solicitudes</h1></div>
-    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_alumno/proyectos.php')) ?>"><i class="bi bi-search" aria-hidden="true"></i>Buscar proyectos</a></div>
+    <div><h1 class="titulo-izquierda">Mis solicitudes</h1></div>
+    <div class="acciones"><a class="btn btn-principal" href="<?= e(url('mod_alumno/proyectos.php')) ?>">Buscar proyectos</a></div>
 </div>
 <div class="mb-3"><?= html_cupo("Candidaturas vigentes: $vigentes de " . MAX_CANDIDATURAS, $vigentes, MAX_CANDIDATURAS,
     $vigentes < MAX_CANDIDATURAS ? 'Te ' . (MAX_CANDIDATURAS - $vigentes === 1 ? 'queda 1' : 'quedan ' . (MAX_CANDIDATURAS - $vigentes)) : 'Sin lugares disponibles') ?></div>
 
-<ul class="nav nav-tabs mb-0">
+<ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link<?= $pestana === 'vigentes' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_alumno/solicitudes.php')) ?>">Vigentes
         <?php if ($vigentes): ?><span class="badge rounded-pill text-bg-primary"><?= $vigentes ?></span><?php endif; ?></a></li>
     <li class="nav-item"><a class="nav-link<?= $pestana === 'historial' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_alumno/solicitudes.php?tab=historial')) ?>">Historial
         <?php if ($historial): ?><span class="badge rounded-pill text-bg-primary"><?= count($historial) ?></span><?php endif; ?></a></li>
 </ul>
-<div class="bg-white border border-top-0 p-3 d-grid gap-3" style="border-radius:0 0 8px 8px">
+<div class="panel-pestana d-grid gap-3">
     <?php if (!$lista): ?>
         <div class="vacio">
-            <div class="vacio-icono"><i class="bi bi-send" aria-hidden="true"></i></div>
             <h2><?= $pestana === 'vigentes' ? 'No tienes solicitudes vigentes' : 'Tu historial está vacío' ?></h2>
             <p><?= $pestana === 'vigentes' ? 'Busca un proyecto que te interese y postúlate. Puedes tener hasta 3 a la vez.' : 'Aquí verás las solicitudes rechazadas, canceladas o cerradas.' ?></p>
         </div>
@@ -103,7 +102,7 @@ $linea = function (array $c): string {
                 <div><h2 class="h4 mb-1"><?= e($c['titulo']) ?></h2>
                     <span class="small text-mute"><?= e($c['razon_social']) ?> · enviada el <?= e(fecha_corta($c['fecha'])) ?></span> <span class="folio"><?= e($c['c_candidatura']) ?></span></div>
                 <div class="d-flex flex-wrap gap-2 align-items-center">
-                    <?php if ($c['preseleccionado']): ?><span class="etiqueta-dato"><i class="bi bi-star" aria-hidden="true"></i>Preseleccionado por la empresa</span><?php endif; ?>
+                    <?php if ($c['preseleccionado']): ?><span class="etiqueta-dato">Preseleccionado por la empresa</span><?php endif; ?>
                     <?php if ($c['estado_asignacion']): ?><?= insignia('asignacion', $c['estado_asignacion']) ?><?php endif; ?>
                     <?= insignia('candidatura', $c['estado']) ?>
                 </div>
@@ -114,7 +113,7 @@ $linea = function (array $c): string {
                     <a class="btn btn-secundario btn-sm" href="<?= e(url('mod_alumno/proyecto.php?id=' . urlencode($c['c_proyecto']))) ?>">Ver proyecto</a>
                     <?php if ($cancelable): ?>
                         <button type="button" class="btn btn-rechazar-contorno btn-sm" data-bs-toggle="modal" data-bs-target="#modal-cancelar"
-                            data-id="<?= e($c['c_candidatura']) ?>" data-titulo="<?= e($c['titulo']) ?>"><i class="bi bi-x-circle" aria-hidden="true"></i>Cancelar solicitud</button>
+                            data-id="<?= e($c['c_candidatura']) ?>" data-titulo="<?= e($c['titulo']) ?>">Cancelar solicitud</button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -126,7 +125,7 @@ $linea = function (array $c): string {
     <div class="modal-dialog"><div class="modal-content">
         <form method="post"><?= csrf_campo() ?><input type="hidden" name="c_candidatura" value="">
             <div class="modal-header">
-                <h2 class="modal-title" id="modal-cancelar-t"><i class="bi bi-x-circle" aria-hidden="true"></i> Cancelar solicitud</h2>
+                <h2 class="modal-title" id="modal-cancelar-t">Cancelar solicitud</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -135,7 +134,7 @@ $linea = function (array $c): string {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-terciario" data-bs-dismiss="modal">Volver</button>
-                <button type="submit" class="btn btn-rechazar"><i class="bi bi-x-circle" aria-hidden="true"></i>Cancelar solicitud</button>
+                <button type="submit" class="btn btn-rechazar">Cancelar solicitud</button>
             </div>
         </form>
     </div></div>

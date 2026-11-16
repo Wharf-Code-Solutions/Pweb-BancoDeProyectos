@@ -1,6 +1,6 @@
 <?php
 /**
- * Plantilla A · Pública (parte superior): franja gob.mx y encabezado con logos.
+ * Plantilla A · Pública (parte superior): encabezado con el nombre del sistema.
  * Variables: $titulo.
  */
 $titulo ??= 'Banco de Proyectos Académicos';
@@ -14,17 +14,16 @@ $titulo ??= 'Banco de Proyectos Académicos';
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
-<div class="franja-gob"><div class="contenedor"><a href="https://www.gob.mx">gob.mx</a><span>Gobierno de México</span></div></div>
 <header class="encabezado-publico">
     <div class="contenedor">
-        <a href="<?= e(url('index.php')) ?>" class="d-flex align-items-center gap-3 text-decoration-none">
-            <div class="logos"><span class="logo-ph tecnm">LOGO TecNM</span><span class="sep" aria-hidden="true"></span><span class="logo-ph itver">ITVer</span></div>
-            <span class="nombre d-none d-md-block">Banco de Proyectos Académicos<small>Vinculación de empresas, alumnos y profesores · ITVer</small></span>
+        <a href="<?= e(url('index.php')) ?>" class="marca-publica">
+            <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="32" height="32">
+            <span class="nombre">Banco de Proyectos Académicos<small>TecNM · Instituto Tecnológico de Veracruz</small></span>
         </a>
         <?php if ($u = usuario_actual()): ?>
-            <a class="btn btn-secundario" href="<?= e(url(ruta_panel($u))) ?>"><i class="bi bi-speedometer2" aria-hidden="true"></i>Ir a mi panel</a>
+            <a class="btn btn-secundario" href="<?= e(url(ruta_panel($u))) ?>">Ir a mi panel</a>
         <?php elseif (basename($_SERVER['SCRIPT_NAME'] ?? '') !== 'login.php'): ?>
-            <a class="btn btn-secundario" href="<?= e(url('login.php')) ?>"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>Iniciar sesión</a>
+            <a class="btn btn-secundario" href="<?= e(url('login.php')) ?>">Iniciar sesión</a>
         <?php endif; ?>
     </div>
 </header>

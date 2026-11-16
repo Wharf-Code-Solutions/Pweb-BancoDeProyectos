@@ -208,7 +208,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $err = fn (string $k) => $errores[$k] ?? null;
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Administración</span><h1 class="titulo-izquierda"><?= e($titulo) ?></h1></div>
+    <div><h1 class="titulo-izquierda"><?= e($titulo) ?></h1></div>
 </div>
 <?= alerta_errores($errores, count($errores) === 1 && !isset($errores['_general']) ? reset($errores) : 'Revisa los campos marcados.') ?>
 

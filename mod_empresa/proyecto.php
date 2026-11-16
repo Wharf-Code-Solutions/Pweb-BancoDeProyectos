@@ -42,7 +42,6 @@ $nota_estado = match ($p['estado']) {
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Mis proyectos</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
             <?= insignia('proyecto', $p['estado']) ?><?= html_folio($id) ?>
@@ -51,23 +50,23 @@ $nota_estado = match ($p['estado']) {
     </div>
     <div class="acciones">
         <?php if ($editable): ?>
-            <a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php?id=' . urlencode($id))) ?>"><i class="bi bi-pencil" aria-hidden="true"></i><?= $p['estado'] === 'devuelto' ? 'Corregir y reenviar' : 'Editar' ?></a>
+            <a class="btn btn-principal" href="<?= e(url('mod_empresa/proyecto_form.php?id=' . urlencode($id))) ?>"><?= $p['estado'] === 'devuelto' ? 'Corregir y reenviar' : 'Editar' ?></a>
         <?php elseif ($con_candidatos): ?>
-            <a class="btn btn-principal" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($id))) ?>"><i class="bi bi-people" aria-hidden="true"></i>Ver candidatos</a>
+            <a class="btn btn-principal" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($id))) ?>">Ver candidatos</a>
         <?php endif; ?>
     </div>
 </div>
 
 <div class="row g-4">
     <div class="col-lg-8">
-        <ul class="nav nav-tabs mb-0">
+        <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link<?= $pestana === 'info' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_empresa/proyecto.php?id=' . urlencode($id))) ?>">Información</a></li>
             <?php if ($con_candidatos): ?>
                 <li class="nav-item"><a class="nav-link" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($id))) ?>">Candidatos <?php if ($num_candidatos): ?><span class="badge rounded-pill text-bg-primary"><?= $num_candidatos ?></span><?php endif; ?></a></li>
             <?php endif; ?>
             <li class="nav-item"><a class="nav-link<?= $pestana === 'historial' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_empresa/proyecto.php?id=' . urlencode($id) . '&tab=historial')) ?>">Historial</a></li>
         </ul>
-        <div class="bg-white border border-top-0 p-4" style="border-radius:0 0 8px 8px">
+        <div class="panel-pestana">
             <h2 class="visually-hidden"><?= $pestana === 'info' ? 'Información del proyecto' : 'Historial del proyecto' ?></h2>
             <?= $pestana === 'info' ? html_contenido_proyecto($p, requisitos_proyecto($id)) : html_linea_tiempo($eventos) ?>
         </div>

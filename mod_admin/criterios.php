@@ -80,10 +80,10 @@ $migas = [['Panel', 'mod_admin/index.php'], ['Catálogos', null], ['Criterios', 
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Catálogos</span><h1 class="titulo-izquierda">Criterios de evaluación</h1></div>
+    <div><h1 class="titulo-izquierda">Criterios de evaluación</h1></div>
     <div class="acciones">
         <button type="button" class="btn btn-principal" data-bs-toggle="modal" data-bs-target="#modal-criterio">
-            <i class="bi bi-plus-lg" aria-hidden="true"></i>Agregar criterio</button>
+            Agregar criterio</button>
     </div>
 </div>
 
@@ -101,7 +101,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
         <p class="p-3 mb-0 text-mute">Aún no hay criterios. Agrega al menos uno para que las empresas puedan evaluar.</p>
     <?php else: ?>
     <div class="table-responsive">
-        <table class="table tabla-datos table-striped mb-0">
+        <table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Criterio</th><th scope="col">Descripción</th><th scope="col">Peso</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody>
             <?php foreach ($criterios as $c): ?>
@@ -112,12 +112,12 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                     <td class="acciones text-nowrap">
                         <button type="button" class="btn btn-secundario btn-sm" data-bs-toggle="modal" data-bs-target="#modal-criterio"
                             data-original="<?= e($c['nombre_criterio']) ?>" data-descripcion="<?= e($c['descripcion'] ?? '') ?>" data-peso="<?= e(rtrim(rtrim($c['peso'], '0'), '.')) ?>">
-                            <i class="bi bi-pencil" aria-hidden="true"></i>Editar</button>
+                            Editar</button>
                         <?php if (!$c['usos']): ?>
                             <form method="post" class="d-inline"><?= csrf_campo() ?>
                                 <input type="hidden" name="accion" value="eliminar"><input type="hidden" name="original" value="<?= e($c['nombre_criterio']) ?>">
                                 <button type="submit" class="btn btn-rechazar-contorno btn-sm" data-confirmar="¿Eliminar el criterio «<?= e($c['nombre_criterio']) ?>»?">
-                                    <i class="bi bi-trash" aria-hidden="true"></i><span class="visually-hidden">Eliminar</span></button>
+                                    <span class="visually-hidden">Eliminar</span></button>
                             </form>
                         <?php endif; ?>
                     </td>

@@ -43,7 +43,6 @@ $lista = $s->fetchAll();
 $base = 'mod_comun/notificaciones.php';
 $enlace = fn (int $p) => url($base . '?' . http_build_query(array_filter(['filtro' => $solo_no_leidas ? 'no_leidas' : null, 'pagina' => $p > 1 ? $p : null])));
 $accion_form = e(url($base . '?' . http_build_query(array_filter(['filtro' => $solo_no_leidas ? 'no_leidas' : null, 'pagina' => $pagina > 1 ? $pagina : null]))));
-$estilo_icono = 'width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;color:var(--navy);';
 
 $titulo = 'Notificaciones';
 $menu_activo = 'mod_comun/notificaciones.php';
@@ -51,39 +50,37 @@ $migas = [['Panel', ruta_panel($usuario) . 'index.php'], ['Notificaciones', null
 require __DIR__ . '/../menumain/app_encabezado.php';
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta"><?= e(nombre_rol($usuario['rol'])) ?></span><h1 class="titulo-izquierda">Notificaciones</h1></div>
+    <div><h1 class="titulo-izquierda">Notificaciones</h1></div>
     <?php if ($sin_leer): ?>
         <div class="acciones">
             <form method="post" action="<?= $accion_form ?>">
                 <?= csrf_campo() ?><input type="hidden" name="accion" value="todas">
-                <button type="submit" class="btn btn-secundario"><i class="bi bi-check2-all" aria-hidden="true"></i>Marcar todas como leídas</button>
+                <button type="submit" class="btn btn-secundario">Marcar todas como leídas</button>
             </form>
         </div>
     <?php endif; ?>
 </div>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-    <ul class="nav nav-tabs mb-0">
+    <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link<?= $solo_no_leidas ? '' : ' active" aria-current="page' ?>" href="<?= e(url($base)) ?>">Todas</a></li>
         <li class="nav-item"><a class="nav-link<?= $solo_no_leidas ? ' active" aria-current="page' : '' ?>" href="<?= e(url($base . '?filtro=no_leidas')) ?>">No leídas
-            <?php if ($sin_leer): ?><span class="badge rounded-pill text-bg-primary"><?= $sin_leer ?></span><?php endif; ?></a></li>
+            <?php if ($sin_leer): ?><span class="badge"><?= $sin_leer ?></span><?php endif; ?></a></li>
     </ul>
-    <span class="small text-mute"><?= $sin_leer ?> sin leer</span>
+    
 </div>
 
 <?php if (!$lista): ?>
     <div class="card"><div class="card-body">
         <div class="vacio">
-            <div class="vacio-icono"><i class="bi bi-bell-slash" aria-hidden="true"></i></div>
             <h2><?= $solo_no_leidas ? 'No tienes notificaciones sin leer' : 'Aún no tienes notificaciones' ?></h2>
             <p>Aquí verás los avisos sobre tus proyectos, solicitudes y asignaciones.</p>
         </div>
     </div></div>
 <?php else: ?>
-    <div class="list-group shadow-sm">
+    <div class="list-group list-group-flush lista-notif">
         <?php foreach ($lista as $n): $nueva = !$n['leida']; ?>
-            <div class="list-group-item d-flex gap-3 align-items-start<?= $nueva ? ' no-leida' : '' ?>"<?= $nueva ? ' style="background:var(--primario-claro-bg)"' : '' ?>>
-                <span class="cupo-icono" style="<?= $estilo_icono ?>background:<?= $nueva ? '#fff' : 'var(--alt)' ?>"><i class="bi <?= icono_notificacion($n['mensaje']) ?>" aria-hidden="true"></i></span>
+            <div class="list-group-item d-flex gap-3 align-items-start<?= $nueva ? ' no-leida' : '' ?>">
                 <span class="flex-grow-1">
                     <span class="d-block<?= $nueva ? ' fw-semibold' : '' ?>"><?= e($n['mensaje']) ?></span>
                     <span class="small text-mute"><?= e(fecha_relativa($n['fecha'])) ?></span>
@@ -92,7 +89,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                     <form method="post" action="<?= $accion_form ?>" class="flex-none">
                         <?= csrf_campo() ?><input type="hidden" name="accion" value="una"><input type="hidden" name="id" value="<?= e($n['c_notificacion']) ?>">
                         <button type="submit" class="btn btn-sm btn-terciario" title="Marcar como leída" aria-label="Marcar como leída">
-                            <span class="mt-2 d-inline-block" style="width:10px;height:10px;border-radius:50%;background:var(--info)"></span>
+                            <span class="punto-nueva"></span>
                         </button>
                     </form>
                 <?php endif; ?>

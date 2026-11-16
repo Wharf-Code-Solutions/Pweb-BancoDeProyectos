@@ -28,20 +28,19 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $n = count($activos);
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Profesor</span><h1 class="titulo-izquierda">Proyectos que dirijo</h1></div>
+    <div><h1 class="titulo-izquierda">Proyectos que dirijo</h1></div>
 </div>
 <div class="mb-3"><?= html_cupo("Proyectos activos: $n de " . MAX_DIRECCIONES, $n, MAX_DIRECCIONES,
     $n >= MAX_DIRECCIONES ? 'Sin lugares disponibles' : (MAX_DIRECCIONES - $n === 1 ? 'Te queda 1' : 'Te quedan ' . (MAX_DIRECCIONES - $n)), 'bi-briefcase') ?></div>
-<ul class="nav nav-tabs mb-0">
+<ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link<?= $pestana === 'activos' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_profesor/dirijo.php')) ?>">Activos
         <?php if ($activos): ?><span class="badge rounded-pill text-bg-primary"><?= count($activos) ?></span><?php endif; ?></a></li>
     <li class="nav-item"><a class="nav-link<?= $pestana === 'historial' ? ' active" aria-current="page' : '' ?>" href="<?= e(url('mod_profesor/dirijo.php?tab=historial')) ?>">Historial
         <?php if ($historial): ?><span class="badge rounded-pill text-bg-primary"><?= count($historial) ?></span><?php endif; ?></a></li>
 </ul>
-<div class="bg-white border border-top-0 p-3 d-grid gap-3" style="border-radius:0 0 8px 8px">
+<div class="panel-pestana d-grid gap-3">
     <?php if (!$lista): ?>
-        <div class="vacio"><div class="vacio-icono"><i class="bi bi-briefcase" aria-hidden="true"></i></div>
-            <h2><?= $pestana === 'activos' ? 'No diriges proyectos activos' : 'Tu historial está vacío' ?></h2>
+        <div class="vacio"><h2><?= $pestana === 'activos' ? 'No diriges proyectos activos' : 'Tu historial está vacío' ?></h2>
             <p><?= $pestana === 'activos' ? 'Solicita la dirección de un proyecto publicado; la administración la autorizará.' : 'Aquí verás los proyectos que ya terminaste de dirigir.' ?></p></div>
     <?php endif; ?>
     <?php foreach ($lista as $d): $alumnos->execute([$d['c_proyecto']]); $als = $alumnos->fetchAll(); ?>

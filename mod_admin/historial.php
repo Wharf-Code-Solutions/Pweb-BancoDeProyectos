@@ -56,7 +56,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 $nombre_op = fn (string $op) => ucfirst(str_replace('_', ' ', $op));
 ?>
 <div class="encabezado-pagina">
-    <div><span class="etiqueta">Consulta</span><h1 class="titulo-izquierda">Historial de auditoría</h1></div>
+    <div><h1 class="titulo-izquierda">Historial de auditoría</h1></div>
 </div>
 <div class="tabla-marco tabla-responsiva-tarjetas">
     <form class="filtros" role="search" method="get">
@@ -73,13 +73,13 @@ $nombre_op = fn (string $op) => ucfirst(str_replace('_', ' ', $op));
                 <?php foreach ($resultados as $k => [$t]): ?><option value="<?= $k ?>"<?= $filtros['resultado'] === $k ? ' selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?></select></div>
         <div><label class="form-label small mb-1" for="desde">Desde</label><input class="form-control" id="desde" name="desde" type="date" value="<?= e($filtros['desde']) ?>"></div>
         <div><label class="form-label small mb-1" for="hasta">Hasta</label><input class="form-control" id="hasta" name="hasta" type="date" value="<?= e($filtros['hasta']) ?>"></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
         <?php if (array_filter($filtros)): ?><a class="btn btn-terciario" href="<?= e(url('mod_admin/historial.php')) ?>">Limpiar</a><?php endif; ?>
     </form>
     <?php if (!$lista): ?>
         <p class="p-3 mb-0 text-mute">No hay registros con esos filtros.</p>
     <?php else: ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Fecha y hora</th><th scope="col">Usuario</th><th scope="col">Operación</th><th scope="col">Entidad</th><th scope="col">Registro</th><th scope="col">Resultado</th></tr></thead>
             <tbody><?php foreach ($lista as $h): [$rt, $rc] = $resultados[$h['resultado']] ?? [$h['resultado'], 'neutro']; ?>
                 <tr><td class="text-nowrap"><?= e(fecha_hora($h['fecha'])) ?></td>

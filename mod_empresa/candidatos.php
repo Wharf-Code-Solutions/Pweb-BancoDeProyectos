@@ -47,18 +47,17 @@ $evaluable = in_array($p['estado'], ['publicado', 'en_curso'], true);
 ?>
 <div class="encabezado-pagina">
     <div>
-        <span class="etiqueta">Candidatos</span>
         <h1 class="titulo-izquierda"><?= e($p['titulo']) ?></h1>
         <div class="mt-2 d-flex flex-wrap gap-2 align-items-center"><?= insignia('proyecto', $p['estado']) ?><span class="folio"><?= e($id) ?></span></div>
     </div>
 </div>
-<ul class="nav nav-tabs mb-0">
+<ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link" href="<?= e(url('mod_empresa/proyecto.php?id=' . urlencode($id))) ?>">Información</a></li>
     <li class="nav-item"><a class="nav-link active" aria-current="page" href="<?= e(url('mod_empresa/candidatos.php?id=' . urlencode($id))) ?>">Candidatos
         <?php if ($lista): ?><span class="badge rounded-pill text-bg-primary"><?= count($lista) ?></span><?php endif; ?></a></li>
     <li class="nav-item"><a class="nav-link" href="<?= e(url('mod_empresa/proyecto.php?id=' . urlencode($id) . '&tab=historial')) ?>">Historial</a></li>
 </ul>
-<div class="bg-white border border-top-0 p-3 d-flex flex-wrap gap-3 align-items-center justify-content-between" style="border-bottom:0!important">
+<div class="panel-pestana d-flex flex-wrap gap-3 align-items-center justify-content-between">
     <?= $p['cupo_alumnos']
         ? html_cupo("Cupo: $asignados de {$p['cupo_alumnos']} asignados", $asignados, (int) $p['cupo_alumnos'], 'La asignación la autoriza el Tec', 'bi-people')
         : html_cupo("Alumnos asignados: $asignados", 0, 0, 'Sin límite de cupo · la asignación la autoriza el Tec', 'bi-people') ?>
@@ -77,11 +76,10 @@ $evaluable = in_array($p['estado'], ['publicado', 'en_curso'], true);
             </select></div>
         <div><label class="form-label small mb-1" for="presel">Preselección</label>
             <select class="form-select" id="presel" name="presel"><option value="">Todos</option><option value="1"<?= $filtros['presel'] ? ' selected' : '' ?>>Preseleccionados</option></select></div>
-        <button type="submit" class="btn btn-secundario"><i class="bi bi-funnel" aria-hidden="true"></i>Filtrar</button>
+        <button type="submit" class="btn btn-secundario">Filtrar</button>
     </form>
     <?php if (!$lista): ?>
-        <div class="vacio p-4"><div class="vacio-icono"><i class="bi bi-people" aria-hidden="true"></i></div>
-            <h2><?= $filtros['estado'] || $filtros['presel'] ? 'No hay candidatos con esos filtros' : 'Aún no hay candidatos' ?></h2>
+        <div class="vacio"><h2><?= $filtros['estado'] || $filtros['presel'] ? 'No hay candidatos con esos filtros' : 'Aún no hay candidatos' ?></h2>
             <p>Cuando un alumno se postule a este proyecto aparecerá aquí.</p></div>
     <?php else:
         $boton = function (array $c) use ($evaluable): string {
@@ -89,7 +87,7 @@ $evaluable = in_array($p['estado'], ['publicado', 'en_curso'], true);
             return '<a class="btn btn-secundario btn-sm" href="' . e(url('mod_empresa/evaluar.php?id=' . urlencode($c['c_candidatura']))) . '">'
                  . ($puede ? ($c['puntuacion_total'] === null ? 'Evaluar' : 'Reevaluar') : 'Ver') . '</a>';
         }; ?>
-        <div class="table-responsive"><table class="table tabla-datos table-striped mb-0">
+        <div class="table-responsive"><table class="table tabla-datos mb-0">
             <thead><tr><th scope="col">Alumno</th><th scope="col">Carrera y semestre</th><th scope="col">Coincidencia de habilidades</th><th scope="col">Estado</th>
                 <th scope="col">Puntuación</th><th scope="col">Preseleccionado</th><th scope="col" class="acciones">Acciones</th></tr></thead>
             <tbody><?php foreach ($lista as $c): $co = coincidencia($requisitos, perfil_alumno($c['matricula'])); ?>
