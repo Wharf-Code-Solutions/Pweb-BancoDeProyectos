@@ -1,7 +1,7 @@
 <?php
 /**
- * Plantilla B · Aplicación (parte superior): barra superior, menú lateral,
- * menú móvil (offcanvas) y apertura del contenido.
+ * Plantilla B · Aplicación (parte superior): menú lateral con la marca, la campana
+ * y el usuario; en celular, barra superior y menú deslizable (offcanvas).
  *
  * Variables que define la página antes de incluirla:
  *   $titulo       Título de la pestaña y del encabezado.
@@ -22,76 +22,79 @@ $rol_txt = nombre_rol($usuario['rol']);
     <?php require __DIR__ . '/recursos_css.php'; ?>
 </head>
 <body>
+<?php
+$campana = function (string $clase = '') use ($sin_leer): string {
+    return '<a class="btn-icono ' . $clase . '" href="' . e(url('mod_comun/notificaciones.php')) . '" aria-label="Notificaciones'
+         . ($sin_leer ? ': ' . $sin_leer . ' sin leer' : '') . '"><i class="bi bi-bell" aria-hidden="true"></i>'
+         . ($sin_leer ? '<span class="contador" aria-hidden="true">' . ($sin_leer > 99 ? '99+' : $sin_leer) . '</span>' : '') . '</a>';
+};
+$menu_cuenta = '<li><span class="dropdown-header">' . e($usuario['subtitulo'] ?: $rol_txt) . '</span></li>'
+    . '<li><a class="dropdown-item" href="' . e(url('mod_comun/cuenta.php')) . '">Mi cuenta</a></li>'
+    . '<li><a class="dropdown-item" href="' . e(url('mod_comun/notificaciones.php')) . '">Notificaciones</a></li>'
+    . '<li><hr class="dropdown-divider"></li>'
+    . '<li><form method="post" action="' . e(url('logout.php')) . '">' . csrf_campo()
+    . '<button type="submit" class="dropdown-item">Cerrar sesión</button></form></li>';
+?>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
 <div class="app">
-    <a class="saltar" href="#contenido">Saltar al contenido</a>
-    <header class="barra-superior">
-        <button type="button" class="btn-icono btn-menu" aria-label="Abrir menú"
+    <header class="barra-movil">
+        <button type="button" class="btn-icono" aria-label="Abrir menú"
                 data-bs-toggle="offcanvas" data-bs-target="#menu-movil" aria-controls="menu-movil">
             <i class="bi bi-list" aria-hidden="true"></i>
         </button>
         <a href="<?= e(url(ruta_panel($usuario))) ?>" class="marca">
-            <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="28" height="28">
-            <span class="nombre-largo">Banco de Proyectos Académicos</span>
-            <span class="nombre-corto">Banco de Proyectos</span>
+            <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="26" height="26">
+            <span>Banco de Proyectos</span>
         </a>
-        <a class="btn-icono" href="<?= e(url('mod_comun/notificaciones.php')) ?>"
-           aria-label="Notificaciones<?= $sin_leer ? ': ' . $sin_leer . ' sin leer' : '' ?>">
-            <i class="bi bi-bell" aria-hidden="true"></i>
-            <?php if ($sin_leer): ?><span class="contador" aria-hidden="true"><?= $sin_leer > 99 ? '99+' : $sin_leer ?></span><?php endif; ?>
-        </a>
+        <?= $campana() ?>
         <div class="dropdown">
-            <button type="button" class="menu-usuario" data-bs-toggle="dropdown" aria-expanded="false"
+            <button type="button" class="menu-usuario solo-avatar" data-bs-toggle="dropdown" aria-expanded="false"
                     aria-label="Menú de usuario: <?= e($usuario['nombre']) ?>">
                 <span class="avatar"><?= e(iniciales($usuario['nombre'])) ?></span>
-                <span class="quien"><strong><?= e($usuario['nombre']) ?></strong><small><?= e($rol_txt) ?></small></span>
-                <i class="bi bi-chevron-down" aria-hidden="true"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><span class="dropdown-header"><?= e($usuario['subtitulo'] ?: $rol_txt) ?></span></li>
-                <li><a class="dropdown-item" href="<?= e(url('mod_comun/cuenta.php')) ?>">Mi cuenta</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <form method="post" action="<?= e(url('logout.php')) ?>">
-                        <?= csrf_campo() ?>
-                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
-                    </form>
-                </li>
-            </ul>
+            <ul class="dropdown-menu dropdown-menu-end"><?= $menu_cuenta ?></ul>
         </div>
     </header>
 
     <div class="offcanvas offcanvas-start offcanvas-nav" tabindex="-1" id="menu-movil" aria-label="Menú">
         <div class="offcanvas-header">
-            <span class="rol-actual m-0 p-0 border-0"><?= e($rol_txt) ?><strong><?= e($usuario['nombre']) ?></strong></span>
+            <span class="marca"><img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="26" height="26"><span>Banco de Proyectos<small>TecNM · ITVer</small></span></span>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar menú"></button>
         </div>
         <div class="offcanvas-body">
             <ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul>
-            <ul class="nav-rol secundario">
-                <li><a href="<?= e(url('mod_comun/cuenta.php')) ?>"><i class="bi bi-person-circle" aria-hidden="true"></i><span>Mi cuenta</span></a></li>
-                <li>
-                    <form method="post" action="<?= e(url('logout.php')) ?>">
-                        <?= csrf_campo() ?>
-                        <button type="submit" class="enlace-menu"><i class="bi bi-box-arrow-right" aria-hidden="true"></i><span>Cerrar sesión</span></button>
-                    </form>
-                </li>
-            </ul>
         </div>
     </div>
 
     <div class="cuerpo-app">
-        <nav class="barra-lateral" aria-label="Navegación principal">
-            <ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul>
-        </nav>
+        <aside class="barra-lateral">
+            <div class="lateral-cab">
+                <a href="<?= e(url(ruta_panel($usuario))) ?>" class="marca">
+                    <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="28" height="28">
+                    <span>Banco de Proyectos<small>TecNM · ITVer</small></span>
+                </a>
+                <?= $campana() ?>
+            </div>
+            <nav aria-label="Navegación principal"><ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul></nav>
+            <div class="lateral-pie dropup">
+                <button type="button" class="menu-usuario" data-bs-toggle="dropdown" aria-expanded="false"
+                        aria-label="Menú de usuario: <?= e($usuario['nombre']) ?>">
+                    <span class="avatar"><?= e(iniciales($usuario['nombre'])) ?></span>
+                    <span class="quien"><strong><?= e($usuario['nombre']) ?></strong><small><?= e($rol_txt) ?></small></span>
+                    <i class="bi bi-chevron-expand" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu"><?= $menu_cuenta ?></ul>
+            </div>
+        </aside>
         <div class="contenido">
+            <?php if (!empty($migas)): ?>
+                <nav class="barra-pagina" aria-label="Migas de pan"><ol class="breadcrumb">
+                    <?php foreach ($migas as $i => [$texto, $ruta]): $ultima = $i === array_key_last($migas); ?>
+                        <li class="breadcrumb-item<?= $ultima ? ' active' : '' ?>"<?= $ultima ? ' aria-current="page"' : '' ?>>
+                            <?= ($ruta && !$ultima) ? '<a href="' . e(url($ruta)) . '">' . e($texto) . '</a>' : e($texto) ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ol></nav>
+            <?php endif; ?>
             <main id="contenido">
-                <?php if (!empty($migas)): ?>
-                    <nav aria-label="Migas de pan"><ol class="breadcrumb">
-                        <?php foreach ($migas as $i => [$texto, $ruta]): $ultima = $i === array_key_last($migas); ?>
-                            <li class="breadcrumb-item<?= $ultima ? ' active' : '' ?>"<?= $ultima ? ' aria-current="page"' : '' ?>>
-                                <?= ($ruta && !$ultima) ? '<a href="' . e(url($ruta)) . '">' . e($texto) . '</a>' : e($texto) ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ol></nav>
-                <?php endif; ?>
                 <?= mostrar_avisos() ?>

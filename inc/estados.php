@@ -48,5 +48,5 @@ function nombre_estado(string $tipo, string $estado): string
 function insignia(string $tipo, string $estado): string
 {
     $clase = ESTADOS[$tipo][$estado][1] ?? 'cerrado';
-    return '<span class="estado estado-' . $clase . '">' . e(nombre_estado($tipo, $estado)) . '</span>';
+    return '<span class="estado estado-' . $clase . ' e-' . e($estado) . '">' . e(nombre_estado($tipo, $estado)) . '</span>';
 }

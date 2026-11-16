@@ -33,79 +33,81 @@ $migas = [['Panel', null]];
 require __DIR__ . '/../menumain/app_encabezado.php';
 
 $pendientes = [
-    ['Proyectos por revisar', $por_revisar, 'mod_admin/revisar_proyectos.php', 'Revisar'],
-    ['Candidaturas por decidir', $candidaturas, 'mod_admin/candidaturas.php', 'Decidir'],
-    ['Solicitudes de dirección', $direccion, 'mod_admin/direccion.php', 'Decidir'],
-    ['Proyectos listos para iniciar', $listos, 'mod_admin/proyectos.php?listos=1', 'Ver'],
+    ['Proyectos por revisar', 'Aprobar, devolver o rechazar lo que enviaron las empresas', $por_revisar, 'mod_admin/revisar_proyectos.php', 'Revisar'],
+    ['Candidaturas por decidir', 'Alumnos ya evaluados por la empresa', $candidaturas, 'mod_admin/candidaturas.php', 'Decidir'],
+    ['Solicitudes de dirección', 'Profesores que quieren dirigir un proyecto', $direccion, 'mod_admin/direccion.php', 'Decidir'],
+    ['Listos para iniciar', 'Con director y alumnos asignados', $listos, 'mod_admin/proyectos.php?listos=1', 'Ver'],
 ];
-$con_trabajo = array_filter($pendientes, fn ($p) => $p[1] > 0);
-$sin_trabajo = array_filter($pendientes, fn ($p) => $p[1] === 0);
+$total_pendiente = $por_revisar + $candidaturas + $direccion + $listos;
+$cifras = [
+    ['Publicados', (int) ($por_estado['publicado'] ?? 0), 'mod_admin/proyectos.php?estado=publicado'],
+    ['En curso', (int) ($por_estado['en_curso'] ?? 0), 'mod_admin/proyectos.php?estado=en_curso'],
+    ['Alumnos asignados', $alumnos_activos, 'mod_admin/asignaciones.php'],
+];
 ?>
 <div class="encabezado-pagina">
-    <div><h1 class="titulo-izquierda">Panel del administrador</h1></div>
+    <div>
+        <h1 class="titulo-izquierda">Panel del administrador</h1>
+        <p><?= $total_pendiente ? $total_pendiente . ' asunto' . ($total_pendiente === 1 ? '' : 's') . ' esperan una decisión de la coordinación.' : 'No hay nada esperando una decisión de la coordinación.' ?></p>
+    </div>
 </div>
 
-<section class="bloque" aria-labelledby="t-pendiente">
-    <h2 id="t-pendiente">Trabajo pendiente</h2>
-    <?php if ($con_trabajo): ?>
-        <ul class="lista-pendientes">
-            <?php foreach ($con_trabajo as [$rotulo, $n, $ruta, $accion]): ?>
-                <li><span class="cifra"><?= $n ?></span><span class="que"><?= e($rotulo) ?></span>
-                    <a class="btn btn-secundario btn-sm" href="<?= e(url($ruta)) ?>"><?= e($accion) ?><span class="visually-hidden">: <?= e($rotulo) ?></span></a></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p class="sin-pendientes">No hay nada esperando una decisión.</p>
-    <?php endif; ?>
-    <?php if ($sin_trabajo && $con_trabajo): ?>
-        <p class="text-mute small mt-2 mb-0">Sin pendientes: <?= e(implode(', ', array_map(fn ($p) => mb_strtolower($p[0]), $sin_trabajo))) ?>.</p>
-    <?php endif; ?>
-</section>
+<div class="row">
+    <?php foreach ($cifras as [$rotulo, $n, $ruta]): ?>
+        <div class="col-6 col-lg-3"><div class="indicador<?= $n ? '' : ' cero' ?>"><span class="rotulo"><?= e($rotulo) ?></span><span class="valor"><?= $n ?></span>
+            <a class="ver" href="<?= e(url($ruta)) ?>">Ver<span class="visually-hidden"> <?= e(mb_strtolower($rotulo)) ?></span></a></div></div>
+    <?php endforeach; ?>
+    <div class="col-6 col-lg-3"><div class="indicador"><span class="rotulo">Profesores con carga completa</span><span class="valor"><?= $profes_llenos ?> <small>de <?= $profes_total ?></small></span>
+        <a class="ver" href="<?= e(url('mod_admin/usuarios.php?rol=profesor')) ?>">Ver<span class="visually-hidden"> profesores</span></a></div></div>
+</div>
 
-<div class="row g-5">
-    <div class="col-lg-7">
-        <section class="bloque" aria-labelledby="t-estado">
-            <div class="bloque-cab">
-                <h2 id="t-estado">Proyectos por estado</h2>
-                <a href="<?= e(url('mod_admin/reportes.php')) ?>">Ver reportes</a>
-            </div>
+<div class="tablero">
+    <div>
+        <section class="card" aria-labelledby="t-pendiente">
+            <div class="card-header"><h2 id="t-pendiente">Trabajo pendiente</h2></div>
+            <ul class="bandeja">
+                <?php foreach ($pendientes as [$rotulo, $detalle, $n, $ruta, $accion]): ?>
+                    <li<?= $n ? '' : ' class="cero"' ?>><span class="cifra"><?= $n ?></span>
+                        <span class="que"><strong><?= e($rotulo) ?></strong><span><?= e($detalle) ?></span></span>
+                        <?php if ($n): ?><a class="btn btn-secundario btn-sm" href="<?= e(url($ruta)) ?>"><?= e($accion) ?><span class="visually-hidden">: <?= e($rotulo) ?></span></a><?php endif; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+        <section class="card" aria-labelledby="t-estado">
+            <div class="card-header"><h2 id="t-estado">Proyectos por estado</h2><a href="<?= e(url('mod_admin/reportes.php')) ?>">Ver reportes</a></div>
             <dl class="conteo-estados">
                 <?php foreach (array_keys(ESTADOS['proyecto']) as $est): $n = (int) ($por_estado[$est] ?? 0); ?>
                     <div<?= $n ? '' : ' class="cero"' ?>>
-                        <dt><span class="punto estado-<?= ESTADOS['proyecto'][$est][1] ?>" aria-hidden="true"></span><?= e(nombre_estado('proyecto', $est)) ?></dt>
+                        <dt class="d-flex align-items-center gap-2"><span class="punto estado-<?= ESTADOS['proyecto'][$est][1] ?> e-<?= $est ?>" aria-hidden="true"></span><?= e(nombre_estado('proyecto', $est)) ?></dt>
                         <dd><span class="barra-reporte" aria-hidden="true"><span style="width:<?= round($n / $max_estado * 100) ?>%"></span></span><strong><?= $n ?></strong></dd>
                     </div>
                 <?php endforeach; ?>
             </dl>
         </section>
-        <section class="bloque" aria-labelledby="t-carga">
-            <h2 id="t-carga">Asignaciones</h2>
-            <dl class="conteo-estados">
-                <div><dt><a href="<?= e(url('mod_admin/asignaciones.php')) ?>">Alumnos asignados activos</a></dt><dd><strong><?= $alumnos_activos ?></strong></dd></div>
-                <div><dt><a href="<?= e(url('mod_admin/usuarios.php?rol=profesor')) ?>">Profesores con carga completa</a></dt><dd><strong><?= $profes_llenos ?></strong>&nbsp;<span class="text-mute">de <?= $profes_total ?></span></dd></div>
-            </dl>
-        </section>
     </div>
-    <div class="col-lg-5">
-        <section class="bloque" aria-labelledby="t-actividad">
-            <div class="bloque-cab">
-                <h2 id="t-actividad">Actividad reciente</h2>
-                <a href="<?= e(url('mod_admin/historial.php')) ?>">Ver historial</a>
+    <div>
+        <section class="card" aria-labelledby="t-actividad">
+            <div class="card-header"><h2 id="t-actividad">Actividad reciente</h2><a href="<?= e(url('mod_admin/historial.php')) ?>">Ver historial</a></div>
+            <div class="card-body">
+                <?php if (!$actividad): ?>
+                    <p class="text-mute mb-0">Aún no hay actividad registrada.</p>
+                <?php else: ?>
+                    <ol class="linea-tiempo">
+                        <?php foreach ($actividad as $a):
+                            [$clase, $icono] = match ($a['resultado']) {
+                                'denegado' => ['peligro', 'bi-shield-exclamation'],
+                                'error'    => ['advertencia', 'bi-exclamation-triangle'],
+                                default    => ['exito', 'bi-check-lg'],
+                            }; ?>
+                            <li>
+                                <span class="hito <?= $clase ?>"><i class="bi <?= $icono ?>" aria-hidden="true"></i></span>
+                                <div class="evento"><?= e(describir_operacion($a)) ?></div>
+                                <div class="cuando"><?= e(fecha_relativa($a['fecha'])) ?> · <?= e($a['nombre']) ?></div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                <?php endif; ?>
             </div>
-            <?php if (!$actividad): ?>
-                <p class="text-mute mb-0">Aún no hay actividad registrada.</p>
-            <?php else: ?>
-                <ol class="linea-tiempo">
-                    <?php foreach ($actividad as $a):
-                        $clase = match ($a['resultado']) { 'denegado' => 'peligro', 'error' => 'advertencia', default => 'exito' }; ?>
-                        <li>
-                            <span class="hito <?= $clase ?>"></span>
-                            <div class="evento"><?= e(describir_operacion($a)) ?></div>
-                            <div class="cuando"><?= e(fecha_relativa($a['fecha'])) ?> · <?= e($a['nombre']) ?></div>
-                        </li>
-                    <?php endforeach; ?>
-                </ol>
-            <?php endif; ?>
         </section>
     </div>
 </div>
