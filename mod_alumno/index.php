@@ -7,13 +7,17 @@ $matricula = $usuario['clave'];
 
 $vigentes = candidaturas_vigentes($matricula);
 $s = $pdo->prepare("SELECT SUM(sc.estado = 'pendiente') AS pendientes, SUM(ev.preseleccionado = 1 AND sc.estado IN ('pendiente', 'en_revision')) AS preseleccionado
-    FROM solicitud_candidatura sc LEFT JOIN evaluacion_candidato ev ON ev.c_candidatura = sc.c_candidatura WHERE sc.matricula = ?");
+    FROM solicitud_candidatura sc LEFT JOIN evaluacion_candidato ev ON ev.c_evaluacion = (
+        SELECT ev2.c_evaluacion FROM evaluacion_candidato ev2 WHERE ev2.c_candidatura = sc.c_candidatura
+        ORDER BY ev2.fecha DESC, ev2.c_evaluacion DESC LIMIT 1) WHERE sc.matricula = ?");
 $s->execute([$matricula]);
 $cuentas = array_map('intval', $s->fetch());
 
 $s = $pdo->prepare("SELECT sc.c_proyecto, sc.fecha, sc.estado, p.titulo, e.razon_social, ev.preseleccionado
     FROM solicitud_candidatura sc JOIN proyecto p ON p.c_proyecto = sc.c_proyecto JOIN empresa e ON e.rfc_empresa = p.rfc_empresa
-    LEFT JOIN evaluacion_candidato ev ON ev.c_candidatura = sc.c_candidatura
+    LEFT JOIN evaluacion_candidato ev ON ev.c_evaluacion = (
+        SELECT ev2.c_evaluacion FROM evaluacion_candidato ev2 WHERE ev2.c_candidatura = sc.c_candidatura
+        ORDER BY ev2.fecha DESC, ev2.c_evaluacion DESC LIMIT 1)
     WHERE sc.matricula = ? ORDER BY sc.fecha DESC LIMIT 4");
 $s->execute([$matricula]);
 $recientes = $s->fetchAll();

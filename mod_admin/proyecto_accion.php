@@ -43,6 +43,7 @@ if ($accion === 'iniciar' && (!$p['num_empleado_director'] || (int) $p['alumnos_
 
 // Se toman los participantes antes de cerrar sus asignaciones, para avisarles.
 $avisar = participantes_proyecto($id);
+$solicitantes = $accion === 'iniciar' ? [] : array_diff(solicitantes_abiertos_proyecto($id), $avisar);
 
 try {
     $pdo->beginTransaction();
@@ -67,6 +68,10 @@ $mensaje = match ($accion) {
 };
 foreach ($avisar as $c_usuario) {
     notificar($c_usuario, $mensaje);
+}
+foreach ($solicitantes as $c_usuario) {
+    notificar($c_usuario, "Tu solicitud a «{$p['titulo']}» se canceló porque el proyecto "
+        . ($accion === 'finalizar' ? 'finalizó.' : 'fue cancelado.') . ' Ya puedes usar ese lugar en otra solicitud.');
 }
 aviso('exito', match ($accion) {
     'iniciar'   => 'Proyecto iniciado: ahora está en curso.',

@@ -107,7 +107,7 @@ if (es_post()) {
     if ($exigir_completo) {
         foreach (CAMPOS_ENVIO as $k => $nombre) {
             if ($d[$k] === '' && !isset($errores[$k])) {
-                $errores[$k] = "Completa «$nombre» para enviar a revisión.";
+                $errores[$k] = "Completa «{$nombre}» para enviar a revisión.";
                 $faltan[] = $nombre;
             }
         }

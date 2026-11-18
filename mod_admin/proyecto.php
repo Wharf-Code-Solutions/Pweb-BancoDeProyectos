@@ -32,7 +32,9 @@ $participantes = $s->fetchAll();
 
 $s = $pdo->prepare("SELECT sc.c_candidatura, sc.fecha, sc.estado, u.nombre, al.matricula, ev.puntuacion_total, ev.preseleccionado
     FROM solicitud_candidatura sc JOIN alumno al ON al.matricula = sc.matricula JOIN usuario u ON u.c_usuario = al.c_usuario
-    LEFT JOIN evaluacion_candidato ev ON ev.c_candidatura = sc.c_candidatura
+    LEFT JOIN evaluacion_candidato ev ON ev.c_evaluacion = (
+        SELECT ev2.c_evaluacion FROM evaluacion_candidato ev2 WHERE ev2.c_candidatura = sc.c_candidatura
+        ORDER BY ev2.fecha DESC, ev2.c_evaluacion DESC LIMIT 1)
     WHERE sc.c_proyecto = ? ORDER BY sc.fecha DESC");
 $s->execute([$id]);
 $candidaturas = $s->fetchAll();

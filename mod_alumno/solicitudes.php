@@ -10,7 +10,7 @@ if (es_post()) {
     $id = (string) ($_POST['c_candidatura'] ?? '');
     $motivo = mb_substr(limpiar($_POST['motivo'] ?? ''), 0, 500);
     // Solo se cancela una solicitud propia que siga pendiente o en revisión.
-    $s = $pdo->prepare("SELECT sc.c_candidatura, p.titulo, e.c_usuario AS empresa
+    $s = $pdo->prepare("SELECT sc.c_candidatura, sc.estado, p.titulo, e.c_usuario AS empresa
         FROM solicitud_candidatura sc JOIN proyecto p ON p.c_proyecto = sc.c_proyecto JOIN empresa e ON e.rfc_empresa = p.rfc_empresa
         WHERE sc.c_candidatura = ? AND sc.matricula = ? AND sc.estado IN ('pendiente', 'en_revision')");
     $s->execute([$id, $matricula]);
@@ -19,6 +19,10 @@ if (es_post()) {
             ->execute([$motivo !== '' ? 'Cancelada por el alumno: ' . $motivo : 'Cancelada por el alumno.', $id]);
         registrar_auditoria('cancelar', 'solicitud_candidatura', $id);
         notificar($c['empresa'], $usuario['nombre'] . ' canceló su solicitud a «' . $c['titulo'] . '».');
+        if ($c['estado'] === 'en_revision') {
+            // Ya estaba en la lista del Tec (D9): se avisa que salió de ella.
+            notificar_administradores($usuario['nombre'] . ' canceló su candidatura a «' . $c['titulo'] . '», que estaba por decidir.');
+        }
         aviso('exito', 'Solicitud cancelada. Liberaste un lugar de tus 3 candidaturas.');
     } else {
         aviso('advertencia', 'Esa solicitud ya no se puede cancelar.');
@@ -34,7 +38,9 @@ $s = $pdo->prepare("SELECT sc.*, p.titulo, p.estado AS estado_proyecto, e.razon_
     FROM solicitud_candidatura sc
     JOIN proyecto p ON p.c_proyecto = sc.c_proyecto
     JOIN empresa e ON e.rfc_empresa = p.rfc_empresa
-    LEFT JOIN evaluacion_candidato ev ON ev.c_candidatura = sc.c_candidatura
+    LEFT JOIN evaluacion_candidato ev ON ev.c_evaluacion = (
+        SELECT ev2.c_evaluacion FROM evaluacion_candidato ev2 WHERE ev2.c_candidatura = sc.c_candidatura
+        ORDER BY ev2.fecha DESC, ev2.c_evaluacion DESC LIMIT 1)
     LEFT JOIN autorizacion a ON a.c_candidatura = sc.c_candidatura
     LEFT JOIN administrador ad ON ad.num_empleado = a.num_empleado_admin
     LEFT JOIN usuario ua ON ua.c_usuario = ad.c_usuario

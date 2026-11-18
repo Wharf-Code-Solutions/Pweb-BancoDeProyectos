@@ -68,6 +68,7 @@ if (es_post()) {
                 aviso('exito', 'Candidatura aprobada: ' . $c['nombre'] . ' quedó asignado al proyecto.');
             } else {
                 notificar($c['c_usuario_alumno'], 'Tu candidatura a «' . $c['titulo'] . '» fue rechazada.');
+                notificar($c['c_usuario_empresa'], 'El Tec no autorizó la candidatura de ' . $c['nombre'] . ' al proyecto «' . $c['titulo'] . '».');
                 aviso('exito', 'Candidatura rechazada.');
             }
             redirigir('mod_admin/candidaturas.php');

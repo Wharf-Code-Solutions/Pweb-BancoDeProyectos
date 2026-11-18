@@ -234,3 +234,18 @@ function participantes_proyecto(string $c_proyecto): array
     $s->execute([$c_proyecto, $c_proyecto, $c_proyecto]);
     return $s->fetchAll(PDO::FETCH_COLUMN);
 }
+
+/**
+ * Usuarios con solicitudes todavía abiertas en el proyecto (alumnos con candidatura
+ * pendiente o en revisión, profesores con solicitud de dirección pendiente).
+ * cerrar_proyecto() las cancela, así que hay que avisarles aparte.
+ */
+function solicitantes_abiertos_proyecto(string $c_proyecto): array
+{
+    $s = conexion()->prepare("SELECT a.c_usuario FROM solicitud_candidatura sc JOIN alumno a ON a.matricula = sc.matricula
+              WHERE sc.c_proyecto = ? AND sc.estado IN ('pendiente', 'en_revision')
+        UNION SELECT pr.c_usuario FROM solicitud_direccion sd JOIN profesor pr ON pr.num_empleado = sd.num_empleado
+              WHERE sd.c_proyecto = ? AND sd.estado = 'pendiente'");
+    $s->execute([$c_proyecto, $c_proyecto]);
+    return $s->fetchAll(PDO::FETCH_COLUMN);
+}

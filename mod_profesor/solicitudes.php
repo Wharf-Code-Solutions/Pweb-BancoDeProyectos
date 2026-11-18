@@ -12,6 +12,9 @@ if (es_post()) {
     $s->execute([$id, $num]);
     if ($s->rowCount()) {
         registrar_auditoria('cancelar', 'solicitud_direccion', $id);
+        $t = $pdo->prepare('SELECT p.titulo FROM solicitud_direccion sd JOIN proyecto p ON p.c_proyecto = sd.c_proyecto WHERE sd.c_solicitud_direccion = ?');
+        $t->execute([$id]);
+        notificar_administradores($usuario['nombre'] . ' canceló su solicitud para dirigir «' . $t->fetchColumn() . '».');
         aviso('exito', 'Solicitud de dirección cancelada.');
     } else {
         aviso('advertencia', 'Esa solicitud ya no se puede cancelar.');
