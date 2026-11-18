@@ -20,7 +20,7 @@
  *
  * Todas las cuentas usan la contraseña Prueba2026! (hasheada con
  * password_hash, igual que la app). La guía de pruebas con las credenciales
- * y los pasos de cada flujo está en sql/GUIA_PRUEBAS.md.
+ * y los pasos de cada flujo está en pruebas/GUIA_PRUEBAS.md.
  *
  * Opciones: --confirmar (obligatoria), --base=nombre,
  *           --mysql=C:\xampp\mysql\bin\mysql.exe
@@ -612,4 +612,4 @@ echo "\nCuentas (contraseña para todas: $PW):\n";
 foreach (sql('SELECT correo, rol, estado FROM usuario ORDER BY rol, correo') as $r) {
     printf("  %-24s %-13s %s\n", $r['correo'], $r['rol'], $r['estado'] === 'activo' ? '' : '(inactiva)');
 }
-echo "\nGuía de pruebas: sql/GUIA_PRUEBAS.md\n";
+echo "\nGuía de pruebas: pruebas/GUIA_PRUEBAS.md\n";
