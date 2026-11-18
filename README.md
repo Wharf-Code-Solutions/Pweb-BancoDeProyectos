@@ -65,6 +65,7 @@ Para levantar este proyecto en un entorno local (como XAMPP o WAMP):
 2. **Base de Datos:**
    * Importa el archivo `sql/banco_proyectos.sql` en tu servidor MariaDB/MySQL local. Este script creará la base de datos `banco_proyectos` y toda su estructura (tablas, triggers, vistas y procedimientos). Probado también en MariaDB 10.4 de XAMPP.
    * Para desarrollo, importa después `sql/datos_prueba.sql`: crea un usuario por rol (`admin@`, `empresa@`, `alumno@` y `profesor@banco.test`, contraseña `Prueba2026!`), el catálogo de habilidades y los criterios de evaluación.
+   * Para probar todos los flujos a mano, corre `C:\xampp\php\php.exe sql\sembrar.php --confirmar`: borra y vuelve a crear la base con 12 cuentas y con proyectos, candidaturas y solicitudes en todos los estados. Las credenciales y los pasos de cada flujo están en `sql/GUIA_PRUEBAS.md`.
 
 3. **Configuración de Credenciales:**
    * Copia `bd/config.ejemplo.php` como `bd/config.local.php` y ajusta los datos de conexión. Si no existe, se usa la plantilla (XAMPP: `root` sin contraseña).
@@ -102,7 +103,7 @@ Cada paso deja una autorización o un registro en el historial, y avisa por noti
 * En `bd/config.local.php` pon `'debug' => false` (oculta los detalles de los errores y desactiva `verificar.php`).
 * Usa un usuario de base de datos con contraseña y solo los permisos que la aplicación necesita.
 * Sirve el sitio por HTTPS: la cookie de sesión se marca como segura automáticamente.
-* No importes `sql/datos_prueba.sql` en producción.
+* No importes `sql/datos_prueba.sql` ni corras `sql/sembrar.php` en producción.
 
 ## 📜 Licencia y Derechos
 
