@@ -19,6 +19,8 @@ Las pruebas automáticas (`pruebas\flujo.php`) no dependen de este script: sigue
 
 Sitio: http://localhost/Banco_Proyectos/
 
+> En el servidor de Hostinger solo se cargan las 4 cuentas base de `sql/datos_prueba.sql` (admin, empresa, alumno y profesor), sin los escenarios de esta guía: `sembrar.php` solo funciona en XAMPP. Ver `docs/DESPLIEGUE_HOSTINGER.md`.
+
 ## 2. Cuentas
 
 **Todas las cuentas usan la contraseña `Prueba2026!`**

@@ -44,7 +44,7 @@ La estructura sigue un patrón modular enfocado en la simplicidad y separación 
 * `/bd` - Scripts de conexión a la base de datos.
 * `/inc` - Núcleo común: arranque (`inicio.php`), sesión y acceso por rol, CSRF, avisos, auditoría y menú.
 * `/css`, `/js`, `/img` - Recursos estáticos locales. `css/app.css` es la hoja de las pantallas; los ajustes nuevos van en `css/extras.css`.
-* `/lib`, `/fonts` - Bootstrap 5.3.3, Bootstrap Icons 1.11.3 y Montserrat servidos en local.
+* `/vendor`, `/fonts` - Bootstrap 5.3.3, Bootstrap Icons 1.11.3 y Montserrat servidos en local (no se llama `lib` porque Hostinger no deja crear esa carpeta en la raíz).
 * `/inputs` - Componentes y fragmentos reutilizables de formularios HTML/PHP.
 * `/menumain` - Plantillas: pública (A) y de aplicación (B) con menú lateral y menú móvil.
 * `/errores` - Páginas 403, 404 y 500.
@@ -103,7 +103,11 @@ Cada paso deja una autorización o un registro en el historial, y avisa por noti
 * En `bd/config.local.php` pon `'debug' => false` (oculta los detalles de los errores y desactiva `verificar.php`).
 * Usa un usuario de base de datos con contraseña y solo los permisos que la aplicación necesita.
 * Sirve el sitio por HTTPS: la cookie de sesión se marca como segura automáticamente.
-* No importes `sql/datos_prueba.sql` ni corras `sql/sembrar.php` en producción.
+* No corras `sql/sembrar.php` en el servidor. `sql/datos_prueba.sql` solo mientras el sitio sea de revisión (sus contraseñas son públicas).
+
+## 🌐 Publicar en Hostinger (FTP)
+
+Los pasos completos (con el script, a mano y con FileZilla) están en [`docs/DESPLIEGUE_HOSTINGER.md`](docs/DESPLIEGUE_HOSTINGER.md), también en Word (`docs/DESPLIEGUE_HOSTINGER.docx`). La guía de pruebas en Word está en `docs/GUIA_PRUEBAS.docx`. En corto: `deploy\subir.bat -Iniciar` crea la carpeta `privado\` (ignorada por Git y nunca subida) donde van las credenciales; `-PrepararSql` genera los `.sql` para phpMyAdmin; `-SubirConfig` sube la configuración de la base solo si el servidor no tiene una; `-Simular` / `-Todo` / sin opciones suben los archivos (siempre piden escribir `SI`).
 
 ## 📜 Licencia y Derechos
 
