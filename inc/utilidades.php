@@ -75,3 +75,15 @@ function iniciales(string $nombre): string
     $ultima  = count($partes) > 2 ? $partes[count($partes) - 2] : ($partes[1] ?? '');
     return mb_strtoupper(mb_substr($primera, 0, 1) . mb_substr($ultima, 0, 1));
 }
+
+/**
+ * URL de un CSS o JS propio con su fecha de modificación (?v=...), para que el
+ * navegador descargue la versión nueva en cuanto el archivo cambia en lugar de
+ * usar la que tiene en caché.
+ */
+function url_recurso(string $ruta): string
+{
+    $archivo = __DIR__ . '/../' . ltrim($ruta, '/');
+    $v = is_file($archivo) ? filemtime($archivo) : null;
+    return url($ruta) . ($v ? '?v=' . $v : '');
+}

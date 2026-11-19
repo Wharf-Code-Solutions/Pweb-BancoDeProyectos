@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Apariencia: modo oscuro y tamaño de letra (tema.css)
+   Se carga después de app.css y extras.css. js/tema-inicio.js pone en <html>
+   data-tema="claro|oscuro" (y data-bs-theme para Bootstrap) y
+   data-letra="grande|mayor" antes de pintar la página, según lo que el
+   usuario eligió (localStorage) o, la primera vez, el tema del sistema.
+
+   El modo oscuro cambia los tokens de app.css; aquí solo se corrigen los
+   lugares que usan un color fijo en lugar de un token.
+   ========================================================================== */
+
+/* ---------- 1. Tokens del modo oscuro ---------- */
+html[data-tema="oscuro"] {
+  color-scheme: dark;
+  /* Azul: claro para texto y acentos; --navy-solido para rellenos con texto blanco */
+  --navy: #9ab6ea;
+  --navy-600: #b3c8f0;
+  --deep: #d3def5;
+  --navy-50: #1c2840;
+  --navy-100: #263755;
+  --navy-solido: #2d5aa8;
+  --navy-solido-hover: #3567bd;
+  /* Neutros */
+  --canvas: #0e131d;
+  --bg: #161c28;
+  --bg-vidrio: rgba(22, 28, 40, .92);
+  --sunken: #1b2230;
+  --card: #262e3e;
+  --ink: #e6e9ef;
+  --ink-2: #c4cad5;
+  --mute: #98a1b2;      /* AA sobre --bg y --canvas */
+  --line: #2a3243;
+  --line-2: #3b4458;
+  /* Estados */
+  --proceso: #8fb3f5;  --proceso-bg: #16233d;
+  --activo: #6fcf97;   --activo-bg: #12281c;
+  --atencion: #f0b455; --atencion-bg: #2c2110;
+  --cerrado: #a3abba;  --cerrado-bg: #212734;
+  --peligro: #f28b82;  --peligro-bg: #321819;
+  /* Sombras: casi no se ven sobre fondo oscuro; se marcan con el borde */
+  --sombra-xs: 0 1px 2px rgba(0, 0, 0, .35);
+  --sombra-sm: 0 1px 3px rgba(0, 0, 0, .4), 0 1px 2px rgba(0, 0, 0, .3);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, .5), 0 2px 6px rgba(0, 0, 0, .35);
+
+  /* Bootstrap: valores que app.css fija en hexadecimal o rgb */
+  --bs-body-color-rgb: 230, 233, 239;
+  --bs-body-bg-rgb: 22, 28, 40;
+  --bs-secondary-bg: var(--sunken);
+  --bs-emphasis-color: #fff;
+  --bs-primary-rgb: 154, 182, 234;
+  --bs-success-rgb: 111, 207, 151;
+  --bs-warning-rgb: 240, 180, 85;
+  --bs-danger-rgb: 242, 139, 130;
+  --bs-info-rgb: 143, 179, 245;
+  --bs-link-color-rgb: 179, 200, 240;
+  --bs-link-hover-color-rgb: 211, 222, 245;
+  --bs-success-border-subtle: #1f4a32;
+  --bs-warning-border-subtle: #5a431c;
+  --bs-danger-border-subtle: #5c2a27;
+  --bs-info-border-subtle: #27406b;
+  --bs-focus-ring-color: rgba(154, 182, 234, .35);
+}
+
+/* ---------- 2. Rellenos azules con texto blanco ---------- */
+html[data-tema="oscuro"] .btn-principal,
+html[data-tema="oscuro"] .btn-primary {
+  --bs-btn-bg: var(--navy-solido); --bs-btn-border-color: var(--navy-solido);
+  --bs-btn-hover-bg: var(--navy-solido-hover); --bs-btn-hover-border-color: var(--navy-solido-hover);
+  --bs-btn-active-bg: #244a8c; --bs-btn-active-border-color: #244a8c;
+  --bs-btn-disabled-bg: var(--card); --bs-btn-disabled-border-color: var(--card); --bs-btn-disabled-color: var(--mute);
+}
+html[data-tema="oscuro"] .saltar,
+html[data-tema="oscuro"] .avatar,
+html[data-tema="oscuro"] .nav-rol .pendientes,
+html[data-tema="oscuro"] .mapa-pasos a.active .n,
+html[data-tema="oscuro"] .pasos li::before,
+html[data-tema="oscuro"] .bandeja .cifra,
+html[data-tema="oscuro"] .bg-navy { background: var(--navy-solido) !important; color: #fff; }
+html[data-tema="oscuro"] .bandeja li.cero .cifra { background: var(--card) !important; color: var(--mute); }
+html[data-tema="oscuro"] .pagination { --bs-pagination-active-bg: var(--navy-solido); --bs-pagination-active-border-color: var(--navy-solido); --bs-pagination-active-color: #fff; }
+html[data-tema="oscuro"] .form-check-input:checked { background-color: var(--navy-solido); border-color: var(--navy-solido); }
+html[data-tema="oscuro"] .bg-deep { background: #0b1222 !important; }
+
+/* ---------- 3. Fondos y bordes que app.css fija en claro ---------- */
+html[data-tema="oscuro"] .nav-rol a:hover,
+html[data-tema="oscuro"] .menu-usuario:hover,
+html[data-tema="oscuro"] .nav-rol .enlace-menu:hover { background: var(--card); }
+html[data-tema="oscuro"] .nav-rol a.active { background: var(--bg); }
+html[data-tema="oscuro"] .tabla-datos tbody tr:hover > td { background: var(--sunken); }
+html[data-tema="oscuro"] .tabla-datos tr.denegado td { background: var(--peligro-bg); }
+html[data-tema="oscuro"] .lista-notif .no-leida { background: var(--navy-50); }
+html[data-tema="oscuro"] label.card:hover { border-color: var(--line-2); }
+html[data-tema="oscuro"] .indicador.cero .valor { color: var(--mute); }
+html[data-tema="oscuro"] .form-control::placeholder { color: #7d8698; }
+html[data-tema="oscuro"] .form-check-input { border-color: #6b7487; }
+html[data-tema="oscuro"] .breadcrumb { --bs-breadcrumb-divider-color: var(--line-2); }
+html[data-tema="oscuro"] .btn-secundario,
+html[data-tema="oscuro"] .btn-outline-primary,
+html[data-tema="oscuro"] .btn-outline-secondary { --bs-btn-hover-border-color: #4a546a; --bs-btn-active-border-color: #4a546a; --bs-btn-disabled-color: var(--mute); }
+html[data-tema="oscuro"] .btn-claro { --bs-btn-hover-bg: var(--bg); }
+/* Botones verde y rojo: el hover en claro oscurece; aquí se mantiene legible */
+html[data-tema="oscuro"] .btn-aprobar { --bs-btn-bg: #1c7a45; --bs-btn-border-color: #1c7a45; --bs-btn-hover-bg: #238c51; --bs-btn-hover-border-color: #238c51; --bs-btn-active-bg: #238c51; }
+html[data-tema="oscuro"] .btn-rechazar { --bs-btn-bg: #b42318; --bs-btn-border-color: #b42318; --bs-btn-hover-bg: #c9301f; --bs-btn-hover-border-color: #c9301f; --bs-btn-active-bg: #c9301f; }
+html[data-tema="oscuro"] .tabla-datos td .btn-rechazar-contorno.btn-sm,
+html[data-tema="oscuro"] .tabla-datos td .text-danger.btn-sm,
+html[data-tema="oscuro"] .btn-rechazar-contorno,
+html[data-tema="oscuro"] .btn-outline-danger { --bs-btn-hover-color: var(--peligro); --bs-btn-hover-border-color: #5c2a27; }
+html[data-tema="oscuro"] .btn-devolver { --bs-btn-hover-border-color: #5a431c; }
+/* Tintes de aviso */
+html[data-tema="oscuro"] .alert-success { --bs-alert-bg: var(--activo-bg); --bs-alert-border-color: #1f4a32; }
+html[data-tema="oscuro"] .alert-danger { --bs-alert-bg: var(--peligro-bg); --bs-alert-border-color: #5c2a27; }
+html[data-tema="oscuro"] .alert-warning { --bs-alert-bg: var(--atencion-bg); --bs-alert-border-color: #5a431c; }
+html[data-tema="oscuro"] .alert-info { --bs-alert-bg: var(--proceso-bg); --bs-alert-border-color: #27406b; }
+html[data-tema="oscuro"] .cupo.lleno,
+html[data-tema="oscuro"] .justificacion.advertencia,
+html[data-tema="oscuro"] .suma-pesos.falta { background: var(--atencion-bg); border-color: #5a431c; }
+html[data-tema="oscuro"] .justificacion.peligro { background: var(--peligro-bg); border-color: #5c2a27; }
+html[data-tema="oscuro"] .suma-pesos.ok { background: var(--activo-bg); border-color: #1f4a32; }
+html[data-tema="oscuro"] .chip.cumple { border-color: #1f4a32; }
+html[data-tema="oscuro"] .chip.menor { border-color: #5a431c; }
+html[data-tema="oscuro"] .linea-tiempo .hito.exito { box-shadow: inset 0 0 0 1px #1f4a32; }
+html[data-tema="oscuro"] .linea-tiempo .hito.advertencia { box-shadow: inset 0 0 0 1px #5a431c; }
+html[data-tema="oscuro"] .hero-publico {
+  background: radial-gradient(1200px 400px at 85% -10%, rgba(143, 179, 245, .10), transparent 60%),
+              linear-gradient(var(--canvas), var(--canvas));
+}
+/* Foco visible con el azul claro */
+html[data-tema="oscuro"] :focus-visible { box-shadow: 0 0 0 4px rgba(154, 182, 234, .2) !important; }
+html[data-tema="oscuro"] .form-control:focus,
+html[data-tema="oscuro"] .form-select:focus { box-shadow: 0 0 0 3px rgba(154, 182, 234, .2); }
+/* Logotipos e imágenes: sin cambios; los SVG de estado ya traen su color. */
+
+/* ---------- 4. Controles de apariencia ---------- */
+/* Menú de usuario: interruptor de tema y tamaño de letra */
+.dropdown-menu .apariencia { padding: .35rem .9rem .5rem; display: grid; gap: .5rem; min-width: 0; }
+.apariencia .fila-apariencia { display: flex; align-items: center; justify-content: space-between; gap: .75rem; font-size: var(--t4); color: var(--ink); }
+.apariencia .form-switch { margin: 0; padding-left: 2.5em; min-height: 0; }
+.apariencia .form-switch .form-check-input { width: 2em; margin-top: .15em; cursor: pointer; }
+/* Tamaño de letra: el rótulo arriba y los tres botones a lo ancho, para que quepa
+   en el menú del lateral (ancho fijo) con cualquier tamaño de letra. */
+.apariencia .fila-letra { flex-direction: column; align-items: stretch; gap: .35rem; }
+.apariencia .fila-letra .selector-letra { display: flex; width: 100%; }
+.apariencia .fila-letra .selector-letra .btn { flex: 1 1 0; }
+.selector-letra .btn { min-width: 2.1rem; padding-inline: .45rem; font-weight: 650; line-height: 1; }
+.selector-letra .btn:nth-child(1) { font-size: 12px; }
+.selector-letra .btn:nth-child(2) { font-size: 14px; }
+.selector-letra .btn:nth-child(3) { font-size: 16px; }
+.selector-letra .btn[aria-pressed="true"] { --bs-btn-bg: var(--navy-50); --bs-btn-color: var(--navy); --bs-btn-border-color: var(--navy); --bs-btn-hover-bg: var(--navy-50); --bs-btn-hover-color: var(--navy); --bs-btn-hover-border-color: var(--navy); position: relative; z-index: 1; }
+
+/* ---------- 5. Tamaño de letra ----------
+   Todos los tamaños de texto de app.css están en rem, así que basta con cambiar
+   la base de <html>. Pasos cortos (16 → 17 → 18 px) para no mover el diseño:
+   anchos del menú y alturas de controles siguen en px. */
+html[data-letra="grande"] { font-size: 106.25%; }
+html[data-letra="mayor"] { font-size: 112.5%; }
+/* La marca del menú lateral conserva su tamaño para que no se corte. */
+html[data-letra] .marca > span { font-size: 13px; }
+html[data-letra] .marca > span small { font-size: 12px; }
+
+/* ---------- 6. Impresión: siempre en claro ---------- */
+@media print {
+  html[data-tema="oscuro"] {
+    color-scheme: light;
+    --navy: #1b396a; --navy-600: #24498a; --deep: #132850; --navy-50: #eef2f9; --navy-100: #dde6f3;
+    --canvas: #fff; --bg: #fff; --sunken: #f8f9fb; --card: #e9ecf1;
+    --ink: #1a2233; --ink-2: #3f4a5e; --mute: #5d6678; --line: #e3e7ed; --line-2: #cfd5de;
+    --proceso: #2459b8; --proceso-bg: #edf3fd; --activo: #1c7a45; --activo-bg: #e8f5ed;
+    --atencion: #a35d00; --atencion-bg: #fdf3e2; --cerrado: #6b7385; --cerrado-bg: #f1f3f6;
+    --peligro: #b42318; --peligro-bg: #fdeceb;
+    --bs-body-color-rgb: 26, 34, 51; --bs-body-bg-rgb: 255, 255, 255; --bs-emphasis-color: #000;
+  }
+}

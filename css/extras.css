@@ -31,3 +31,8 @@
 /* Encabezados h2 que antes eran h3 (orden de encabezados para accesibilidad): mismo aspecto. */
 .vacio h2 { font-size: var(--t4); margin-bottom: .25rem; }
 .tarjeta-proyecto h2 { font-size: var(--t4); margin: 0; }
+
+/* D1 · El nombre en la lista de usuarios abre su detalle (D1b). */
+.enlace-nombre { color: inherit; text-decoration: none; }
+.enlace-nombre:hover, .enlace-nombre:focus-visible { color: var(--navy-600); text-decoration: underline; }
+.col-proyecto { min-width: 12rem; }

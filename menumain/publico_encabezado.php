@@ -20,11 +20,14 @@ $titulo ??= 'Banco de Proyectos Académicos';
             <img src="<?= e(url('img/favicon.svg')) ?>" alt="" width="32" height="32">
             <span class="nombre">Banco de Proyectos Académicos<small>TecNM · Instituto Tecnológico de Veracruz</small></span>
         </a>
+        <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn-icono" data-tema-alternar aria-pressed="false" aria-label="Cambiar a modo oscuro"><i class="bi bi-moon" aria-hidden="true"></i></button>
         <?php if ($u = usuario_actual()): ?>
             <a class="btn btn-secundario" href="<?= e(url(ruta_panel($u))) ?>">Ir a mi panel</a>
         <?php elseif (basename($_SERVER['SCRIPT_NAME'] ?? '') !== 'login.php'): ?>
             <a class="btn btn-secundario" href="<?= e(url('login.php')) ?>">Iniciar sesión</a>
         <?php endif; ?>
+        </div>
     </div>
 </header>
 <main id="contenido">

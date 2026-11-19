@@ -32,6 +32,15 @@ $menu_cuenta = '<li><span class="dropdown-header">' . e($usuario['subtitulo'] ?:
     . '<li><a class="dropdown-item" href="' . e(url('mod_comun/cuenta.php')) . '">Mi cuenta</a></li>'
     . '<li><a class="dropdown-item" href="' . e(url('mod_comun/notificaciones.php')) . '">Notificaciones</a></li>'
     . '<li><hr class="dropdown-divider"></li>'
+    . '<li><div class="apariencia"><span class="dropdown-header p-0">Apariencia</span>'
+    . '<label class="fila-apariencia"><span>Modo oscuro</span><span class="form-check form-switch">'
+    . '<input class="form-check-input" type="checkbox" role="switch" data-tema-interruptor></span></label>'
+    . '<div class="fila-apariencia fila-letra"><span>Tamaño de letra</span><span class="btn-group selector-letra" role="group" aria-label="Tamaño de letra">'
+    . '<button type="button" class="btn btn-secundario btn-sm" data-letra="normal" aria-label="Letra normal" title="Normal">A</button>'
+    . '<button type="button" class="btn btn-secundario btn-sm" data-letra="grande" aria-label="Letra grande" title="Grande">A</button>'
+    . '<button type="button" class="btn btn-secundario btn-sm" data-letra="mayor" aria-label="Letra más grande" title="Más grande">A</button>'
+    . '</span></div></div></li>'
+    . '<li><hr class="dropdown-divider"></li>'
     . '<li><form method="post" action="' . e(url('logout.php')) . '">' . csrf_campo()
     . '<button type="submit" class="dropdown-item">Cerrar sesión</button></form></li>';
 ?>
@@ -48,7 +57,7 @@ $menu_cuenta = '<li><span class="dropdown-header">' . e($usuario['subtitulo'] ?:
         </a>
         <?= $campana() ?>
         <div class="dropdown">
-            <button type="button" class="menu-usuario solo-avatar" data-bs-toggle="dropdown" aria-expanded="false"
+            <button type="button" class="menu-usuario solo-avatar" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
                     aria-label="Menú de usuario: <?= e($usuario['nombre']) ?>">
                 <span class="avatar"><?= e(iniciales($usuario['nombre'])) ?></span>
             </button>
@@ -77,7 +86,7 @@ $menu_cuenta = '<li><span class="dropdown-header">' . e($usuario['subtitulo'] ?:
             </div>
             <nav aria-label="Navegación principal"><ul class="nav-rol"><?= html_menu($usuario['rol'], $menu_activo) ?></ul></nav>
             <div class="lateral-pie dropup">
-                <button type="button" class="menu-usuario" data-bs-toggle="dropdown" aria-expanded="false"
+                <button type="button" class="menu-usuario" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
                         aria-label="Menú de usuario: <?= e($usuario['nombre']) ?>">
                     <span class="avatar"><?= e(iniciales($usuario['nombre'])) ?></span>
                     <span class="quien"><strong><?= e($usuario['nombre']) ?></strong><small><?= e($rol_txt) ?></small></span>

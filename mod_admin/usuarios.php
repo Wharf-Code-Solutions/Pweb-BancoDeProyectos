@@ -27,6 +27,9 @@ if (es_post()) {
                 : 'Usuario desactivado. Ya no podrá iniciar sesión; su información se conserva.');
         }
     }
+    if (($_POST['volver'] ?? '') === 'detalle') {
+        redirigir('mod_admin/usuario.php?id=' . urlencode($id));
+    }
     redirigir(url_lista('mod_admin/usuarios.php', $filtros + ['pagina' => (int) ($_GET['pagina'] ?? 1)]));
 }
 
@@ -104,8 +107,11 @@ require __DIR__ . '/../menumain/app_encabezado.php';
 
     <?php
     $accion_form = e(url_lista('mod_admin/usuarios.php', $filtros + ['pagina' => $pag['pagina']]));
+    $enlace_nombre = fn (array $u): string => '<a class="enlace-nombre" href="' . e(url('mod_admin/usuario.php?id=' . urlencode($u['c_usuario']))) . '">'
+        . e($u['rol'] === 'empresa' && $u['razon_social'] ? $u['razon_social'] : $u['nombre']) . '</a>';
     $botones = function (array $u) use ($usuario, $accion_form): string {
-        $html = '<a class="btn btn-terciario btn-sm" href="' . e(url('mod_admin/usuario_form.php?id=' . urlencode($u['c_usuario']))) . '">Editar<span class="visually-hidden"> a ' . e($u['nombre']) . '</span></a> ';
+        $html = '<a class="btn btn-secundario btn-sm" href="' . e(url('mod_admin/usuario.php?id=' . urlencode($u['c_usuario']))) . '">Ver<span class="visually-hidden"> a ' . e($u['nombre']) . '</span></a> '
+              . '<a class="btn btn-terciario btn-sm" href="' . e(url('mod_admin/usuario_form.php?id=' . urlencode($u['c_usuario']))) . '">Editar<span class="visually-hidden"> a ' . e($u['nombre']) . '</span></a> ';
         if ($u['c_usuario'] === $usuario['c_usuario']) {
             return $html;
         }
@@ -135,7 +141,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
                 <tbody>
                 <?php foreach ($lista as $u): ?>
                     <tr>
-                        <td><strong><?= e($u['rol'] === 'empresa' && $u['razon_social'] ? $u['razon_social'] : $u['nombre']) ?></strong>
+                        <td><strong><?= $enlace_nombre($u) ?></strong>
                             <?php if ($u['rol'] === 'empresa'): ?><span class="d-block small text-mute"><?= e($u['nombre']) ?></span><?php endif; ?></td>
                         <td><?= e($u['correo']) ?></td>
                         <td><?= e(nombre_rol($u['rol'])) ?></td>
@@ -150,7 +156,7 @@ require __DIR__ . '/../menumain/app_encabezado.php';
         <div class="lista-tarjetas">
             <?php foreach ($lista as $u): ?>
                 <div class="fila-tarjeta">
-                    <span class="titulo"><?= e($u['rol'] === 'empresa' && $u['razon_social'] ? $u['razon_social'] : $u['nombre']) ?></span>
+                    <span class="titulo"><?= $enlace_nombre($u) ?></span>
                     <span class="meta"><?= e(nombre_rol($u['rol'])) ?> · <?= e($u['identificador'] ?? '—') ?> · <?= e($u['correo']) ?></span>
                     <span><?= insignia('usuario', $u['estado']) ?></span>
                     <div><?= $botones($u) ?></div>

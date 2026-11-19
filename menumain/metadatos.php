@@ -18,6 +18,7 @@ $indexar ??= false;
     <meta name="application-name" content="Banco de Proyectos Académicos">
     <meta name="robots" content="<?= $indexar ? 'index, follow' : 'noindex, nofollow' ?>">
     <meta name="theme-color" content="#1b396a">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="light dark">
     <meta name="format-detection" content="telephone=no">
+    <script src="<?= e(url_recurso('js/tema-inicio.js')) ?>"></script>
     <link rel="icon" type="image/svg+xml" href="<?= e(url('img/favicon.svg')) ?>">
